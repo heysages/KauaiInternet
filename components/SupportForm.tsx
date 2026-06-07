@@ -71,7 +71,7 @@ export default function SupportForm() {
     saveSupportSubmission(payload);
 
     try {
-      await fetch("/api/support", {
+      await fetch("/api/submissions/support", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -52,6 +52,19 @@ export default function ResidentKnowledgeForm({
       })
     );
 
+    fetch("/api/submissions/observation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        observationType,
+        message: message.trim(),
+        lat,
+        lng,
+        locationLabel,
+        nameOrOrg: nameOrOrg.trim() || undefined,
+      }),
+    }).catch(() => undefined);
+
     setSubmitted(true);
     setTimeout(onSubmit, 1200);
   };

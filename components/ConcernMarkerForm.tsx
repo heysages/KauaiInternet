@@ -54,6 +54,18 @@ export default function ConcernMarkerForm({
     });
 
     saveVisitorConcernMarker(marker);
+    fetch("/api/submissions/concern", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        category,
+        message: message.trim(),
+        lat,
+        lng,
+        locationLabel,
+        nameOrOrg: nameOrOrg.trim() || undefined,
+      }),
+    }).catch(() => undefined);
     setSubmitted(true);
     setTimeout(onSubmit, 1200);
   };

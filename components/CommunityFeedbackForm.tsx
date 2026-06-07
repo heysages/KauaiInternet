@@ -31,11 +31,17 @@ export default function CommunityFeedbackForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selected.size === 0) return;
-    saveCommunityFeedback({
+    const entry = {
       priorities: [...selected],
       otherNote: selected.has("other") ? otherNote.trim() : undefined,
       locationLabel,
-    });
+    };
+    saveCommunityFeedback(entry);
+    fetch("/api/submissions/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(entry),
+    }).catch(() => undefined);
     setSubmitted(true);
   };
 
