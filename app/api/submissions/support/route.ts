@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { mergeAttribution } from "@/lib/mergeAttribution";
 import { createSubmission } from "@/lib/submissionsDb";
 import { sendOutboundEmail } from "@/lib/emailService";
 
@@ -11,6 +12,7 @@ export async function POST(request: NextRequest) {
     helpMessage?: string;
     location?: string;
     mayContact?: boolean;
+    attribution?: Record<string, unknown>;
   };
 
   try {
@@ -34,7 +36,7 @@ export async function POST(request: NextRequest) {
     supportType: body.supportType,
     locationLabel: body.location?.trim(),
     message: body.helpMessage.trim(),
-    metadata: { mayContact: true },
+    metadata: mergeAttribution({ mayContact: true }, body.attribution),
   });
 
   if (process.env.RESEND_API_KEY && process.env.SUPPORT_NOTIFY_EMAIL) {

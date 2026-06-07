@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { mergeAttribution } from "@/lib/mergeAttribution";
 import { createSubmission } from "@/lib/submissionsDb";
 
 export async function POST(request: NextRequest) {
@@ -9,6 +10,7 @@ export async function POST(request: NextRequest) {
     lng?: number;
     locationLabel?: string;
     nameOrOrg?: string;
+    attribution?: Record<string, unknown>;
   };
 
   try {
@@ -26,11 +28,10 @@ export async function POST(request: NextRequest) {
     name: body.nameOrOrg?.trim(),
     locationLabel: body.locationLabel,
     message: body.message.trim(),
-    metadata: {
-      category: body.category,
-      lat: body.lat,
-      lng: body.lng,
-    },
+    metadata: mergeAttribution(
+      { category: body.category, lat: body.lat, lng: body.lng },
+      body.attribution
+    ),
   });
 
   return NextResponse.json({ ok: true, id: submission?.id, stored: Boolean(submission) });

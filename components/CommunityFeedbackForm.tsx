@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { communityFeedbackPriorities } from "@/data/communityFeedbackPriorities";
+import { getAttributionPayload } from "@/lib/analyticsClient";
 import { saveCommunityFeedback } from "@/lib/communityFeedbackStorage";
 import type { CommunityFeedbackPriority } from "@/types/network";
 
@@ -40,7 +41,7 @@ export default function CommunityFeedbackForm({
     fetch("/api/submissions/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(entry),
+      body: JSON.stringify({ ...entry, attribution: getAttributionPayload() }),
     }).catch(() => undefined);
     setSubmitted(true);
   };

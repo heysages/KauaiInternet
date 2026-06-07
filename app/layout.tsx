@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
+import WebAnalytics from "@/components/WebAnalytics";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${fraunces.variable} antialiased`}
       >
+        <WebAnalytics />
         {children}
       </body>
     </html>

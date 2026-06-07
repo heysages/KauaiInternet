@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ConcernCategory } from "@/types/network";
 import { concernCategories } from "@/data/concernCategories";
 import { sampleAddresses } from "@/data/sampleAddresses";
+import { getAttributionPayload } from "@/lib/analyticsClient";
 import {
   createConcernMarker,
   saveVisitorConcernMarker,
@@ -64,6 +65,7 @@ export default function ConcernMarkerForm({
         lng,
         locationLabel,
         nameOrOrg: nameOrOrg.trim() || undefined,
+        attribution: getAttributionPayload(),
       }),
     }).catch(() => undefined);
     setSubmitted(true);

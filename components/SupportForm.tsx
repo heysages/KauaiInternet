@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { SupportType } from "@/types/network";
 import { supportTypeOptions } from "@/data/supportTypeLabels";
+import { getAttributionPayload } from "@/lib/analyticsClient";
 import { saveSupportSubmission } from "@/lib/supportSubmissionStorage";
 
 type FormState = {
@@ -74,7 +75,7 @@ export default function SupportForm() {
       await fetch("/api/submissions/support", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, attribution: getAttributionPayload() }),
       });
     } catch {
       /* local save already succeeded */

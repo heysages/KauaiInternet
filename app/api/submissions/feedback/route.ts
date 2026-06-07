@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { mergeAttribution } from "@/lib/mergeAttribution";
 import { createSubmission } from "@/lib/submissionsDb";
 import type { CommunityFeedbackPriority } from "@/types/network";
 
@@ -7,6 +8,7 @@ export async function POST(request: NextRequest) {
     priorities?: CommunityFeedbackPriority[];
     otherNote?: string;
     locationLabel?: string;
+    attribution?: Record<string, unknown>;
   };
 
   try {
@@ -30,7 +32,10 @@ export async function POST(request: NextRequest) {
     kind: "feedback",
     locationLabel: body.locationLabel,
     message,
-    metadata: { priorities: body.priorities, otherNote: body.otherNote ?? null },
+    metadata: mergeAttribution(
+      { priorities: body.priorities, otherNote: body.otherNote ?? null },
+      body.attribution
+    ),
   });
 
   return NextResponse.json({ ok: true, id: submission?.id, stored: Boolean(submission) });

@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ResidentObservationType } from "@/types/network";
 import { sampleAddresses } from "@/data/sampleAddresses";
 import { residentObservationTypes } from "@/data/residentObservationTypes";
+import { getAttributionPayload } from "@/lib/analyticsClient";
 import {
   createResidentObservation,
   saveVisitorObservation,
@@ -62,6 +63,7 @@ export default function ResidentKnowledgeForm({
         lng,
         locationLabel,
         nameOrOrg: nameOrOrg.trim() || undefined,
+        attribution: getAttributionPayload(),
       }),
     }).catch(() => undefined);
 

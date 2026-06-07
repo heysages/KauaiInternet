@@ -10,6 +10,13 @@ type Stats = {
   byKind: Record<string, number>;
   byStatus: Record<string, number>;
   email?: { inbound: number; outbound: number };
+  traffic?: {
+    configured: boolean;
+    pageviewsToday: number;
+    pageviews7d: number;
+    visitors7d: number;
+    topReferrer: string | null;
+  };
 };
 
 export default function AdminDashboardPage() {
@@ -24,12 +31,25 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminShell title="Dashboard">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+        <StatCard label="Page views today" value={stats?.traffic?.pageviewsToday ?? "—"} />
+        <StatCard label="Visitors (7d)" value={stats?.traffic?.visitors7d ?? "—"} />
+        <StatCard label="Page views (7d)" value={stats?.traffic?.pageviews7d ?? "—"} />
         <StatCard label="Total interest" value={stats?.total ?? "—"} />
-        <StatCard label="Last 7 days" value={stats?.last7Days ?? "—"} />
+        <StatCard label="Interest (7d)" value={stats?.last7Days ?? "—"} />
         <StatCard label="Inbound emails" value={stats?.email?.inbound ?? "—"} />
-        <StatCard label="Replies sent" value={stats?.email?.outbound ?? "—"} />
       </div>
+
+      {stats?.traffic?.topReferrer && (
+        <p className="text-xs text-mist/70 mb-6">
+          Top referrer (30d):{" "}
+          <span className="text-amber-glow">{stats.traffic.topReferrer}</span>
+          {" · "}
+          <Link href="/admin/analytics" className="text-mist hover:text-white underline">
+            Full traffic report →
+          </Link>
+        </p>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="platform-panel rounded-2xl p-5">
@@ -60,6 +80,12 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
+        <Link
+          href="/admin/analytics"
+          className="text-sm font-semibold bg-amber-emergency/20 hover:bg-amber-emergency/30 text-amber-glow px-4 py-2 rounded-xl"
+        >
+          Traffic & referrers →
+        </Link>
         <Link
           href="/admin/submissions"
           className="text-sm font-semibold bg-amber-emergency/20 hover:bg-amber-emergency/30 text-amber-glow px-4 py-2 rounded-xl"
