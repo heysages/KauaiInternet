@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 
 const navLinks = [
   { href: "#why", label: "Why" },
@@ -37,17 +38,8 @@ export default function SiteNav() {
       }`}
     >
       <nav className="flex items-center justify-between px-5 py-4 sm:px-8 lg:px-12 max-w-[1400px] mx-auto">
-        <Link href="#" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-full bg-amber-emergency/20 border border-amber-glow/40 flex items-center justify-center group-hover:border-amber-glow/60 transition-colors">
-            <svg viewBox="0 0 24 24" className="w-5 h-5 text-amber-glow" fill="currentColor">
-              <circle cx="12" cy="12" r="3" />
-              <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-            </svg>
-          </div>
-          <div className="hidden xs:block sm:block">
-            <p className="font-semibold text-sm tracking-wide text-white">Kauai Resilience Network</p>
-            <p className="text-[10px] text-mist/70 hidden sm:block">Community resilience movement</p>
-          </div>
+        <Link href="#" className="group">
+          <KauaiInternetLogo variant="light" compact />
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

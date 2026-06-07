@@ -1,13 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import AddressImpactReportPanel from "@/components/AddressImpactReportPanel";
 import AddressImpactSearch from "@/components/AddressImpactSearch";
 import CommunityFeedbackForm from "@/components/CommunityFeedbackForm";
+import ImmersiveMapControls from "@/components/ImmersiveMapControls";
+import MapViewModeToggle from "@/components/MapViewModeToggle";
 import TodayFutureSlider from "@/components/TodayFutureSlider";
+import type { MapViewMode } from "@/types/mapView";
 import { communityMapLayers } from "@/data/communityMapLayers";
 import { computeAddressImpactReport } from "@/lib/addressImpactReport";
+import { getGroundViewSceneFeatures, getNearbySceneFeatures } from "@/lib/nearbySceneFeatures";
+import { isImmersiveMode } from "@/lib/mapBasemaps";
 import { useAddressImpact } from "@/components/AddressImpactContext";
 import type { MapLayer } from "@/types/network";
 
@@ -30,6 +35,34 @@ export default function AddressImpactExplorer() {
     setSearchType,
     selectLocationAndScroll,
   } = useAddressImpact();
+
+  const [mapViewMode, setMapViewMode] = useState<MapViewMode>("community");
+  const [mapFullscreen, setMapFullscreen] = useState(false);
+  const [sceneOrbit, setSceneOrbit] = useState(false);
+  useEffect(() => {
+    if (!selectedLocation && mapViewMode !== "community") {
+      setMapViewMode("community");
+    }
+  }, [selectedLocation, mapViewMode]);
+
+  useEffect(() => {
+    if (mapViewMode !== "scene") {
+      setSceneOrbit(false);
+    }
+  }, [mapViewMode]);
+
+  useEffect(() => {
+    if (!mapFullscreen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMapFullscreen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mapFullscreen]);
 
   const report = useMemo(
     () =>
@@ -62,6 +95,24 @@ export default function AddressImpactExplorer() {
     });
   }, [futureProgress]);
 
+  const sceneFeatures = useMemo(() => {
+    if (!selectedLocation || !isImmersiveMode(mapViewMode)) return [];
+    if (mapViewMode === "street") {
+      return getGroundViewSceneFeatures(
+        selectedLocation.lat,
+        selectedLocation.lng,
+        explorerLayers,
+        futureProgress
+      );
+    }
+    return getNearbySceneFeatures(
+      selectedLocation.lat,
+      selectedLocation.lng,
+      explorerLayers,
+      futureProgress
+    );
+  }, [selectedLocation, mapViewMode, explorerLayers, futureProgress]);
+
   return (
     <section id="explore" className="section-padding gradient-sand">
       <div className="max-w-6xl mx-auto">
@@ -88,11 +139,39 @@ export default function AddressImpactExplorer() {
 
         <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-3 space-y-4">
-            <div className="platform-shell platform-shell-embedded rounded-2xl overflow-hidden h-[420px] sm:h-[480px]">
+            <div
+              className={`platform-shell platform-shell-embedded rounded-2xl overflow-hidden relative transition-[height] duration-300 ${
+                mapFullscreen
+                  ? "map-immersive-fullscreen"
+                  : mapViewMode === "street" && selectedLocation
+                    ? "h-[520px] sm:h-[580px]"
+                    : "h-[420px] sm:h-[480px]"
+              }`}
+            >
+              <div className="absolute top-3 left-3 right-3 z-30 flex items-start justify-between gap-2 pointer-events-none">
+                <div className="pointer-events-auto min-w-0">
+                  <MapViewModeToggle
+                    value={mapViewMode}
+                    onChange={setMapViewMode}
+                    hasFocus={!!selectedLocation}
+                    variant="dark"
+                  />
+                </div>
+                <ImmersiveMapControls
+                  viewMode={mapViewMode}
+                  fullscreen={mapFullscreen}
+                  sceneOrbit={sceneOrbit}
+                  onFullscreenChange={setMapFullscreen}
+                  onSceneOrbitChange={setSceneOrbit}
+                />
+              </div>
+
               <IslandMap
                 layers={explorerLayers}
                 focusLocation={selectedLocation}
                 futureProgress={futureProgress}
+                viewMode={mapViewMode}
+                sceneOrbit={sceneOrbit}
                 displayOptions={{ terrain: true, towns: true, majorRoads: true }}
                 onSelectionChange={() => {}}
               />

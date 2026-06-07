@@ -30,6 +30,10 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     type: "website",
     locale: "en_US",
+    images: [{ url: "/brand/kauai-internet-brand-guide.png", width: 1024, height: 819, alt: siteConfig.name }],
+  },
+  icons: {
+    icon: "/brand/kauai-internet-bird.png",
   },
   twitter: {
     card: "summary_large_image",

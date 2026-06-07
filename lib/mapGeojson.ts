@@ -279,3 +279,27 @@ export function townsToGeoJSON(towns: MapTown[]) {
     })),
   };
 }
+
+export function sceneBeamsToGeoJSON(
+  focusLng: number,
+  focusLat: number,
+  features: { lng: number; lat: number; color: string }[]
+) {
+  return {
+    type: "FeatureCollection" as const,
+    features: features.map((feature, index) => ({
+      type: "Feature" as const,
+      id: `beam-${index}`,
+      geometry: {
+        type: "LineString" as const,
+        coordinates: [
+          [focusLng, focusLat],
+          [feature.lng, feature.lat],
+        ],
+      },
+      properties: {
+        color: feature.color,
+      },
+    })),
+  };
+}

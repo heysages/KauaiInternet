@@ -10,12 +10,18 @@ import { islandAssets } from "@/data/islandAssets";
 import { mapTowns } from "@/data/mapTowns";
 import { mapRegions } from "@/data/mapRegions";
 import { regionConnectivityProfiles } from "@/data/regionConnectivity";
+import { basemapStyleForMode, isSatelliteMode } from "@/lib/mapBasemaps";
+import { getGroundViewSceneFeatures, getNearbySceneFeatures } from "@/lib/nearbySceneFeatures";
+import { cameraForView, focusBearingOffset } from "@/lib/mapViewModes";
 import { MAP_STYLE_URL } from "@/lib/mapStyle";
 import {
   KAUAI_CENTER,
   KAUAI_MAX_BOUNDS,
   fitKauaiIsland,
 } from "@/lib/kauaiMapView";
+import type { MapViewMode } from "@/types/mapView";
+import MapSceneOverlay from "@/components/MapSceneOverlay";
+import StreetViewEmbed from "@/components/StreetViewEmbed";
 import type {
   CommunityConcernMarker,
   MapDisplayOptions,
@@ -32,6 +38,7 @@ import {
   markersToGeoJSON,
   regionsToGeoJSON,
   residentObservationsToGeoJSON,
+  sceneBeamsToGeoJSON,
   sitesToGeoJSON,
   technologyHighlightsToGeoJSON,
   townsToGeoJSON,
@@ -61,6 +68,9 @@ type IslandMapProps = {
   addObservationMode?: boolean;
   onObservationPlaced?: () => void;
   observationRefreshKey?: number;
+  viewMode?: MapViewMode;
+  sceneOrbit?: boolean;
+  onMapReady?: (map: maplibregl.Map | null, ready: boolean) => void;
   onSelectionChange: (selection: MapSelection) => void;
 };
 
@@ -362,6 +372,34 @@ function addNetworkLayers(map: maplibregl.Map) {
       "text-halo-blur": 0.5,
     },
   });
+
+  map.addSource("scene-beams", {
+    type: "geojson",
+    data: { type: "FeatureCollection", features: [] },
+  });
+  map.addLayer({
+    id: "scene-beams-glow",
+    type: "line",
+    source: "scene-beams",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": ["get", "color"],
+      "line-width": 10,
+      "line-opacity": 0.18,
+    },
+  });
+  map.addLayer({
+    id: "scene-beams-line",
+    type: "line",
+    source: "scene-beams",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": ["get", "color"],
+      "line-width": 2.5,
+      "line-opacity": 0.75,
+      "line-dasharray": [2, 3],
+    },
+  });
 }
 
 export default function IslandMap({
@@ -377,12 +415,21 @@ export default function IslandMap({
   addObservationMode = false,
   onObservationPlaced,
   observationRefreshKey = 0,
+  viewMode = "community",
+  sceneOrbit = false,
+  onMapReady,
   onSelectionChange,
 }: IslandMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const focusSiteIdRef = useRef(focusSiteId);
   focusSiteIdRef.current = focusSiteId;
+  const basemapKindRef = useRef<"community" | "satellite">("community");
+  const mapReadyRef = useRef(false);
+  const viewModeRef = useRef(viewMode);
+  viewModeRef.current = viewMode;
+  const [basemapReady, setBasemapReady] = useState(true);
+  const [styleEpoch, setStyleEpoch] = useState(0);
   const [supportMarkers, setSupportMarkers] = useState<SupportMarker[]>([]);
   const [concernMarkers, setConcernMarkers] = useState<CommunityConcernMarker[]>([]);
   const [residentObservations, setResidentObservations] = useState(
@@ -418,6 +465,13 @@ export default function IslandMap({
   const showTechnologyLayer =
     layers.find((l) => l.id === "technology-options")?.enabled ?? false;
   const showConnections = visibleSites.length > 1;
+  const immersiveMode = isSatelliteMode(viewMode);
+  const sceneFeatures = useMemo(() => {
+    if (!focusLocation || !immersiveMode) return [];
+    const collector =
+      viewMode === "street" ? getGroundViewSceneFeatures : getNearbySceneFeatures;
+    return collector(focusLocation.lat, focusLocation.lng, layers, futureProgress);
+  }, [focusLocation, immersiveMode, viewMode, layers, futureProgress]);
 
   const refreshMarkers = useCallback(() => {
     setSupportMarkers(loadAllSupportMarkers());
@@ -473,7 +527,9 @@ export default function IslandMap({
         // Container may still be settling inside the embedded layout
         requestAnimationFrame(applyIslandFit);
         setTimeout(applyIslandFit, 150);
+        mapReadyRef.current = true;
         setMapReady(true);
+        setBasemapReady(true);
         setMapError(null);
       });
     });
@@ -493,13 +549,41 @@ export default function IslandMap({
       resizeObserver.disconnect();
       map.remove();
       mapRef.current = null;
+      mapReadyRef.current = false;
       setMapReady(false);
+      setBasemapReady(false);
     };
   }, []);
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !mapReady) return;
+    if (!map || !mapReadyRef.current) return;
+
+    const wantsSatellite = isSatelliteMode(viewMode);
+    const hasSatellite = basemapKindRef.current === "satellite";
+    if (wantsSatellite === hasSatellite) return;
+
+    basemapKindRef.current = wantsSatellite ? "satellite" : "community";
+    setBasemapReady(false);
+
+    const onStyleReady = () => {
+      try {
+        addNetworkLayers(map);
+      } catch (err) {
+        console.error("Failed to restore map layers after basemap switch:", err);
+      }
+      setBasemapReady(true);
+      setStyleEpoch((epoch) => epoch + 1);
+    };
+
+    map.once("style.load", onStyleReady);
+    map.setStyle(basemapStyleForMode(wantsSatellite ? "live" : "community"));
+  }, [viewMode]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !basemapReady) return;
+    if (!map.getSource("sites")) return;
 
     const sitesSource = map.getSource("sites") as maplibregl.GeoJSONSource | undefined;
     sitesSource?.setData(
@@ -623,12 +707,37 @@ export default function IslandMap({
       setVis("property-focus-pin", false);
     }
 
-    if (map.getTerrain()) {
+    const beamSource = map.getSource("scene-beams") as maplibregl.GeoJSONSource | undefined;
+    const showBeams = immersiveMode && focusLocation && sceneFeatures.length > 0;
+    if (beamSource) {
+      beamSource.setData(
+        showBeams
+          ? sceneBeamsToGeoJSON(
+              focusLocation.lng,
+              focusLocation.lat,
+              sceneFeatures
+            )
+          : { type: "FeatureCollection", features: [] }
+      );
+    }
+    setVis("scene-beams-glow", !!showBeams);
+    setVis("scene-beams-line", !!showBeams);
+
+    const camera = cameraForView(viewMode, !!focusLocation);
+    map.setMaxZoom(camera.maxZoom);
+
+    if (map.getSource("terrain-dem")) {
       if (displayOptions.terrain) {
-        map.setTerrain({ source: "terrain-dem", exaggeration: 1.4 });
+        map.setTerrain({ source: "terrain-dem", exaggeration: camera.terrainExaggeration });
       } else {
         map.setTerrain(null);
       }
+    }
+
+    const markerScale = immersiveMode ? 1.25 : 1;
+    if (map.getLayer("property-focus-pin")) {
+      map.setPaintProperty("property-focus-pin", "circle-radius", 8 * markerScale);
+      map.setPaintProperty("property-focus-glow", "circle-radius", 22 * markerScale);
     }
   }, [
     mapReady,
@@ -649,6 +758,11 @@ export default function IslandMap({
     displayOptions,
     futureProgress,
     focusLocation,
+    viewMode,
+    immersiveMode,
+    sceneFeatures,
+    basemapReady,
+    styleEpoch,
   ]);
 
   useEffect(() => {
@@ -811,15 +925,16 @@ export default function IslandMap({
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !mapReady) return;
+    if (!map || !mapReady || !basemapReady) return;
 
     if (focusLocation) {
+      const camera = cameraForView(viewMode, true);
       map.flyTo({
         center: [focusLocation.lng, focusLocation.lat],
-        zoom: 11.2,
-        pitch: 32,
-        bearing: -12,
-        duration: 900,
+        zoom: camera.zoom,
+        pitch: camera.pitch,
+        bearing: camera.bearing + focusBearingOffset(focusLocation.lng, viewMode),
+        duration: viewMode === "scene" ? 1400 : 1000,
         essential: true,
       });
       return;
@@ -832,21 +947,63 @@ export default function IslandMap({
 
     const site = candidateSites.find((s) => s.id === focusSiteId);
     if (!site) return;
+    const camera = cameraForView(viewMode, true);
     map.flyTo({
       center: [site.lng, site.lat],
-      zoom: 10.6,
-      pitch: 28,
-      bearing: -8,
+      zoom: Math.min(camera.zoom - 1.2, 12),
+      pitch: camera.pitch * 0.7,
+      bearing: camera.bearing,
       duration: 700,
       essential: true,
     });
-  }, [focusSiteId, focusLocation, mapReady]);
+  }, [focusSiteId, focusLocation, mapReady, basemapReady, viewMode, styleEpoch]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !basemapReady || !sceneOrbit || viewMode !== "scene" || !focusLocation) {
+      return;
+    }
+
+    let frame = 0;
+    const step = () => {
+      map.setBearing(map.getBearing() + 0.08);
+      frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(frame);
+  }, [mapReady, basemapReady, sceneOrbit, viewMode, focusLocation, styleEpoch]);
+
+  useEffect(() => {
+    onMapReady?.(mapRef.current, mapReady && basemapReady);
+  }, [mapReady, basemapReady, onMapReady]);
+
+  useEffect(() => {
+    return () => onMapReady?.(null, false);
+  }, [onMapReady]);
+
+  const groundArMode = viewMode === "street";
 
   return (
     <div className="relative w-full h-full bg-[#d4dde0]">
-      <div ref={mapContainerRef} className="absolute inset-0 network-map-canvas" />
+      {groundArMode && focusLocation && (
+        <StreetViewEmbed
+          lat={focusLocation.lat}
+          lng={focusLocation.lng}
+          map={mapRef.current}
+          mapReady={mapReady && basemapReady}
+        />
+      )}
 
-      {!mapReady && !mapError && (
+      <div
+        className={`absolute inset-0 ${groundArMode ? "z-10 pointer-events-none ground-ar-mode" : ""}`}
+      >
+      <div
+        ref={mapContainerRef}
+        className={`absolute inset-0 network-map-canvas ${groundArMode ? "opacity-0" : ""}`}
+      />
+
+      {!mapReady && !mapError && !groundArMode && (
         <div className="absolute inset-0 z-[5] flex items-center justify-center bg-[#d4dde0] text-ocean-mid text-sm">
           Loading Kauai terrain map…
         </div>
@@ -858,8 +1015,30 @@ export default function IslandMap({
         </div>
       )}
 
-      <div className="pointer-events-none absolute bottom-14 left-3 z-10 platform-panel px-3 py-1.5 text-[10px] text-mist/80 hidden sm:block">
-        Community knowledge map · verified + neighbor observations · Kauai, Hawaiʻi
+      <MapSceneOverlay
+        map={mapRef.current}
+        mapReady={mapReady && basemapReady}
+        viewMode={viewMode}
+        focusLat={focusLocation?.lat ?? 0}
+        focusLng={focusLocation?.lng ?? 0}
+        features={sceneFeatures}
+        layers={layers}
+        futureProgress={futureProgress}
+        addressLabel={focusLocation?.address}
+      />
+
+      <div
+        className={`pointer-events-none absolute bottom-14 left-3 z-10 platform-panel px-3 py-1.5 text-[10px] text-mist/80 hidden sm:block ${
+          groundArMode ? "!hidden" : ""
+        }`}
+      >
+        {viewMode === "scene"
+          ? "Scene view · connection layers projected into your neighborhood"
+          : viewMode === "live"
+            ? "Live aerial · zoomed to your address on Kauai"
+            : viewMode === "street"
+              ? "Ground view · street panorama with nearby connections"
+              : "Community knowledge map · verified + neighbor observations · Kauai, Hawaiʻi"}
       </div>
 
       {addObservationMode && !pendingObservation && (
@@ -914,6 +1093,7 @@ export default function IslandMap({
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

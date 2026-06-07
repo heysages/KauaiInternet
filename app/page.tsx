@@ -1,5 +1,7 @@
 import { AddressImpactProvider } from "@/components/AddressImpactContext";
+import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 import SiteNav from "@/components/SiteNav";
+import { siteConfig } from "@/lib/site";
 import Hero from "@/components/Hero";
 import WhyThisMattersSection from "@/components/WhyThisMattersSection";
 import ProblemSection from "@/components/ProblemSection";
@@ -38,17 +40,12 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-full bg-amber-emergency/20 border border-amber-glow/30 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 text-amber-glow" fill="currentColor">
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </div>
-                <p className="font-semibold text-white">Kauai Resilience Network</p>
+              <div className="mb-4">
+                <KauaiInternetLogo variant="light" />
               </div>
               <p className="text-sm leading-relaxed max-w-sm">
-                A community-built blueprint for a more connected and resilient Kauai —
-                shaped by neighbors, for neighbors.
+                {siteConfig.projectName} — a community-built blueprint for a more connected
+                and resilient Kauai, shaped by neighbors, for neighbors.
               </p>
             </div>
 

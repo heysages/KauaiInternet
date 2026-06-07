@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="ki-bird-gradient" x1="40" y1="12" x2="40" y2="68" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D2B45"/>
+      <stop offset="1" stop-color="#3FA7B5"/>
+    </linearGradient>
+  </defs>
+  <path
+    d="M22 54c8-14 18-22 30-24 6-.8 12 1 16 5 3 3 4 7 3 11-2 5-7 9-13 9-8 0-14-4-19-9-3 3-5 6-7 9-2 3-5 4-8 2-3-2-4-5-2-3z"
+    stroke="url(#ki-bird-gradient)"
+    stroke-width="2.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M48 24c10 3 17 10 19 20"
+    stroke="url(#ki-bird-gradient)"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+  <path
+    d="M34 34c5-8 12-13 22-14"
+    stroke="url(#ki-bird-gradient)"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+  <circle cx="41" cy="36" r="2.5" fill="#0D2B45"/>
+</svg>
