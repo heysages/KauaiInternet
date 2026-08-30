@@ -15,6 +15,10 @@ import { candidateSiteTypeById } from "@/data/candidateSiteTypes";
 import { islandAssetCategoryLabels } from "@/data/islandAssets";
 import { residentObservationColors } from "@/data/residentObservationTypes";
 import { mapConnections } from "@/data/mapLayers";
+import { networkLinks, linkMediumColors } from "@/data/networkLinks";
+import { networkNodes } from "@/data/networkNodes";
+import { filterPublicLinks, filterPublicNodes, getPublicNode } from "@/lib/networkVisibility";
+import type { NetworkLink, NetworkNode, RadioSiteResearch } from "@/types/network";
 
 export function sitesToGeoJSON(
   sites: CandidateSite[],
@@ -156,6 +160,88 @@ export function connectionsToGeoJSON(sites: CandidateSite[]) {
     });
 
   return { type: "FeatureCollection" as const, features };
+}
+
+export function networkNodesToGeoJSON(nodes?: NetworkNode[]) {
+  const list = filterPublicNodes(nodes ?? networkNodes);
+  return {
+    type: "FeatureCollection" as const,
+    features: list.map((node) => ({
+      type: "Feature" as const,
+      id: node.id,
+      geometry: {
+        type: "Point" as const,
+        coordinates: [node.lng, node.lat],
+      },
+      properties: {
+        id: node.id,
+        name: node.name,
+        nodeClass: node.nodeClass,
+        status: node.operationalStatus,
+        color:
+          node.nodeClass === "K3"
+            ? "#8b5cf6"
+            : node.nodeClass === "K4"
+              ? "#6366f1"
+              : node.nodeClass === "K2"
+                ? "#22c55e"
+                : "#f59e0b",
+        roles: node.roles.join(","),
+      },
+    })),
+  };
+}
+
+export function networkLinksToGeoJSON(links?: NetworkLink[], nodes?: NetworkNode[]) {
+  const nodeList = filterPublicNodes(nodes ?? networkNodes);
+  const byId = Object.fromEntries(nodeList.map((n) => [n.id, getPublicNode(n)]));
+  const list = filterPublicLinks(links ?? networkLinks);
+  const features = list
+    .filter((l) => byId[l.fromNodeId] && byId[l.toNodeId])
+    .map((l) => {
+      const a = byId[l.fromNodeId]!;
+      const b = byId[l.toNodeId]!;
+      return {
+        type: "Feature" as const,
+        id: l.id,
+        geometry: {
+          type: "LineString" as const,
+          coordinates: [
+            [a.lng, a.lat],
+            [b.lng, b.lat],
+          ],
+        },
+        properties: {
+          id: l.id,
+          medium: l.medium,
+          color: linkMediumColors[l.medium],
+          status: l.operationalStatus,
+          dashArray: l.medium === "lora" ? [2, 2] : l.medium === "reticulumLogical" ? [4, 4] : [1, 0],
+        },
+      };
+    });
+  return { type: "FeatureCollection" as const, features };
+}
+
+export function radioSitesToGeoJSON(sites: RadioSiteResearch[]) {
+  return {
+    type: "FeatureCollection" as const,
+    features: sites.map((site) => ({
+      type: "Feature" as const,
+      id: site.id,
+      geometry: {
+        type: "Point" as const,
+        coordinates: [site.lng, site.lat],
+      },
+      properties: {
+        id: site.id,
+        name: site.name,
+        type: site.type,
+        permissionStatus: site.permissionStatus,
+        color: "#64748b",
+      },
+    })),
+  };
 }
 
 const infraColors: Record<ExistingInfrastructure["type"], string> = {

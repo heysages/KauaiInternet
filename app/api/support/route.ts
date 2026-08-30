@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSubmission } from "@/lib/submissionsDb";
-import { sendOutboundEmail } from "@/lib/emailService";
+import { notifySupportTeam } from "@/lib/emailService";
 
 export async function POST(request: NextRequest) {
   let body: {
@@ -34,14 +34,12 @@ export async function POST(request: NextRequest) {
     metadata: { mayContact: Boolean(body.mayContact) },
   });
 
-  if (process.env.RESEND_API_KEY && process.env.SUPPORT_NOTIFY_EMAIL) {
-    await sendOutboundEmail({
-      to: process.env.SUPPORT_NOTIFY_EMAIL,
-      subject: `New interest: ${body.name.trim()}`,
-      text: body.helpMessage.trim(),
-      threadKey: body.email.trim().toLowerCase(),
-    }).catch(() => undefined);
-  }
+  await notifySupportTeam({
+    subject: `New interest: ${body.name.trim()}`,
+    text: body.helpMessage.trim(),
+    threadKey: body.email.trim().toLowerCase(),
+    replyTo: body.email.trim(),
+  });
 
   return NextResponse.json({ ok: true, id: submission?.id, stored: Boolean(submission) });
 }

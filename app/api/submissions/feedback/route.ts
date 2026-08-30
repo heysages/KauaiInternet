@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mergeAttribution } from "@/lib/mergeAttribution";
 import { createSubmission } from "@/lib/submissionsDb";
+import { notifySupportTeam } from "@/lib/emailService";
 import type { CommunityFeedbackPriority } from "@/types/network";
 
 export async function POST(request: NextRequest) {
@@ -36,6 +37,13 @@ export async function POST(request: NextRequest) {
       { priorities: body.priorities, otherNote: body.otherNote ?? null },
       body.attribution
     ),
+  });
+
+  await notifySupportTeam({
+    subject: "New community feedback",
+    text: [body.locationLabel ? `Location: ${body.locationLabel}` : null, "", message]
+      .filter(Boolean)
+      .join("\n"),
   });
 
   return NextResponse.json({ ok: true, id: submission?.id, stored: Boolean(submission) });

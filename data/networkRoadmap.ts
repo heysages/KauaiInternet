@@ -1,0 +1,67 @@
+import type { NetworkRoadmapPhase } from "@/types/network";
+
+export const networkRoadmap: NetworkRoadmapPhase[] = [
+  {
+    phase: 0,
+    title: "Architecture & Research",
+    summary: "Define network layers, evaluate technologies, build planning tools.",
+    status: "current",
+    outcomes: ["Network data model", "Planning map", "Technology evaluation", "Regulatory research"],
+  },
+  {
+    phase: 1,
+    title: "North Shore RF Experiment",
+    summary: "Field-test LoRa, antennas, and solar relay design on North Shore corridor.",
+    status: "next",
+    outcomes: ["Real RF measurements", "Host site identification", "Pilot hardware deployed"],
+  },
+  {
+    phase: 2,
+    title: "North Shore Resilient Mesh",
+    summary: "Connect North Shore planning nodes with operational relay chain.",
+    status: "future",
+    outcomes: ["Multi-hop LoRa path", "Reticulum evaluation results", "Community UX prototype"],
+  },
+  {
+    phase: 3,
+    title: "East Side Connection",
+    summary: "Extend pilot toward Kapaʻa and Wailua corridor.",
+    status: "future",
+    outcomes: ["East Side endpoint", "Cross-island path hypothesis tested"],
+  },
+  {
+    phase: 4,
+    title: "Island Backbone",
+    summary: "Investigate 6–10 strategic backbone locations island-wide.",
+    status: "future",
+    outcomes: ["Backbone site pipeline", "RF modeling integration", "Redundant routes"],
+  },
+  {
+    phase: 5,
+    title: "Community Resilience Hubs",
+    summary: "Partner with schools, shelters, and community facilities.",
+    status: "future",
+    outcomes: ["K5 hub agreements", "Local services at hubs", "Emergency information displays"],
+  },
+  {
+    phase: 6,
+    title: "Local Services / Island Mode",
+    summary: "Deploy local-only services when upstream Internet fails.",
+    status: "future",
+    outcomes: ["Island Mode UX", "Local caching", "Emergency messaging prototype"],
+  },
+  {
+    phase: 7,
+    title: "Commercial Internet Integration",
+    summary: "Offer residential and business connectivity where sustainable.",
+    status: "future",
+    outcomes: ["Subscriber service", "Revenue funds resilience infrastructure"],
+  },
+  {
+    phase: 8,
+    title: "Operational Resilient Network",
+    summary: "Sustained community-governed communications infrastructure.",
+    status: "future",
+    outcomes: ["24/7 operations", "Telemetry", "Grant-funded expansion"],
+  },
+];

@@ -18,7 +18,7 @@ type Submission = {
   created_at: string;
 };
 
-const kinds = ["all", "support", "feedback", "observation", "concern"] as const;
+const kinds = ["all", "support", "node-application", "feedback", "observation", "concern"] as const;
 
 export default function AdminSubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);

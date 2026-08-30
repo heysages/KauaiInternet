@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import ConnectivitySnapshot from "@/components/ConnectivitySnapshot";
 import MapDataLegend from "@/components/MapDataLegend";
 import ResidentKnowledgeForm from "@/components/ResidentKnowledgeForm";
 import { islandAssetCategoryLabels } from "@/data/islandAssets";
@@ -37,7 +38,9 @@ export default function ConnectivityExplorerSection({
           need more data, and resilience considerations. We never present speculation as fact.
         </p>
 
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <ConnectivitySnapshot regionId={selectedRegionId} />
+
+        <div className="grid lg:grid-cols-3 gap-8 items-start mt-10">
           <div className="lg:col-span-1 space-y-4">
             <MapDataLegend variant="light" />
             <div className="glass-card rounded-2xl p-5">

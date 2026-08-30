@@ -464,3 +464,223 @@ export type SupportSubmission = {
   mayContact: boolean;
   createdAt: string;
 };
+
+/* ─── Resilient Communications Network (Phase 2) ─── */
+
+export type OperationalStatus =
+  | "live"
+  | "testing"
+  | "planned"
+  | "proposed"
+  | "simulated"
+  | "experimental";
+
+export type NetworkLayerId = "internet" | "kauaiLocal" | "resilientRadio";
+
+export type NodeClass = "K1" | "K2" | "K3" | "K4" | "K5";
+
+export type LinkMedium =
+  | "fiber"
+  | "microwave"
+  | "fixedWireless"
+  | "wifi"
+  | "lora"
+  | "radio"
+  | "satellite"
+  | "internetBackhaul"
+  | "reticulumLogical";
+
+export type SitePermissionStatus =
+  | "known"
+  | "potential"
+  | "permissionRequired"
+  | "historic"
+  | "activePartner";
+
+export type VisibilityLevel =
+  | "public"
+  | "approximate"
+  | "members"
+  | "operations"
+  | "adminOnly";
+
+export type NetworkMode = "global" | "island" | "emergencyMesh";
+
+export type MessagePriority = "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+
+export type NetworkNodeRole =
+  | "backbone"
+  | "loraRelay"
+  | "reticulumTransport"
+  | "wifiNode"
+  | "fixedWireless"
+  | "microwaveLink"
+  | "internetGateway"
+  | "satelliteGateway"
+  | "localService"
+  | "emergencyComms"
+  | "voiceRepeater"
+  | "communityHub";
+
+export type NetworkNode = {
+  id: string;
+  name: string;
+  nodeClass: NodeClass;
+  roles: NetworkNodeRole[];
+  networkLayers: NetworkLayerId[];
+  operationalStatus: OperationalStatus;
+  permissionStatus: SitePermissionStatus;
+  visibility: VisibilityLevel;
+  lat: number;
+  lng: number;
+  /** Generalized area label — not exact infrastructure position */
+  areaLabel: string;
+  elevation?: string;
+  planningAreaId?: string;
+  description: string;
+  whyItMatters: string;
+  /** Links to legacy candidate site when mapped from planning data */
+  candidateSiteId?: string;
+  power?: { grid?: boolean; solar?: boolean; battery?: boolean; generator?: boolean };
+  radios?: string[];
+  populationServed?: number;
+};
+
+export type NetworkLink = {
+  id: string;
+  fromNodeId: string;
+  toNodeId: string;
+  medium: LinkMedium;
+  operationalStatus: OperationalStatus;
+  visibility: VisibilityLevel;
+  label?: string;
+  bidirectional?: boolean;
+};
+
+export type PlanningArea = {
+  id: string;
+  name: string;
+  description: string;
+  /** Approximate center for map highlighting */
+  lat: number;
+  lng: number;
+  region: "north" | "east" | "central" | "west" | "south";
+};
+
+export type RadioSiteResearch = {
+  id: string;
+  name: string;
+  type: "amateurRepeater" | "fmBroadcast" | "commercialTower" | "publicSafety" | "utility" | "historic";
+  permissionStatus: SitePermissionStatus;
+  operationalStatus: OperationalStatus;
+  lat: number;
+  lng: number;
+  areaLabel: string;
+  notes: string;
+  source?: string;
+};
+
+export type NodeApplicationInput = {
+  name: string;
+  email: string;
+  phone?: string;
+  locationLabel: string;
+  siteType: string;
+  elevation?: string;
+  hasPower: boolean;
+  hasInternet: boolean;
+  hasRoofOrTower: boolean;
+  hasSolar: boolean;
+  hasBackupPower: boolean;
+  willingToHostAntennas: boolean;
+  technicalHelp?: boolean;
+  sponsorInterest?: boolean;
+  pilotInterest?: boolean;
+  message?: string;
+  mayContact: boolean;
+};
+
+export type CommunityReportCategory =
+  | "roadBlocked"
+  | "powerOut"
+  | "treeDown"
+  | "flooding"
+  | "bridgeClosed"
+  | "fire"
+  | "cellDown"
+  | "internetDown"
+  | "needHelp"
+  | "safeCheckIn"
+  | "infrastructure";
+
+export type CommunityReport = {
+  id: string;
+  category: CommunityReportCategory;
+  description: string;
+  lat?: number;
+  lng?: number;
+  locationLabel?: string;
+  verificationCount: number;
+  confidence: "unverified" | "community" | "verified";
+  moderationState: "pending" | "approved" | "rejected" | "expired";
+  createdAt: string;
+};
+
+export type NetworkStatusComponent = {
+  label: string;
+  online: number | null;
+  total: number | null;
+  status: OperationalStatus;
+  detail?: string;
+};
+
+export type NetworkStatusSnapshot = {
+  mode: NetworkMode;
+  dataSource: "unavailable" | "simulated" | "live";
+  updatedAt: string | null;
+  components: NetworkStatusComponent[];
+  localNetworkStatus: OperationalStatus;
+  internetStatus: OperationalStatus;
+  emergencyMessagingStatus: OperationalStatus;
+};
+
+export type NetworkMapLayerId =
+  | "existing-fiber"
+  | "existing-towers"
+  | "existing-radio"
+  | "proposed-backbone"
+  | "proposed-lora"
+  | "proposed-reticulum"
+  | "proposed-wifi"
+  | "proposed-gateway"
+  | "proposed-emergency"
+  | "network-links";
+
+export type NetworkMapLayer = {
+  id: NetworkMapLayerId;
+  name: string;
+  description: string;
+  color: string;
+  enabled: boolean;
+  category: "existing" | "proposed" | "links";
+  nodeRoles?: NetworkNodeRole[];
+  linkMediums?: LinkMedium[];
+};
+
+export type HardwareKitConcept = {
+  id: string;
+  name: string;
+  tagline: string;
+  nodeClass: NodeClass;
+  priceRange?: string;
+  features: string[];
+  status: OperationalStatus;
+};
+
+export type NetworkRoadmapPhase = {
+  phase: number;
+  title: string;
+  summary: string;
+  status: "current" | "next" | "future" | "complete";
+  outcomes: string[];
+};

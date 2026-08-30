@@ -1,6 +1,11 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-export type SubmissionKind = "support" | "feedback" | "observation" | "concern";
+export type SubmissionKind =
+  | "support"
+  | "feedback"
+  | "observation"
+  | "concern"
+  | "node-application";
 export type SubmissionStatus = "new" | "reviewed" | "replied" | "archived";
 
 export type InterestSubmission = {

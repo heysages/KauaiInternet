@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kauai Internet
 
-## Getting Started
+**Kauai Resilient Communications Network** — an independent, resilient communications layer for Kauaʻi.
 
-First, run the development server:
+Production site: [kauaiinternet.com](https://kauaiinternet.com)
+
+## What this is
+
+KauaiInternet combines Internet access, local island networking, and resilient radio mesh (LoRa, Reticulum evaluation, voice radio) so Kauaʻi can communicate when conventional networks fail.
+
+This repository is the community planning platform, public site, admin backend, and network planning tools.
+
+## Stack
+
+- **Next.js 15** (App Router) + **React 19** + **Tailwind CSS v4**
+- **MapLibre GL** for island planning maps
+- **Supabase** for submissions, analytics, connectivity tests
+- **Resend** for email notifications
+- **Vercel** for deployment
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | Purpose |
+|-------|---------|
+| `/` | Public homepage |
+| `/network` | Network status dashboard (demo telemetry) |
+| `/admin` | Password-protected admin |
+| `/admin/network` | NOC planning view |
+| `/admin/strategy` | Operating plan |
 
-## Learn More
+## Documentation
 
-To learn more about Next.js, take a look at the following resources:
+- [DEPLOY.md](./DEPLOY.md) — Vercel + DNS deployment
+- [EMAIL_SETUP.md](./EMAIL_SETUP.md) — Resend email configuration
+- [docs/RESILIENT_NETWORK.md](./docs/RESILIENT_NETWORK.md) — Architecture and data model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `DEPLOY.md` and `EMAIL_SETUP.md`. Optional: `NEXT_PUBLIC_NETWORK_TELEMETRY=mock` for demo status cards.
 
-## Deploy on Vercel
+## Status labeling
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All infrastructure uses explicit statuses: **live**, **testing**, **planned**, **proposed**, **simulated**, **experimental**. Never confuse planning data with operational telemetry.

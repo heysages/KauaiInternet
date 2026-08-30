@@ -17,6 +17,14 @@ type Stats = {
     visitors7d: number;
     topReferrer: string | null;
   };
+  connectivity?: {
+    configured: boolean;
+    testsToday: number;
+    tests7d: number;
+    medianDownloadMbps: number | null;
+    medianLatencyMs: number | null;
+    topIsp: string | null;
+  };
 };
 
 export default function AdminDashboardPage() {
@@ -40,16 +48,37 @@ export default function AdminDashboardPage() {
         <StatCard label="Inbound emails" value={stats?.email?.inbound ?? "—"} />
       </div>
 
-      {stats?.traffic?.topReferrer && (
+      {(stats?.traffic?.topReferrer || stats?.connectivity?.tests7d) ? (
         <p className="text-xs text-mist/70 mb-6">
-          Top referrer (30d):{" "}
-          <span className="text-amber-glow">{stats.traffic.topReferrer}</span>
+          {stats?.traffic?.topReferrer && (
+            <>
+              Top referrer (30d):{" "}
+              <span className="text-amber-glow">{stats.traffic.topReferrer}</span>
+            </>
+          )}
+          {stats?.traffic?.topReferrer && stats?.connectivity?.tests7d ? " · " : null}
+          {stats?.connectivity?.tests7d ? (
+            <>
+              Connectivity tests (7d):{" "}
+              <span className="text-amber-glow">{stats.connectivity.tests7d}</span>
+              {stats.connectivity.medianDownloadMbps != null && (
+                <>
+                  {" "}
+                  · median {stats.connectivity.medianDownloadMbps.toFixed(1)} Mbps down
+                </>
+              )}
+            </>
+          ) : null}
           {" · "}
           <Link href="/admin/analytics" className="text-mist hover:text-white underline">
-            Full traffic report →
+            Traffic
+          </Link>
+          {" · "}
+          <Link href="/admin/connectivity" className="text-mist hover:text-white underline">
+            Connectivity →
           </Link>
         </p>
-      )}
+      ) : null}
 
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="platform-panel rounded-2xl p-5">

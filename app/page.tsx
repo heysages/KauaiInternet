@@ -3,18 +3,23 @@ import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 import SiteNav from "@/components/SiteNav";
 import { siteConfig } from "@/lib/site";
 import Hero from "@/components/Hero";
+import NetworkStatusBanner from "@/components/NetworkStatusBanner";
+import HowNetworkWorksSection from "@/components/HowNetworkWorksSection";
+import NetworkLayersSection from "@/components/NetworkLayersSection";
 import WhyThisMattersSection from "@/components/WhyThisMattersSection";
-import ProblemSection from "@/components/ProblemSection";
+import IslandModeSection from "@/components/IslandModeSection";
+import NetworkMapSection from "@/components/NetworkMapSection";
 import CommunityExperience from "@/components/CommunityExperience";
-import PlanningToolsSection from "@/components/PlanningToolsSection";
+import NorthShorePilotSection from "@/components/NorthShorePilotSection";
+import HostNodeSection from "@/components/HostNodeSection";
+import TechnologySection from "@/components/TechnologySection";
+import NetworkRoadmapSection from "@/components/NetworkRoadmapSection";
+import CommunityResilienceSection from "@/components/CommunityResilienceSection";
+import BuildWithUsSection from "@/components/BuildWithUsSection";
 import WaysToHelpSection from "@/components/WaysToHelpSection";
-import ProjectRoadmapSection from "@/components/ProjectRoadmapSection";
-import PilotPlanSection from "@/components/PilotPlanSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import InventoryPreview from "@/components/InventoryPreview";
-import BeneficiaryGrid from "@/components/BeneficiaryGrid";
 import PartnerOpportunitiesSection from "@/components/PartnerOpportunitiesSection";
-import DigitalTwinRoadmap from "@/components/DigitalTwinRoadmap";
 import SupportCTA from "@/components/SupportCTA";
 
 export default function Home() {
@@ -22,18 +27,23 @@ export default function Home() {
     <AddressImpactProvider>
       <SiteNav />
       <Hero />
+      <NetworkStatusBanner />
+      <HowNetworkWorksSection />
+      <NetworkLayersSection />
       <WhyThisMattersSection />
-      <ProblemSection />
+      <IslandModeSection />
+      <NetworkMapSection />
       <CommunityExperience />
-      <PlanningToolsSection />
+      <NorthShorePilotSection />
+      <HostNodeSection />
+      <TechnologySection />
+      <NetworkRoadmapSection />
+      <CommunityResilienceSection />
+      <BuildWithUsSection />
       <WaysToHelpSection />
-      <ProjectRoadmapSection />
-      <PilotPlanSection />
       <UseCasesSection />
       <InventoryPreview />
-      <BeneficiaryGrid />
       <PartnerOpportunitiesSection />
-      <DigitalTwinRoadmap />
       <SupportCTA />
 
       <footer className="bg-ocean-deep text-mist py-12 px-5 sm:px-8 lg:px-12">
@@ -44,22 +54,21 @@ export default function Home() {
                 <KauaiInternetLogo variant="light" />
               </div>
               <p className="text-sm leading-relaxed max-w-sm">
-                {siteConfig.projectName} — a community-built blueprint for a more connected
-                and resilient Kauai, shaped by neighbors, for neighbors.
+                {siteConfig.projectName} — a resilient communications network for Kauaʻi,
+                shaped by neighbors, for neighbors.
               </p>
             </div>
 
             <div>
               <p className="font-semibold text-white text-sm mb-3">Explore</p>
               <ul className="space-y-2 text-sm">
-                <li><a href="#why" className="hover:text-white transition-colors">Why This Matters</a></li>
-                <li><a href="#explore" className="hover:text-white transition-colors">Your Community</a></li>
-                <li><a href="#providers" className="hover:text-white transition-colors">Connectivity Today</a></li>
-                <li><a href="#connectivity" className="hover:text-white transition-colors">Connectivity Explorer</a></li>
-                <li><a href="#conversation" className="hover:text-white transition-colors">Conversation</a></li>
-                <li><a href="#map" className="hover:text-white transition-colors">Community Map</a></li>
-                <li><a href="#planning" className="hover:text-white transition-colors">Planning Tools</a></li>
-                <li><a href="#inventory" className="hover:text-white transition-colors">Inventory</a></li>
+                <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#island-mode" className="hover:text-white transition-colors">Island Mode</a></li>
+                <li><a href="/network" className="hover:text-white transition-colors">Network Status</a></li>
+                <li><a href="#network-map" className="hover:text-white transition-colors">Network Map</a></li>
+                <li><a href="#north-shore-pilot" className="hover:text-white transition-colors">North Shore Pilot</a></li>
+                <li><a href="#technology" className="hover:text-white transition-colors">Technology</a></li>
+                <li><a href="#host-node" className="hover:text-white transition-colors">Host a Node</a></li>
                 <li><a href="#support" className="hover:text-white transition-colors">Get Involved</a></li>
               </ul>
             </div>
@@ -73,11 +82,6 @@ export default function Home() {
                   </a>
                 </li>
                 <li>Līhuʻe, Kauai, Hawaiʻi</li>
-                <li>
-                  <a href="#support" className="hover:text-white transition-colors">
-                    Support the Vision
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
@@ -85,7 +89,7 @@ export default function Home() {
           <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs">
             <p>&copy; {new Date().getFullYear()} Kauai Resilience Network. All rights reserved.</p>
             <p className="text-mist/70">
-              A community movement — with open planning tools for volunteers and neighbors.
+              Planning data is approximate — live, testing, and proposed statuses are labeled throughout.
             </p>
           </div>
         </div>

@@ -1,6 +1,30 @@
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 const DEFAULT_FROM = "Kauai Internet <hello@kauaiinternet.com>";
+export const DEFAULT_SUPPORT_NOTIFY_EMAIL = "troy@troysnyder.com";
+
+export function getSupportNotifyEmail(): string {
+  return process.env.SUPPORT_NOTIFY_EMAIL ?? DEFAULT_SUPPORT_NOTIFY_EMAIL;
+}
+
+/** Send an alert to the support inbox when Resend is configured. */
+export async function notifySupportTeam(options: {
+  subject: string;
+  text: string;
+  submissionId?: string;
+  threadKey?: string;
+  replyTo?: string;
+}): Promise<void> {
+  if (!process.env.RESEND_API_KEY) return;
+  await sendOutboundEmail({
+    to: getSupportNotifyEmail(),
+    subject: options.subject,
+    text: options.text,
+    submissionId: options.submissionId,
+    threadKey: options.threadKey,
+    replyTo: options.replyTo,
+  }).catch(() => undefined);
+}
 
 export async function sendOutboundEmail(options: {
   to: string;
@@ -26,7 +50,7 @@ export async function sendOutboundEmail(options: {
     body: JSON.stringify({
       from,
       to: [options.to],
-      reply_to: options.replyTo ?? process.env.SUPPORT_NOTIFY_EMAIL ?? "hello@kauaiinternet.com",
+      reply_to: options.replyTo ?? getSupportNotifyEmail(),
       subject: options.subject,
       text: options.text,
     }),
@@ -95,6 +119,15 @@ export async function storeInboundEmail(options: {
     message: options.text,
     location_label: "Inbound email",
     metadata: { source: "inbound-email", subject: options.subject ?? "" },
+  });
+
+  await notifySupportTeam({
+    subject: options.subject
+      ? `Inbound email: ${options.subject}`
+      : `Inbound email from ${options.from}`,
+    text: [`From: ${options.from}`, `To: ${options.to}`, "", options.text].join("\n"),
+    threadKey: options.from.toLowerCase(),
+    replyTo: options.from,
   });
 
   return data;

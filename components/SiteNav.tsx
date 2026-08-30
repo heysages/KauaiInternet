@@ -5,11 +5,12 @@ import Link from "next/link";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 
 const navLinks = [
-  { href: "#why", label: "Why" },
-  { href: "#explore", label: "Your Community" },
-  { href: "#map", label: "Map" },
-  { href: "#planning", label: "Planning" },
-  { href: "#support", label: "Get Involved" },
+  { href: "#how-it-works", label: "Network" },
+  { href: "#island-mode", label: "Island Mode" },
+  { href: "/network", label: "Status", external: true },
+  { href: "#north-shore-pilot", label: "Pilot" },
+  { href: "#technology", label: "Technology" },
+  { href: "#host-node", label: "Host a Node" },
 ];
 
 export default function SiteNav() {
@@ -43,15 +44,25 @@ export default function SiteNav() {
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            "external" in link && link.external ? (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <a
             href="#support"
             className="ml-2 px-4 py-2 text-sm font-semibold bg-amber-emergency hover:bg-amber-glow text-ocean-deep rounded-lg transition-colors"

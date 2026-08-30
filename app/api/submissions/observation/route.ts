@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mergeAttribution } from "@/lib/mergeAttribution";
 import { createSubmission } from "@/lib/submissionsDb";
+import { notifySupportTeam } from "@/lib/emailService";
 
 export async function POST(request: NextRequest) {
   let body: {
@@ -37,6 +38,19 @@ export async function POST(request: NextRequest) {
       },
       body.attribution
     ),
+  });
+
+  await notifySupportTeam({
+    subject: `New map observation${body.observationType ? `: ${body.observationType}` : ""}`,
+    text: [
+      body.nameOrOrg ? `From: ${body.nameOrOrg}` : null,
+      body.locationLabel ? `Location: ${body.locationLabel}` : null,
+      body.observationType ? `Type: ${body.observationType}` : null,
+      "",
+      body.message.trim(),
+    ]
+      .filter(Boolean)
+      .join("\n"),
   });
 
   return NextResponse.json({ ok: true, id: submission?.id, stored: Boolean(submission) });

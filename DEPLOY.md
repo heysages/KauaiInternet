@@ -16,7 +16,8 @@ Set these environment variables in Vercel → Project → Settings → Environme
 | `NEXT_PUBLIC_SITE_URL` | Yes | `https://kauaiinternet.com` |
 | `MAPBOX_ACCESS_TOKEN` | No | Better address search (else OpenStreetMap) |
 | `RESEND_API_KEY` | No | Email support form submissions |
-| `SUPPORT_NOTIFY_EMAIL` | No | Where support emails go (default: hello@kauaiinternet.com) |
+| `SUPPORT_NOTIFY_EMAIL` | No | Where support emails go (default: troy@troysnyder.com) |
+| `NEXT_PUBLIC_NETWORK_TELEMETRY` | No | Set to `mock` for demo network status cards; omit for honest empty state |
 
 ## 2. Connect domain (GoDaddy)
 
