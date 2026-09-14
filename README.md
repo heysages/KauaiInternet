@@ -42,6 +42,7 @@ Open [http://localhost:3001](http://localhost:3001)
 - [DEPLOY.md](./DEPLOY.md) — Vercel + DNS deployment
 - [EMAIL_SETUP.md](./EMAIL_SETUP.md) — Resend email configuration
 - [docs/RESILIENT_NETWORK.md](./docs/RESILIENT_NETWORK.md) — Architecture and data model
+- [docs/EMERGENCY_OPERATIONS.md](./docs/EMERGENCY_OPERATIONS.md) — Power outage protocols and team deployment guide
 
 ## Environment variables
 

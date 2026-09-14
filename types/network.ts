@@ -522,6 +522,22 @@ export type NetworkNodeRole =
   | "voiceRepeater"
   | "communityHub";
 
+export type PowerTier = 0 | 1 | 2 | 3;
+
+export type PowerConfiguration = {
+  grid?: boolean;
+  solar?: boolean;
+  solarWatts?: number;
+  battery?: boolean;
+  batteryWh?: number;
+  generator?: boolean;
+  generatorWatts?: number;
+  /** Power tier: 0=solar-only, 1=optional grid, 2=grid+battery, 3=grid+UPS */
+  tier?: PowerTier;
+  /** Estimated runtime in hours without grid power */
+  offGridRuntime?: number;
+};
+
 export type NetworkNode = {
   id: string;
   name: string;
@@ -541,7 +557,7 @@ export type NetworkNode = {
   whyItMatters: string;
   /** Links to legacy candidate site when mapped from planning data */
   candidateSiteId?: string;
-  power?: { grid?: boolean; solar?: boolean; battery?: boolean; generator?: boolean };
+  power?: PowerConfiguration;
   radios?: string[];
   populationServed?: number;
 };
@@ -683,4 +699,66 @@ export type NetworkRoadmapPhase = {
   summary: string;
   status: "current" | "next" | "future" | "complete";
   outcomes: string[];
+};
+
+/* ─── Emergency Deployment Types ─── */
+
+export type DeploymentKitType = "solarRelay" | "communityHub" | "backboneLink" | "meshExtender";
+
+export type DeploymentKitStatus = "staged" | "deployed" | "inTransit" | "maintenance" | "unavailable";
+
+export type DeploymentKit = {
+  id: string;
+  name: string;
+  type: DeploymentKitType;
+  nodeClass: NodeClass;
+  status: DeploymentKitStatus;
+  location?: string;
+  deployedAt?: string;
+  components: DeploymentKitComponent[];
+  estimatedDeploymentMinutes: number;
+  offGridRuntime: number;
+  solarCapable: boolean;
+};
+
+export type DeploymentKitComponent = {
+  name: string;
+  quantity: number;
+  category: NetworkAssetCategory | "solar" | "mounting" | "tools" | "safety";
+  notes?: string;
+};
+
+export type EmergencyDeployment = {
+  id: string;
+  kitId: string;
+  status: "planned" | "inProgress" | "active" | "recovered";
+  deployedAt: string;
+  deployedBy: string;
+  lat: number;
+  lng: number;
+  locationLabel: string;
+  notes?: string;
+  batteryLevel?: number;
+  lastCheckIn?: string;
+};
+
+export type EmergencyAlert = {
+  id: string;
+  level: "watch" | "warning" | "emergency";
+  type: "hurricane" | "flood" | "tsunami" | "fire" | "earthquake" | "infrastructure";
+  title: string;
+  description: string;
+  issuedAt: string;
+  expiresAt?: string;
+  affectedAreas: string[];
+  networkActions: string[];
+};
+
+export type PowerOutageZone = {
+  id: string;
+  name: string;
+  reportedAt: string;
+  estimatedRestoration?: string;
+  affectedNodeIds: string[];
+  populationAffected?: number;
 };

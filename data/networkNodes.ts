@@ -1,5 +1,5 @@
 import { candidateSites } from "@/data/candidateSites";
-import type { NetworkNode, NodeClass, NetworkNodeRole } from "@/types/network";
+import type { NetworkNode, NodeClass, NetworkNodeRole, PowerConfiguration } from "@/types/network";
 
 const siteToNodeClass: Record<string, NodeClass> = {
   "data-center-edge": "K4",
@@ -64,6 +64,7 @@ const northShorePlanningNodes: NetworkNode[] = [
     planningAreaId: "haena",
     description: "Proposed North Shore pilot relay endpoint.",
     whyItMatters: "Tests LoRa range from the island's northern gateway community.",
+    power: { solar: true, solarWatts: 100, battery: true, batteryWh: 600, tier: 0, offGridRuntime: 48 },
   },
   {
     id: "node-hanalei-plan",
@@ -80,6 +81,7 @@ const northShorePlanningNodes: NetworkNode[] = [
     planningAreaId: "hanalei",
     description: "Proposed community relay in Hanalei valley area.",
     whyItMatters: "Valley terrain makes this a key RF measurement point for the pilot.",
+    power: { solar: true, solarWatts: 100, battery: true, batteryWh: 600, tier: 0, offGridRuntime: 48 },
   },
   {
     id: "node-princeville-plan",
@@ -97,6 +99,7 @@ const northShorePlanningNodes: NetworkNode[] = [
     planningAreaId: "princeville",
     description: "Proposed elevated backbone candidate for North Shore pilot.",
     whyItMatters: "Elevated sites may extend LoRa and fixed-wireless reach toward Kīlauea.",
+    power: { solar: true, solarWatts: 200, battery: true, batteryWh: 1200, tier: 1, offGridRuntime: 72 },
   },
   {
     id: "node-kilauea-plan",
@@ -114,6 +117,7 @@ const northShorePlanningNodes: NetworkNode[] = [
     planningAreaId: "kilauea",
     description: "Proposed strategic backbone site for North-to-East corridor.",
     whyItMatters: "Crater Hill area may offer line-of-sight toward both North Shore and Kapaʻa.",
+    power: { solar: true, solarWatts: 200, battery: true, batteryWh: 1200, tier: 1, offGridRuntime: 72 },
   },
   {
     id: "node-anahola-plan",
@@ -130,6 +134,7 @@ const northShorePlanningNodes: NetworkNode[] = [
     planningAreaId: "anahola",
     description: "Proposed relay linking North Shore pilot toward East Side.",
     whyItMatters: "Coastal plain relay point between ridge and Kapaʻa corridor.",
+    power: { solar: true, solarWatts: 100, battery: true, batteryWh: 600, tier: 0, offGridRuntime: 48 },
   },
   {
     id: "node-kapaa-plan",
@@ -146,6 +151,7 @@ const northShorePlanningNodes: NetworkNode[] = [
     planningAreaId: "kapaa",
     description: "Proposed East Side pilot endpoint — community resilience hub candidate.",
     whyItMatters: "Tests whether North Shore pilot links can reach East Side population centers.",
+    power: { solar: true, solarWatts: 400, battery: true, batteryWh: 2400, generator: true, generatorWatts: 2000, tier: 1, offGridRuntime: 72 },
   },
 ];
 

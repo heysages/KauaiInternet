@@ -5,8 +5,21 @@ export const networkRoadmap: NetworkRoadmapPhase[] = [
     phase: 0,
     title: "Architecture & Research",
     summary: "Define network layers, evaluate technologies, build planning tools.",
-    status: "current",
+    status: "complete",
     outcomes: ["Network data model", "Planning map", "Technology evaluation", "Regulatory research"],
+  },
+  {
+    phase: 0.5,
+    title: "Emergency Response Deployment",
+    summary: "Deploy solar-powered emergency communications during active hurricane recovery. Team on standby for rapid deployment.",
+    status: "current",
+    outcomes: [
+      "Solar relay kits deployed to affected areas",
+      "Community hub at shelter locations",
+      "LoRa mesh coverage for priority messaging",
+      "Power-independent backbone links",
+      "Emergency team trained and equipped",
+    ],
   },
   {
     phase: 1,
