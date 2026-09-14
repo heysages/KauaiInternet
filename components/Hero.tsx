@@ -22,7 +22,7 @@ export default function Hero() {
         <div className="max-w-3xl mx-auto lg:mx-0 space-y-8 animate-fade-up">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-xs font-medium text-sand-warm">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-glow animate-pulse-node" />
-            Kauai Resilient Communications Network
+            Kauai Resilient Communications Network — Building for moments like this
           </div>
 
           <h1 className="heading-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.08] text-balance">

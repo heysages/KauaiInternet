@@ -79,6 +79,11 @@ export default function NorthShorePilotSection() {
           <p className="text-xs text-ocean-mid/80">
             Excludes: {northShorePilot.budget.excluded.join(", ")}.
           </p>
+          {northShorePilot.budget.powerNote && (
+            <p className="text-xs text-amber-800 bg-amber-emergency/10 rounded-lg p-3 mt-3">
+              ⚡ {northShorePilot.budget.powerNote}
+            </p>
+          )}
           <a
             href="#host-node"
             className="inline-flex mt-4 px-5 py-2.5 bg-amber-emergency text-ocean-deep font-semibold rounded-xl text-sm hover:bg-amber-glow transition-colors"

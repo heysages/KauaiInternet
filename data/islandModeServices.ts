@@ -1,7 +1,7 @@
 export const islandModeServices = {
   uxLabel: "kauaʻi.local",
   status: "concept" as const,
-  note: "UX concept only — literal .local mDNS architecture requires separate networking evaluation.",
+  note: "UX concept only — literal .local mDNS architecture requires separate networking evaluation. During power outages, solar-powered nodes provide these services where deployed.",
   services: [
     "Emergency information",
     "Local network status",
@@ -44,10 +44,10 @@ export const islandModeStates = [
   {
     mode: "emergencyMesh" as const,
     label: "Emergency Mesh Mode",
-    headline: "Broadband infrastructure degraded",
-    subline: "Resilient messaging available",
+    headline: "Grid power down",
+    subline: "Solar mesh active",
     icon: "🔴",
     description:
-      "Conventional broadband may be down. LoRa and radio mesh paths prioritized for essential communications.",
+      "Grid power unavailable — exactly when resilient infrastructure matters most. Solar-powered LoRa and radio mesh nodes provide essential communications.",
   },
 ];

@@ -1,6 +1,6 @@
 export const businessModel = {
   principle:
-    "Businesses and Internet customers help fund a communications network the entire island can depend on during emergencies. Basic emergency and local messaging should remain accessible without expensive subscriptions.",
+    "When hurricanes knock out power and cell towers go silent, Kauaʻi needs communications that keep working. Solar-powered, battery-backed nodes provide emergency messaging without depending on fragile mainland infrastructure. Businesses and Internet customers help fund resilience infrastructure the entire island can depend on.",
   models: [
     { id: "residential", title: "Residential Internet", description: "Monthly connectivity for homes." },
     { id: "business", title: "Business Internet", description: "Higher reliability for businesses." },

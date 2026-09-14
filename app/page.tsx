@@ -2,6 +2,7 @@ import { AddressImpactProvider } from "@/components/AddressImpactContext";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 import SiteNav from "@/components/SiteNav";
 import { siteConfig } from "@/lib/site";
+import EmergencyBanner from "@/components/EmergencyBanner";
 import Hero from "@/components/Hero";
 import NetworkStatusBanner from "@/components/NetworkStatusBanner";
 import HowNetworkWorksSection from "@/components/HowNetworkWorksSection";
@@ -25,6 +26,7 @@ import SupportCTA from "@/components/SupportCTA";
 export default function Home() {
   return (
     <AddressImpactProvider>
+      <EmergencyBanner />
       <SiteNav />
       <Hero />
       <NetworkStatusBanner />
