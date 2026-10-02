@@ -1,0 +1,257 @@
+import { getInventoryStats } from "@/data/inventory";
+import {
+  architecture,
+  costEstimateNote,
+  designPrinciple,
+  failureColumns,
+  failureRows,
+  formatUsd,
+  formatUsdRange,
+  kauaiInternet72,
+  lowellLessons,
+  pilotCapex,
+  pilotCorridor,
+  pilotOpex,
+  rolloutStages,
+  type FailureState,
+} from "@/data/resilienceMission";
+
+const cellClass: Record<FailureState, string> = {
+  up: "bg-emerald-50 text-emerald-900",
+  limited: "bg-amber-50 text-amber-950",
+  down: "bg-sand-light text-ocean-mid",
+};
+
+const costScale = Math.max(pilotCapex.high, pilotOpex.high);
+
+export default function ResilienceMissionSection() {
+  const inventory = getInventoryStats();
+
+  return (
+    <>
+      <section id="problem" className="section-padding bg-sand-light">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
+            1 · The problem
+          </p>
+          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
+            When the grid and the internet fail together, Kauaʻi goes quiet
+          </h2>
+          <p className="text-lg text-ocean-mid max-w-3xl leading-relaxed mb-4">
+            {designPrinciple}
+          </p>
+          <p className="text-ocean-mid max-w-3xl leading-relaxed">
+            Phones, fiber, and many radios plug into the same utility power. Hurricane Lowell
+            showed what that means: days without electricity, and communities that still needed
+            to know which roads were open, where water and food were, and how to reach a neighbor.
+            KauaiInternet is the local layer that keeps that message moving.
+          </p>
+        </div>
+      </section>
+
+      <section id="lowell" className="section-padding bg-white">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
+            2 · What Hurricane Lowell taught us
+          </p>
+          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
+            Prolonged outages, and nowhere reliable to hear the news
+          </h2>
+          <p className="text-ocean-mid max-w-3xl mb-8 leading-relaxed">
+            Lowell hit Kauaʻi in early September 2026. These points are from public county,
+            utility, and news reports. KauaiInternet does not operate 911, county radio, or
+            the broadcast stations named here.
+          </p>
+          <div className="grid lg:grid-cols-3 gap-4">
+            {lowellLessons.map((lesson) => (
+              <article key={lesson.id} className="glass-card rounded-2xl p-5 flex flex-col">
+                <h3 className="font-semibold text-ocean-deep mb-3">{lesson.title}</h3>
+                <p className="text-sm text-ocean-mid leading-relaxed mb-4">{lesson.summary}</p>
+                <ul className="mt-auto space-y-1">
+                  {lesson.sources.map((source) => (
+                    <li key={source.href}>
+                      <a
+                        href={source.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-ocean-mid underline underline-offset-2 hover:text-ocean-deep"
+                      >
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="what-we-are-building" className="section-padding bg-sand-light">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
+            3 · What we are building
+          </p>
+          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
+            A North Shore corridor that stays up without the grid
+          </h2>
+          <p className="text-ocean-mid max-w-3xl mb-8 leading-relaxed">
+            The first build is an operating resilience corridor for {pilotCorridor.join(", ")}.
+            It is a place where a short message and a status note still work, not a radio
+            range test.
+          </p>
+
+          <div className="glass-card rounded-2xl p-6 mb-10 flex flex-col sm:flex-row sm:items-center gap-6">
+            <p className="heading-display text-5xl font-semibold text-ocean-deep leading-none">
+              {kauaiInternet72.hours}
+            </p>
+            <div>
+              <p className="font-semibold text-ocean-deep">{kauaiInternet72.name}</p>
+              <p className="text-sm text-ocean-mid mt-1 max-w-xl">{kauaiInternet72.rule}</p>
+              <p className="text-xs text-ocean-mid mt-2 max-w-xl">
+                Lowell lasted longer than 72 hours in Hāʻena, Wainiha, and Kōkeʻe. This standard
+                is the minimum for every critical node, so the first three days are covered
+                while utility crews are still getting in.
+              </p>
+            </div>
+          </div>
+
+          <h3 className="font-semibold text-ocean-deep mb-1">Three parts, in this order</h3>
+          <p className="text-sm text-ocean-mid mb-4">
+            Resilience Hubs → Wireless Backbone → Emergency Mesh
+          </p>
+          <ol className="grid lg:grid-cols-3 gap-3 mb-12">
+            {architecture.map((part) => (
+              <li key={part.id} className="glass-card rounded-2xl p-5">
+                <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-2">
+                  {part.title}
+                </p>
+                <p className="text-sm text-ocean-mid leading-relaxed">{part.summary}</p>
+              </li>
+            ))}
+          </ol>
+
+          <h3 className="font-semibold text-ocean-deep mb-1">How the build grows</h3>
+          <p className="text-sm text-ocean-mid mb-4">
+            North Shore Pilot → North/East Expansion → Island Backbone
+          </p>
+          <ol className="grid lg:grid-cols-3 gap-3">
+            {rolloutStages.map((stage, index) => (
+              <li key={stage.id} className="rounded-2xl border border-sand-warm bg-white p-5">
+                <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-2">
+                  Stage {index + 1}
+                </p>
+                <p className="font-semibold text-ocean-deep mb-2">{stage.title}</p>
+                <p className="text-sm text-ocean-mid leading-relaxed">{stage.summary}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="when-everything-is-down" className="section-padding bg-white">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
+            4 · When everything goes down
+          </p>
+          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
+            What still works in each kind of failure
+          </h2>
+          <p className="text-ocean-mid max-w-3xl mb-6 leading-relaxed">
+            This is the planned behavior of the design. It is not a claim that nodes are on
+            the air today. “All of these” means the grid, fiber, cellular, and satellite are
+            unavailable at the same time.
+          </p>
+          <div className="overflow-x-auto rounded-2xl border border-sand-warm">
+            <table className="w-full min-w-[760px] text-sm text-left">
+              <thead className="bg-sand-light text-ocean-deep">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Service</th>
+                  {failureColumns.map((column) => (
+                    <th key={column.id} className="px-4 py-3 font-semibold">
+                      {column.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {failureRows.map((row) => (
+                  <tr key={row.service} className="border-t border-sand-warm">
+                    <th className="px-4 py-3 font-medium text-ocean-deep align-top bg-white">
+                      {row.service}
+                    </th>
+                    {row.cells.map((cell, index) => (
+                      <td
+                        key={failureColumns[index].id}
+                        className={`px-4 py-3 align-top ${cellClass[cell.state]}`}
+                      >
+                        {cell.label}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-ocean-mid mt-3">
+            Mesh, hub status, and hub-to-hub links stay up only where the node meets{" "}
+            {kauaiInternet72.name}. Off-island internet is a bonus path, not the service.
+          </p>
+        </div>
+      </section>
+
+      <section id="cost" className="section-padding bg-sand-light">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
+            5 · What it costs to start
+          </p>
+          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
+            North Shore pilot, before a final parts list
+          </h2>
+          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+            <div>
+              <p className="text-sm font-semibold text-ocean-deep mb-1">
+                Capital cost to build the pilot
+              </p>
+              <p className="text-3xl font-semibold text-ocean-deep mb-3">
+                {formatUsdRange(pilotCapex.low, pilotCapex.high)}
+              </p>
+              <div className="h-3 rounded-full bg-sand-warm overflow-hidden mb-6">
+                <div
+                  className="h-full rounded-full bg-ocean-mid"
+                  style={{ width: `${(pilotCapex.high / costScale) * 100}%` }}
+                />
+              </div>
+              <p className="text-sm font-semibold text-ocean-deep mb-1">Annual operating cost</p>
+              <p className="text-3xl font-semibold text-ocean-deep mb-3">
+                {formatUsdRange(pilotOpex.low, pilotOpex.high)}
+              </p>
+              <div className="h-3 rounded-full bg-sand-warm overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-ocean-mid/70"
+                  style={{ width: `${(pilotOpex.high / costScale) * 100}%` }}
+                />
+              </div>
+              <p className="text-xs text-ocean-mid mt-3">
+                Bar length is the high end of each range, scaled to {formatUsd(costScale)}.
+              </p>
+            </div>
+            <div className="glass-card rounded-2xl p-6">
+              <p className="text-3xl font-semibold text-ocean-deep">{inventory.totalUnits}</p>
+              <p className="text-sm text-ocean-mid mb-4">
+                pieces of starter equipment already on hand, across {inventory.uniqueSkus} SKUs.
+              </p>
+              <p className="text-sm text-ocean-mid leading-relaxed">
+                That stock — switches, backhaul radios, antennas, a few computers, two Starlink
+                kits, and tower batteries — cuts the hardware the first corridor has to purchase.
+                It does not replace site work or a 72-hour solar and battery design. Those pieces
+                are on the shelf, not deployed.
+              </p>
+            </div>
+          </div>
+          <p className="text-sm text-ocean-mid max-w-3xl leading-relaxed">{costEstimateNote}</p>
+        </div>
+      </section>
+    </>
+  );
+}

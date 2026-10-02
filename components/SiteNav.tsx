@@ -5,12 +5,13 @@ import Link from "next/link";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 
 const navLinks = [
-  { href: "#how-it-works", label: "Network" },
-  { href: "#island-mode", label: "Island Mode" },
-  { href: "/network", label: "Status", external: true },
-  { href: "#north-shore-pilot", label: "Pilot" },
-  { href: "#technology", label: "Technology" },
-  { href: "#host-node", label: "Host a Node" },
+  { href: "/#lowell", label: "Lowell", external: true },
+  { href: "/#what-we-are-building", label: "Build", external: true },
+  { href: "/#when-everything-is-down", label: "Outages", external: true },
+  { href: "/#cost", label: "Cost", external: true },
+  { href: "/#network-map", label: "Map", external: true },
+  { href: "/#technology", label: "Technology", external: true },
+  { href: "/#host-node", label: "Host a Node", external: true },
 ];
 
 export default function SiteNav() {

@@ -44,8 +44,8 @@ export default function SupportCTA() {
                   Offer your support
                 </h3>
                 <p className="text-ocean-mid text-sm leading-relaxed">
-                  Tell us who you are and how you can help. Submissions are stored
-                  locally for now and will sync when a backend is connected.
+                  Tell us who you are and how you can help. Submissions are sent securely to
+                  the KauaiInternet team and saved for follow-up.
                 </p>
               </div>
               <SupportForm />

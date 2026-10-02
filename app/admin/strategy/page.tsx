@@ -2,7 +2,7 @@ import AdminShell from "@/components/admin/AdminShell";
 import { strategySections } from "@/data/regulatoryWorkstream";
 import { businessModel, hardwareEconomics } from "@/data/businessModel";
 import { networkRoadmap } from "@/data/networkRoadmap";
-import { northShorePilot } from "@/data/northShorePilot";
+import { costEstimateNote, formatUsdRange, pilotCapex, pilotOpex } from "@/data/resilienceMission";
 import { networkMetrics } from "@/data/networkMetrics";
 import { regulatoryWorkstream } from "@/data/regulatoryWorkstream";
 
@@ -47,8 +47,13 @@ export default function AdminStrategyPage() {
 
         <div className="platform-panel rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-3">North Shore pilot budget</h2>
-          <p className="text-sm text-amber-glow mb-2">{northShorePilot.budget.targetRange}</p>
-          <p className="text-xs text-mist">{northShorePilot.budget.excluded.join("; ")}</p>
+          <p className="text-sm text-amber-glow mb-1">
+            Capital {formatUsdRange(pilotCapex.low, pilotCapex.high)}
+          </p>
+          <p className="text-sm text-amber-glow mb-3">
+            Operating {formatUsdRange(pilotOpex.low, pilotOpex.high)} per year
+          </p>
+          <p className="text-xs text-mist">{costEstimateNote}</p>
         </div>
 
         <div className="platform-panel rounded-2xl p-5">

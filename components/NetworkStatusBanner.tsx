@@ -7,31 +7,40 @@ export default function NetworkStatusBanner() {
 
   return (
     <section id="network-status" className="border-b border-sand-warm bg-ocean-deep text-white py-4 px-5 sm:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div className="flex flex-wrap items-center gap-2 mb-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-sand-warm">
-              Kauaʻi Network
-            </p>
-            <OperationalStatusBadge status="simulated" />
-          </div>
-          <p className="text-sm text-mist">
-            Demonstration data — not live telemetry.{" "}
-            <Link href="/network" className="text-amber-glow hover:underline">
-              Open network dashboard →
-            </Link>
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-4 sm:gap-6">
-          {snapshot.components.map((c) => (
-            <div key={c.label} className="text-center">
-              <p className="text-lg font-semibold tabular-nums">
-                {c.online ?? "—"} / {c.total ?? "—"}
+      <div className="max-w-6xl mx-auto flex flex-col gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+          <div>
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <p className="text-sm font-semibold text-white">
+                Demonstration, not a live network
               </p>
-              <p className="text-xs text-mist">{c.label}</p>
+              <OperationalStatusBadge status="simulated" />
             </div>
-          ))}
+            <p className="text-sm text-mist max-w-2xl">
+              The figures below are sample numbers for a planning dashboard. They are not
+              coverage on Kauaʻi, and no nodes are on the air.
+            </p>
+          </div>
+          <Link
+            href="/network"
+            className="shrink-0 text-sm text-amber-glow hover:underline"
+          >
+            Open the sample dashboard →
+          </Link>
         </div>
+        <p className="text-xs text-mist">
+          <span className="uppercase tracking-widest text-sand-warm/80">Sample figures only</span>
+          {" · "}
+          {snapshot.components.map((c, i) => (
+            <span key={c.label}>
+              {i > 0 && " · "}
+              <span className="tabular-nums">
+                {c.online ?? "—"}/{c.total ?? "—"}
+              </span>{" "}
+              {c.label}
+            </span>
+          ))}
+        </p>
       </div>
     </section>
   );

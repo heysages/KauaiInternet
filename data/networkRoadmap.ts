@@ -11,14 +11,16 @@ export const networkRoadmap: NetworkRoadmapPhase[] = [
   {
     phase: 1,
     title: "North Shore RF Experiment",
-    summary: "Field-test LoRa, antennas, and solar relay design on North Shore corridor.",
+    summary:
+      "Stand up the Hāʻena–Hanalei–Princeville–Kīlauea corridor to the KauaiInternet 72 standard.",
     status: "next",
     outcomes: ["Real RF measurements", "Host site identification", "Pilot hardware deployed"],
   },
   {
     phase: 2,
     title: "North Shore Resilient Mesh",
-    summary: "Connect North Shore planning nodes with operational relay chain.",
+    summary:
+      "Hubs, a wireless backbone, and an emergency mesh along the North Shore corridor.",
     status: "future",
     outcomes: ["Multi-hop LoRa path", "Reticulum evaluation results", "Community UX prototype"],
   },

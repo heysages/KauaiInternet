@@ -15,8 +15,9 @@ export default function TechnologySection() {
           Voice + data + Internet
         </h2>
         <p className="text-ocean-mid max-w-3xl mb-10">
-          No single technology does everything. KauaiInternet combines whatever communication paths
-          remain available — and clearly labels what is operational vs. under evaluation.
+          Protocol choices live here: LoRa, Reticulum, Meshtastic, microwave, and routing.
+          The homepage states the service. This section states the tools under evaluation,
+          and labels what is operational versus still a plan.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">

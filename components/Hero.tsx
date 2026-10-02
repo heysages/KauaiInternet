@@ -1,9 +1,9 @@
 import Link from "next/link";
-import HeroAddressSearch from "@/components/HeroAddressSearch";
+import { designPrinciple } from "@/data/resilienceMission";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[90vh] text-white overflow-hidden pt-20">
+    <section className="relative min-h-[90vh] text-white overflow-hidden pt-6">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/kauai-satellite.jpg')" }}
@@ -26,36 +26,33 @@ export default function Hero() {
           </div>
 
           <h1 className="heading-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.08] text-balance">
-            The Internet can go down.
-            <span className="block text-sand-warm mt-1">Kauaʻi shouldn&apos;t go silent.</span>
+            {designPrinciple}
           </h1>
 
           <p className="text-lg sm:text-xl text-mist leading-relaxed max-w-2xl text-balance">
-            KauaiInternet is building an independent, resilient communications network for Kauaʻi
-            — combining Internet, wireless, radio, and community infrastructure so the island can
-            remain connected even when conventional networks fail.
+            After Hurricane Lowell, power and ordinary communications stayed down for days.
+            KauaiInternet is building a North Shore corridor that still carries a message
+            when the utility grid does not.
           </p>
-
-          <HeroAddressSearch />
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
-              href="#network-map"
+              href="#lowell"
               className="inline-flex items-center justify-center gap-2 bg-amber-emergency hover:bg-amber-glow text-ocean-deep font-semibold px-7 py-3.5 rounded-xl transition-colors shadow-lg shadow-amber-emergency/25"
             >
-              Explore the Network
+              What Lowell taught us
             </Link>
             <Link
-              href="#host-node"
+              href="#cost"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 font-medium px-7 py-3.5 rounded-xl transition-colors"
             >
-              Host a Node
+              What it costs
             </Link>
             <Link
-              href="#north-shore-pilot"
+              href="#network-map"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 font-medium px-7 py-3.5 rounded-xl transition-colors"
             >
-              Join the Pilot
+              Explore the map
             </Link>
           </div>
         </div>

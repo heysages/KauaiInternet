@@ -1,4 +1,5 @@
 import { northShorePilot } from "@/data/northShorePilot";
+import { costEstimateNote, formatUsdRange, pilotCapex, pilotOpex } from "@/data/resilienceMission";
 import OperationalStatusBadge from "@/components/OperationalStatusBadge";
 
 export default function NorthShorePilotSection() {
@@ -64,21 +65,20 @@ export default function NorthShorePilotSection() {
         </div>
 
         <div className="mt-8 glass-card rounded-2xl p-6">
-          <h3 className="font-semibold text-ocean-deep mb-2">
-            Preliminary budget: {northShorePilot.budget.targetRange}
-          </h3>
-          <p className="text-xs text-ocean-mid mb-4">Experimental hardware only — excludes site costs</p>
-          <div className="grid sm:grid-cols-2 gap-2 mb-4">
-            {northShorePilot.budget.categories.map((c) => (
-              <div key={c.label} className="flex justify-between text-sm">
-                <span className="text-ocean-mid">{c.label}</span>
-                <span className="font-medium text-ocean-deep">{c.range}</span>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-ocean-mid/80">
-            Excludes: {northShorePilot.budget.excluded.join(", ")}.
+          <h3 className="font-semibold text-ocean-deep mb-2">Preliminary project economics</h3>
+          <p className="text-sm text-ocean-deep mb-1">
+            Capital {formatUsdRange(pilotCapex.low, pilotCapex.high)}
           </p>
+          <p className="text-sm text-ocean-deep mb-3">
+            Operating {formatUsdRange(pilotOpex.low, pilotOpex.high)} per year
+          </p>
+          <p className="text-xs text-ocean-mid/80">{costEstimateNote}</p>
+          <a
+            href="#cost"
+            className="inline-flex mt-3 text-sm font-semibold text-ocean-deep underline underline-offset-2"
+          >
+            See the cost section
+          </a>
           <a
             href="#host-node"
             className="inline-flex mt-4 px-5 py-2.5 bg-amber-emergency text-ocean-deep font-semibold rounded-xl text-sm hover:bg-amber-glow transition-colors"

@@ -15,15 +15,17 @@ export const regulatoryWorkstream = {
 };
 
 export const strategySections = {
-  lastUpdated: "2026-08-30",
+  lastUpdated: "2026-10-02",
   mission:
-    "Build an independent, resilient communications layer for Kauaʻi — so the island can still communicate when the Internet does not.",
+    "Grid down. Internet down. Kauaʻi still communicates. Critical nodes meet KauaiInternet 72: at least 72 hours on solar and battery with no utility power.",
   technologyPlan:
     "Three-layer architecture: Internet (Layer 1), Kauaʻi Local Network (Layer 2), Resilient Radio Mesh (Layer 3). Reticulum evaluated as heterogeneous transport foundation; Meshtastic for LoRa prototyping.",
   networkPlan:
     "North Shore pilot first, then East Side connection, then island backbone hypothesis (6–10 strategic sites). All coverage claims require measurement.",
-  pilotPlan: "North Shore corridor: Hāʻena → Kapaʻa. Budget $2k–$4k experimental hardware.",
-  capitalRequirements: "Pilot hardware $2k–$4k; site costs dominate at scale. Grant research in progress.",
+  pilotPlan:
+    "Operational corridor: Hāʻena, Hanalei, Princeville, Kīlauea. Resilience hubs, a wireless backbone, and an emergency mesh. Then North/East expansion, then an island backbone.",
+  capitalRequirements:
+    "North Shore pilot about $65,000–$115,000 capital and $25,000–$50,000 a year to operate. Planning estimates, October 2026, pending final site design and a bill of materials. 397 pieces across 38 SKUs are already on hand and reduce hardware purchases.",
   partners: "No confirmed facility partnerships — all K5 hubs marked proposed.",
   sitePipeline: "10 candidate sites + 6 North Shore planning nodes + radio infrastructure research entries.",
   risks: [
@@ -38,5 +40,10 @@ export const strategySections = {
     { date: "2026-08", decision: "Adopt three-layer network architecture and Island Mode concept." },
     { date: "2026-08", decision: "North Shore selected as first RF pilot corridor." },
     { date: "2026-08", decision: "Reticulum evaluation; Meshtastic for prototyping only." },
+    {
+      date: "2026-10",
+      decision:
+        "After Hurricane Lowell, lead with a Hāʻena–Kīlauea resilience corridor, KauaiInternet 72, and preliminary pilot economics of $65,000–$115,000 capital and $25,000–$50,000 a year.",
+    },
   ],
 };

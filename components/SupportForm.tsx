@@ -29,6 +29,7 @@ const initialState: FormState = {
 export default function SupportForm() {
   const [form, setForm] = useState<FormState>(initialState);
   const [submitted, setSubmitted] = useState(false);
+  const [synced, setSynced] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
@@ -71,16 +72,23 @@ export default function SupportForm() {
 
     saveSupportSubmission(payload);
 
+    let serverOk = false;
     try {
-      await fetch("/api/submissions/support", {
+      const res = await fetch("/api/submissions/support", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload, attribution: getAttributionPayload() }),
       });
+      serverOk = res.ok;
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error ?? "Could not reach the server. Your offer was saved in this browser.");
+      }
     } catch {
-      /* local save already succeeded */
+      setError("Could not reach the server. Your offer was saved in this browser as a backup.");
     }
 
+    setSynced(serverOk);
     setSubmitted(true);
     setForm(initialState);
   };
@@ -97,8 +105,9 @@ export default function SupportForm() {
           Mahalo — we received your offer
         </h3>
         <p className="text-ocean-mid text-sm leading-relaxed max-w-sm mx-auto mb-6">
-          Your support has been saved locally. When we connect a backend, your
-          submission will sync to the project team for follow-up.
+          {synced
+            ? "Mahalo — your offer was received by the KauaiInternet team. We will follow up if there is a fit."
+            : "Your offer was saved in this browser. If the connection failed, please try again or email hello@kauaiinternet.com."}
         </p>
         <button
           type="button"
@@ -233,8 +242,8 @@ export default function SupportForm() {
       </button>
 
       <p className="text-center text-xs text-ocean-mid">
-        Stored locally in your browser for now. No data leaves your device until
-        a backend is connected.
+        Submissions go to the KauaiInternet team (secure database + email alert). A copy
+        is also kept in your browser if you are offline.
       </p>
     </form>
   );
