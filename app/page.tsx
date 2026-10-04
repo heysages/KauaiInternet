@@ -69,6 +69,7 @@ export default function Home() {
                 <li><a href="#cost" className="hover:text-white transition-colors">Pilot cost</a></li>
                 <li><a href="#island-mode" className="hover:text-white transition-colors">Island Mode</a></li>
                 <li><a href="/network" className="hover:text-white transition-colors">Network Status</a></li>
+                <li><a href="#coverage" className="hover:text-white transition-colors">Proposed coverage</a></li>
                 <li><a href="#network-map" className="hover:text-white transition-colors">Network Map</a></li>
                 <li><a href="#north-shore-pilot" className="hover:text-white transition-colors">North Shore Pilot</a></li>
                 <li><a href="#technology" className="hover:text-white transition-colors">Technology</a></li>

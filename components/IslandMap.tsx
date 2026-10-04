@@ -9,6 +9,7 @@ import { existingInfrastructure } from "@/data/existingInfrastructure";
 import { islandAssets } from "@/data/islandAssets";
 import { mapTowns } from "@/data/mapTowns";
 import { mapRegions } from "@/data/mapRegions";
+import { pilotLinks, pilotServiceAreas } from "@/data/proposedCoverage";
 import { regionConnectivityProfiles } from "@/data/regionConnectivity";
 import { basemapStyleForMode, isSatelliteMode } from "@/lib/mapBasemaps";
 import { getGroundViewSceneFeatures, getNearbySceneFeatures } from "@/lib/nearbySceneFeatures";
@@ -104,6 +105,44 @@ function addNetworkLayers(map: maplibregl.Map) {
       "line-color": ["get", "fillColor"],
       "line-width": 1.5,
       "line-opacity": 0.3,
+    },
+  });
+
+  map.addSource("pilot-coverage", {
+    type: "geojson",
+    data: pilotServiceAreas,
+  });
+  map.addLayer({
+    id: "pilot-coverage-fill",
+    type: "fill",
+    source: "pilot-coverage",
+    paint: {
+      "fill-color": "#3fa7b5",
+      "fill-opacity": 0.22,
+    },
+  });
+  map.addLayer({
+    id: "pilot-coverage-line",
+    type: "line",
+    source: "pilot-coverage",
+    paint: {
+      "line-color": "#0d2b45",
+      "line-width": 1.5,
+      "line-opacity": 0.55,
+    },
+  });
+  map.addSource("pilot-backbone", {
+    type: "geojson",
+    data: pilotLinks,
+  });
+  map.addLayer({
+    id: "pilot-backbone",
+    type: "line",
+    source: "pilot-backbone",
+    paint: {
+      "line-color": "#e8a317",
+      "line-width": 2.5,
+      "line-opacity": 0.85,
     },
   });
 

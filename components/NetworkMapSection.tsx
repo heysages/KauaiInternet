@@ -28,8 +28,9 @@ export default function NetworkMapSection() {
           Infrastructure planning map
         </h2>
         <p className="text-mist max-w-3xl mb-4">
-          Explore proposed nodes, link types, and planning areas. All locations are approximate
-          until field surveys and permissions are complete.
+          Teal areas are the North Shore communities the pilot is meant to serve. The gold line
+          is the proposed link between hubs. All locations are approximate until field surveys
+          and permissions are complete. This is not a measured signal map.
         </p>
         <MapLinkLegend dark />
       </div>

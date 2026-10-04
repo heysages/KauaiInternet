@@ -1,6 +1,11 @@
+import ArchitectureDiagram from "@/components/explainers/ArchitectureDiagram";
+import OutageTimeline from "@/components/explainers/OutageTimeline";
+import PowerPathDiagram from "@/components/explainers/PowerPathDiagram";
+import RolloutDiagram from "@/components/explainers/RolloutDiagram";
+import WhatStaysDiagram from "@/components/explainers/WhatStaysDiagram";
 import PilotBudgetBreakdown from "@/components/PilotBudgetBreakdown";
+import ProposedCoverageMap from "@/components/ProposedCoverageMap";
 import {
-  architecture,
   designPrinciple,
   failureColumns,
   failureRows,
@@ -25,18 +30,32 @@ export default function ResilienceMissionSection() {
           <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
             1 · The problem
           </p>
-          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
-            When the grid and the internet fail together, Kauaʻi goes quiet
-          </h2>
-          <p className="text-lg text-ocean-mid max-w-3xl leading-relaxed mb-4">
-            {designPrinciple}
-          </p>
-          <p className="text-ocean-mid max-w-3xl leading-relaxed">
-            Phones, fiber, and many radios plug into the same utility power. Hurricane Lowell
-            showed what that means: days without electricity, and communities that still needed
-            to know which roads were open, where water and food were, and how to reach a neighbor.
-            KauaiInternet is the local layer that keeps that message moving.
-          </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
+                When the grid and the internet fail together, Kauaʻi goes quiet
+              </h2>
+              <p className="text-lg text-ocean-mid leading-relaxed mb-4">
+                {designPrinciple}
+              </p>
+              <p className="text-ocean-mid leading-relaxed">
+                Phones, fiber, and many radios plug into the same utility power. Hurricane Lowell
+                showed what that means: days without electricity, and communities that still needed
+                to know which roads were open, where water and food were, and how to reach a neighbor.
+                KauaiInternet is the local layer that keeps that message moving.
+              </p>
+            </div>
+            <figure>
+              <img
+                src="/images/kauai-satellite.jpg"
+                alt="Satellite view of Kauaʻi, with the mountainous interior and the coastal towns around the edge"
+                className="w-full rounded-2xl object-cover max-h-[420px]"
+              />
+              <figcaption className="text-xs text-ocean-mid mt-2">
+                The first plan is the North Shore corridor, not a signal over the whole island.
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
@@ -53,6 +72,7 @@ export default function ResilienceMissionSection() {
             utility, and news reports. KauaiInternet does not operate 911, county radio, or
             the broadcast stations named here.
           </p>
+          <OutageTimeline />
           <div className="grid lg:grid-cols-3 gap-4">
             {lowellLessons.map((lesson) => (
               <article key={lesson.id} className="glass-card rounded-2xl p-5 flex flex-col">
@@ -92,7 +112,16 @@ export default function ResilienceMissionSection() {
             range test.
           </p>
 
-          <div className="glass-card rounded-2xl p-6 mb-10 flex flex-col sm:flex-row sm:items-center gap-6">
+          <div id="coverage" className="mb-12 scroll-mt-24">
+            <h3 className="font-semibold text-ocean-deep mb-1">Where the plan would serve</h3>
+            <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
+              Four communities on the North Shore. Each shaded area is the town a hub is
+              meant to serve. The gold line is the link between hubs.
+            </p>
+            <ProposedCoverageMap />
+          </div>
+
+          <div className="glass-card rounded-2xl p-6 mb-6 flex flex-col sm:flex-row sm:items-center gap-6">
             <p className="heading-display text-5xl font-semibold text-ocean-deep leading-none">
               {kauaiInternet72.hours}
             </p>
@@ -107,25 +136,30 @@ export default function ResilienceMissionSection() {
             </div>
           </div>
 
+          <h3 className="font-semibold text-ocean-deep mb-1">Power at each hub</h3>
+          <p className="text-sm text-ocean-mid mb-4">
+            Solar and batteries carry the 72 hours. The generator and the spare pack are there
+            when that is not enough.
+          </p>
+          <div className="mb-12">
+            <PowerPathDiagram />
+          </div>
+
           <h3 className="font-semibold text-ocean-deep mb-1">Three parts, in this order</h3>
           <p className="text-sm text-ocean-mid mb-4">
-            Resilience Hubs → Wireless Backbone → Emergency Mesh
+            Resilience hubs, then the link between them, then a short-range mesh.
           </p>
-          <ol className="grid lg:grid-cols-3 gap-3 mb-12">
-            {architecture.map((part) => (
-              <li key={part.id} className="glass-card rounded-2xl p-5">
-                <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-2">
-                  {part.title}
-                </p>
-                <p className="text-sm text-ocean-mid leading-relaxed">{part.summary}</p>
-              </li>
-            ))}
-          </ol>
+          <div className="mb-12">
+            <ArchitectureDiagram />
+          </div>
 
           <h3 className="font-semibold text-ocean-deep mb-1">How the build grows</h3>
           <p className="text-sm text-ocean-mid mb-4">
-            North Shore Pilot → North/East Expansion → Island Backbone
+            North Shore first. East side next. The rest of the island after that.
           </p>
+          <div className="mb-8">
+            <RolloutDiagram />
+          </div>
           <ol className="grid lg:grid-cols-3 gap-3">
             {rolloutStages.map((stage, index) => (
               <li key={stage.id} className="rounded-2xl border border-sand-warm bg-white p-5">
@@ -153,6 +187,7 @@ export default function ResilienceMissionSection() {
             the air today. “All of these” means the grid, fiber, cellular, and satellite are
             unavailable at the same time.
           </p>
+          <WhatStaysDiagram />
           <div className="overflow-x-auto rounded-2xl border border-sand-warm">
             <table className="w-full min-w-[760px] text-sm text-left">
               <thead className="bg-sand-light text-ocean-deep">

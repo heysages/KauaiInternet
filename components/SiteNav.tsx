@@ -9,7 +9,7 @@ const navLinks = [
   { href: "/#what-we-are-building", label: "Build" },
   { href: "/#when-everything-is-down", label: "Outages" },
   { href: "/#cost", label: "Cost" },
-  { href: "/#network-map", label: "Map" },
+  { href: "/#coverage", label: "Map" },
   { href: "/#technology", label: "Technology" },
   { href: "/#host-node", label: "Host a Node" },
 ];
