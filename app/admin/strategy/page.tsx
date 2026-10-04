@@ -2,7 +2,7 @@ import AdminShell from "@/components/admin/AdminShell";
 import { strategySections } from "@/data/regulatoryWorkstream";
 import { businessModel, hardwareEconomics } from "@/data/businessModel";
 import { networkRoadmap } from "@/data/networkRoadmap";
-import { costEstimateNote, formatUsdRange, pilotCapex, pilotOpex } from "@/data/resilienceMission";
+import { costEstimateNote, formatUsd, pilotCapital, pilotOperating } from "@/data/resilienceMission";
 import { networkMetrics } from "@/data/networkMetrics";
 import { regulatoryWorkstream } from "@/data/regulatoryWorkstream";
 
@@ -34,7 +34,10 @@ export default function AdminStrategyPage() {
         </div>
 
         <div className="platform-panel rounded-2xl p-5">
-          <h2 className="text-sm font-semibold text-white mb-3">Hardware economics (assumptions)</h2>
+          <h2 className="text-sm font-semibold text-white mb-3">Old per-piece guesses</h2>
+          <p className="text-xs text-mist mb-3">
+            These are not the pilot budget. The buy-new corridor total is below.
+          </p>
           <ul className="text-xs text-mist space-y-1">
             {hardwareEconomics.ranges.map((r) => (
               <li key={r.item} className="flex justify-between">
@@ -48,10 +51,10 @@ export default function AdminStrategyPage() {
         <div className="platform-panel rounded-2xl p-5">
           <h2 className="text-sm font-semibold text-white mb-3">North Shore pilot budget</h2>
           <p className="text-sm text-amber-glow mb-1">
-            Capital {formatUsdRange(pilotCapex.low, pilotCapex.high)}
+            Capital {formatUsd(pilotCapital)}
           </p>
           <p className="text-sm text-amber-glow mb-3">
-            Operating {formatUsdRange(pilotOpex.low, pilotOpex.high)} per year
+            Operating {formatUsd(pilotOperating)} per year
           </p>
           <p className="text-xs text-mist">{costEstimateNote}</p>
         </div>

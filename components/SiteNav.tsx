@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import HashLink from "@/components/HashLink";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 
 const navLinks = [
-  { href: "/#lowell", label: "Lowell", external: true },
-  { href: "/#what-we-are-building", label: "Build", external: true },
-  { href: "/#when-everything-is-down", label: "Outages", external: true },
-  { href: "/#cost", label: "Cost", external: true },
-  { href: "/#network-map", label: "Map", external: true },
-  { href: "/#technology", label: "Technology", external: true },
-  { href: "/#host-node", label: "Host a Node", external: true },
+  { href: "/#lowell", label: "Lowell" },
+  { href: "/#what-we-are-building", label: "Build" },
+  { href: "/#when-everything-is-down", label: "Outages" },
+  { href: "/#cost", label: "Cost" },
+  { href: "/#network-map", label: "Map" },
+  { href: "/#technology", label: "Technology" },
+  { href: "/#host-node", label: "Host a Node" },
 ];
 
 export default function SiteNav() {
@@ -40,36 +40,26 @@ export default function SiteNav() {
       }`}
     >
       <nav className="flex items-center justify-between px-5 py-4 sm:px-8 lg:px-12 max-w-[1400px] mx-auto">
-        <Link href="#" className="group">
+        <HashLink href="/" className="group">
           <KauaiInternetLogo variant="light" compact />
-        </Link>
+        </HashLink>
 
         <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) =>
-            "external" in link && link.external ? (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
-              >
-                {link.label}
-              </a>
-            )
-          )}
-          <a
-            href="#support"
+          {navLinks.map((link) => (
+            <HashLink
+              key={link.href}
+              href={link.href}
+              className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
+            >
+              {link.label}
+            </HashLink>
+          ))}
+          <HashLink
+            href="/#support"
             className="ml-2 px-4 py-2 text-sm font-semibold bg-amber-emergency hover:bg-amber-glow text-ocean-deep rounded-lg transition-colors"
           >
             Get Involved
-          </a>
+          </HashLink>
         </div>
 
         <button
@@ -92,22 +82,22 @@ export default function SiteNav() {
       {menuOpen && (
         <div className="md:hidden border-t border-white/10 bg-ocean-deep/98 backdrop-blur-md px-5 py-4 space-y-1">
           {navLinks.map((link) => (
-            <a
+            <HashLink
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
               className="block px-4 py-3 text-sm text-mist hover:text-white hover:bg-white/8 rounded-xl transition-colors"
             >
               {link.label}
-            </a>
+            </HashLink>
           ))}
-          <a
-            href="#support"
+          <HashLink
+            href="/#support"
             onClick={() => setMenuOpen(false)}
             className="block mt-2 px-4 py-3 text-sm font-semibold text-center bg-amber-emergency text-ocean-deep rounded-xl"
           >
             Get Involved
-          </a>
+          </HashLink>
         </div>
       )}
     </header>

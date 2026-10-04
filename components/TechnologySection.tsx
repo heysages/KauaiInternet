@@ -15,9 +15,14 @@ export default function TechnologySection() {
           Voice + data + Internet
         </h2>
         <p className="text-ocean-mid max-w-3xl mb-10">
-          Protocol choices live here: LoRa, Reticulum, Meshtastic, microwave, and routing.
-          The homepage states the service. This section states the tools under evaluation,
-          and labels what is operational versus still a plan.
+          The pilot budget buys Ubiquiti airFiber 5XHD radios for the backbone. Cambium’s
+          UK company entered administration in September 2026, so that vendor is not in
+          the plan. 60 GHz is skipped because Kauaʻi rain fades it. RAK WisMesh carries
+          short messages, and Starlink Mini is the off-island path. Each site carries four
+          batteries online, a fifth pack that swaps in live, a 3.2 kW array, and a propane
+          generator. The older NanoBeam
+          stock on the shelf is not part of this design.
+          Protocol notes for LoRa, Reticulum, and Meshtastic stay here.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">

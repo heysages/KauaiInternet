@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import HashLink from "@/components/HashLink";
 import ConnectivitySnapshot from "@/components/ConnectivitySnapshot";
 import MapDataLegend from "@/components/MapDataLegend";
 import ResidentKnowledgeForm from "@/components/ResidentKnowledgeForm";
@@ -65,7 +65,7 @@ export default function ConnectivityExplorerSection({
                   </li>
                 ))}
               </ul>
-              <Link
+              <HashLink
                 href="#map"
                 className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-ridge-mid hover:text-ridge-dark"
               >
@@ -73,7 +73,7 @@ export default function ConnectivityExplorerSection({
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </HashLink>
             </div>
           </div>
 

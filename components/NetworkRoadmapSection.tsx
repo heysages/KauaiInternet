@@ -1,5 +1,4 @@
 import { networkRoadmap } from "@/data/networkRoadmap";
-import { rolloutStages } from "@/data/resilienceMission";
 import OperationalStatusBadge from "@/components/OperationalStatusBadge";
 
 const statusToBadge = {
@@ -24,18 +23,6 @@ export default function NetworkRoadmapSection() {
           The phase list below is the longer record. Nothing here implies guaranteed
           timelines or funding.
         </p>
-
-        <ol className="grid sm:grid-cols-3 gap-3 mb-10">
-          {rolloutStages.map((stage, index) => (
-            <li key={stage.id} className="rounded-xl bg-white/70 border border-sand-warm px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-1">
-                Stage {index + 1}
-                {index < rolloutStages.length - 1 ? " →" : ""}
-              </p>
-              <p className="text-sm font-semibold text-ocean-deep">{stage.title}</p>
-            </li>
-          ))}
-        </ol>
 
         <div className="space-y-4">
           {networkRoadmap.map((phase) => (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import HashLink from "@/components/HashLink";
 import ConcernTopicCard from "@/components/ConcernTopicCard";
 import ConcernMarkerForm from "@/components/ConcernMarkerForm";
 import { concernTopics } from "@/data/concernTopics";
@@ -76,7 +76,7 @@ export default function CommunityConversationSection({
               Community Questions &amp; Concerns map layer — alongside other voices from
               across the island.
             </p>
-            <Link
+            <HashLink
               href="#map"
               className="inline-flex items-center gap-2 text-sm font-semibold text-ridge-mid hover:text-ridge-dark transition-colors"
             >
@@ -84,7 +84,7 @@ export default function CommunityConversationSection({
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </Link>
+            </HashLink>
           </div>
           <div className="lg:col-span-3">
             <ConcernMarkerForm key={formKey} onSubmit={handleSubmitted} />

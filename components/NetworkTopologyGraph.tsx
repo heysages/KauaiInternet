@@ -19,10 +19,12 @@ const layout: Record<string, { x: number; y: number }> = {
 export default function NetworkTopologyGraph({
   disabledNodeIds = [],
   disabledLinkIds = [],
+  dimmedMediums = [],
   height = 220,
 }: {
   disabledNodeIds?: string[];
   disabledLinkIds?: string[];
+  dimmedMediums?: string[];
   height?: number;
 }) {
   const { nodes, edges } = useMemo(
@@ -44,6 +46,7 @@ export default function NetworkTopologyGraph({
         const b = posById[e.to];
         if (!a || !b) return null;
         const color = linkMediumColors[e.medium as LinkMedium] ?? "#64748b";
+        const dimmed = dimmedMediums.includes(e.medium);
         return (
           <line
             key={e.id}
@@ -52,8 +55,8 @@ export default function NetworkTopologyGraph({
             x2={b.x}
             y2={b.y}
             stroke={color}
-            strokeWidth={2}
-            strokeOpacity={e.active ? 0.8 : 0.25}
+            strokeWidth={dimmed ? 1.5 : 2.5}
+            strokeOpacity={dimmed ? 0.18 : e.active ? 0.9 : 0.25}
             strokeDasharray={e.medium === "lora" ? "4 4" : undefined}
           />
         );

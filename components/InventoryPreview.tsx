@@ -58,16 +58,15 @@ export default function InventoryPreview() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
           <div className="max-w-2xl">
             <p className="text-ridge-mid font-semibold text-sm tracking-widest uppercase mb-3">
-              Starter Inventory
+              On the shelf
             </p>
             <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
-              Gear on hand to accelerate a pilot
+              Gear we have, and are not counting
             </h2>
             <p className="text-ocean-mid text-lg leading-relaxed">
-              This is a real starter inventory — not a claim of island-wide readiness.
-              It can jump-start a pilot corridor with switching, backhaul, radios, power,
-              and edge compute, but sites, power design, licensing, and operations still
-              need to be built out.
+              This stock is real, and it is older than the radios in the pilot budget.
+              The cost section buys the corridor new. None of these units are subtracted
+              from that budget, and none of them are deployed.
             </p>
           </div>
 

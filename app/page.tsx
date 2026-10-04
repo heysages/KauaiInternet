@@ -7,9 +7,6 @@ import Hero from "@/components/Hero";
 import HeroAddressSearch from "@/components/HeroAddressSearch";
 import ResilienceMissionSection from "@/components/ResilienceMissionSection";
 import NetworkStatusBanner from "@/components/NetworkStatusBanner";
-import HowNetworkWorksSection from "@/components/HowNetworkWorksSection";
-import NetworkLayersSection from "@/components/NetworkLayersSection";
-import WhyThisMattersSection from "@/components/WhyThisMattersSection";
 import IslandModeSection from "@/components/IslandModeSection";
 import NetworkMapSection from "@/components/NetworkMapSection";
 import CommunityExperience from "@/components/CommunityExperience";
@@ -18,7 +15,6 @@ import HostNodeSection from "@/components/HostNodeSection";
 import TechnologySection from "@/components/TechnologySection";
 import NetworkRoadmapSection from "@/components/NetworkRoadmapSection";
 import CommunityResilienceSection from "@/components/CommunityResilienceSection";
-import BuildWithUsSection from "@/components/BuildWithUsSection";
 import WaysToHelpSection from "@/components/WaysToHelpSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import InventoryPreview from "@/components/InventoryPreview";
@@ -43,17 +39,12 @@ export default function Home() {
       <NorthShorePilotSection />
       <HostNodeSection />
       <TechnologySection />
-      <HowNetworkWorksSection />
-      <NetworkLayersSection />
       <IslandModeSection />
       <NetworkRoadmapSection />
-      <WhyThisMattersSection />
       <CommunityExperience />
       <CommunityResilienceSection />
-      <BuildWithUsSection />
       <WaysToHelpSection />
       <UseCasesSection />
-      <InventoryPreview />
       <PartnerOpportunitiesSection />
       <SupportCTA />
 
@@ -76,7 +67,6 @@ export default function Home() {
                 <li><a href="#lowell" className="hover:text-white transition-colors">Hurricane Lowell</a></li>
                 <li><a href="#what-we-are-building" className="hover:text-white transition-colors">What we are building</a></li>
                 <li><a href="#cost" className="hover:text-white transition-colors">Pilot cost</a></li>
-                <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
                 <li><a href="#island-mode" className="hover:text-white transition-colors">Island Mode</a></li>
                 <li><a href="/network" className="hover:text-white transition-colors">Network Status</a></li>
                 <li><a href="#network-map" className="hover:text-white transition-colors">Network Map</a></li>

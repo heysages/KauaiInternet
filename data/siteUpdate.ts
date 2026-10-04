@@ -62,7 +62,7 @@ export const siteUpdate = {
       "North Shore pilot corridor: Hāʻena, Hanalei, Princeville, and Kīlauea",
       "KauaiInternet 72: critical nodes run at least 72 hours on solar and battery with no utility power",
       "Resilience hubs, a wireless backbone, and an emergency mesh",
-      "About $65,000–$115,000 to build and $25,000–$50,000 a year to operate. Planning estimates, pending site design and a bill of materials",
+      "The pilot budget buys the corridor new, including labor and overhead. Shelf gear is not counted. See the cost section on the homepage.",
     ],
     longTerm: [
       "Island backbone, more hubs, and subscriber internet only after this first path works with the grid off",
@@ -76,7 +76,7 @@ export const siteUpdate = {
     { label: "Report your experience on our map", href: "/#network-map", external: false },
     { label: "Offer to host a node", href: "/#host-node", external: false },
     { label: "Join the North Shore pilot", href: "/#north-shore-pilot", external: false },
-    { label: "Read the full network plan", href: "/#how-it-works", external: false },
+    { label: "Read the full network plan", href: "/#technology", external: false },
   ],
 
   disclaimer:

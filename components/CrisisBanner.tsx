@@ -1,4 +1,4 @@
-import Link from "next/link";
+import HashLink from "@/components/HashLink";
 
 export default function CrisisBanner() {
   return (
@@ -8,12 +8,12 @@ export default function CrisisBanner() {
           <span className="font-semibold">Hurricane Lowell left communities without power for days.</span>{" "}
           Here is what that changed about the plan.
         </p>
-        <Link
+        <HashLink
           href="/#lowell"
           className="shrink-0 text-sm font-semibold text-ocean-deep hover:text-ocean-mid underline underline-offset-2"
         >
           See the lessons →
-        </Link>
+        </HashLink>
       </div>
     </div>
   );

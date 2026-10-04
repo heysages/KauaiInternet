@@ -1,4 +1,4 @@
-import Link from "next/link";
+import HashLink from "@/components/HashLink";
 import CommunityScoreCards from "@/components/CommunityScoreCards";
 import type { AddressImpactReport, SampleAddress } from "@/types/network";
 
@@ -132,14 +132,14 @@ export default function AddressImpactReportPanel({
         <ul className="space-y-3">
           {report.participationOpportunities.map((w) => (
             <li key={w.id}>
-              <Link
+              <HashLink
                 href={w.href}
                 className={`text-sm font-medium hover:underline ${
                   isPlatform ? "text-amber-glow" : "text-ridge-mid"
                 }`}
               >
                 {w.label}
-              </Link>
+              </HashLink>
               <p className={`text-xs mt-0.5 ${isPlatform ? "text-mist/70" : "text-ocean-mid/80"}`}>
                 {w.description}
               </p>
@@ -147,7 +147,7 @@ export default function AddressImpactReportPanel({
           ))}
         </ul>
         <div className="flex flex-wrap gap-2 mt-3">
-          <Link
+          <HashLink
             href="#conversation"
             className={`text-xs font-medium px-3 py-1.5 rounded-full border ${
               isPlatform
@@ -156,8 +156,8 @@ export default function AddressImpactReportPanel({
             }`}
           >
             Join community discussions
-          </Link>
-          <Link
+          </HashLink>
+          <HashLink
             href="#map"
             className={`text-xs font-medium px-3 py-1.5 rounded-full border ${
               isPlatform
@@ -166,7 +166,7 @@ export default function AddressImpactReportPanel({
             }`}
           >
             Share local knowledge
-          </Link>
+          </HashLink>
         </div>
       </ReportBlock>
 

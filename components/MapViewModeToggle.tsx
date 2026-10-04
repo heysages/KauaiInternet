@@ -55,14 +55,12 @@ export default function MapViewModeToggle({
       >
         {MODES.map((mode) => {
           const active = value === mode.id;
-          const dimmed = !hasFocus && mode.id !== "community";
           return (
             <button
               key={mode.id}
               type="button"
               role="tab"
               aria-selected={active}
-              disabled={dimmed}
               title={mode.hint}
               onClick={() => onChange(mode.id)}
               className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
@@ -73,7 +71,7 @@ export default function MapViewModeToggle({
                   : isDark
                     ? "text-mist/80 hover:text-white"
                     : "text-ocean-mid hover:text-ocean-deep"
-              } ${dimmed ? "opacity-40 cursor-not-allowed" : ""}`}
+              }`}
             >
               {mode.label}
             </button>
@@ -84,7 +82,7 @@ export default function MapViewModeToggle({
         <p className={`text-[10px] leading-relaxed ${isDark ? "text-mist/70" : "text-ocean-mid/70"}`}>
           {hasFocus
             ? MODES.find((m) => m.id === value)?.hint
-            : "Search an address to unlock Live, Scene, and Ground views"}
+            : "Live, Scene, and Ground open a sample Hanalei address until you search your own"}
         </p>
       )}
     </div>

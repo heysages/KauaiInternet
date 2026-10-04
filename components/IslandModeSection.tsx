@@ -1,6 +1,5 @@
 import { islandModeStates, islandModeServices } from "@/data/islandModeServices";
-import NetworkModeIndicator from "@/components/NetworkModeIndicator";
-import { NetworkModeProvider } from "@/components/NetworkModeContext";
+import IslandModeDemo from "@/components/IslandModeDemo";
 import OperationalStatusBadge from "@/components/OperationalStatusBadge";
 
 export default function IslandModeSection() {
@@ -23,15 +22,8 @@ export default function IslandModeSection() {
           continue — where nodes remain powered.
         </p>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          <NetworkModeProvider demoEnabled initialMode="global">
-            <div className="platform-shell rounded-2xl p-6">
-              <p className="text-xs uppercase tracking-widest text-mist mb-4">
-                Demo — toggle network states
-              </p>
-              <NetworkModeIndicator />
-            </div>
-          </NetworkModeProvider>
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <IslandModeDemo />
 
           <div>
             <h3 className="font-semibold text-ocean-deep mb-3">Services in Island Mode</h3>

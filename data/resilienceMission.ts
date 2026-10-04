@@ -1,7 +1,11 @@
 /**
  * Homepage operational story after Hurricane Lowell.
- * Dollar figures are planning estimates, pending site design and a bill of materials.
+ * Dollar figures come from data/pilotBudget.ts (October 2026, no contributed gear).
  */
+
+import { pilotCapital, pilotOperating } from "@/data/pilotBudget";
+
+export { pilotCapital, pilotOperating };
 
 export const designPrinciple = "Grid down. Internet down. Kauaʻi still communicates.";
 
@@ -52,11 +56,8 @@ export const rolloutStages = [
   },
 ] as const;
 
-export const pilotCapex = { low: 65_000, high: 115_000 };
-export const pilotOpex = { low: 25_000, high: 50_000 };
-
 export const costEstimateNote =
-  "Planning estimates, pending final site design and a bill of materials. Not vendor quotes. Gear already on hand reduces what the pilot has to buy. Solar, batteries sized for 72 hours, sites, and operations are still in these ranges.";
+  "October 2026 budget to buy the corridor new. No contributed gear is subtracted. Listed hardware uses published prices. Labor, freight, cabinets, and overhead are allowances, not quotes.";
 
 export function formatUsd(amount: number): string {
   return amount.toLocaleString("en-US", {

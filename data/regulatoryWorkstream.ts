@@ -10,7 +10,7 @@ export const regulatoryWorkstream = {
     { area: "Antenna regulations", question: "Height, structure, and HOA/local ordinances." },
     { area: "Tower/site permissions", question: "Land use, zoning, and environmental review." },
     { area: "Emergency claims", question: "KauaiInternet is not an official emergency service without formal integration." },
-    { area: "Electrical work", question: "Solar and battery installations require qualified electricians where required by code." },
+    { area: "Electrical work", question: "Solar, battery, and generator installations require qualified electricians where required by code." },
   ],
 };
 
@@ -25,7 +25,7 @@ export const strategySections = {
   pilotPlan:
     "Operational corridor: Hāʻena, Hanalei, Princeville, Kīlauea. Resilience hubs, a wireless backbone, and an emergency mesh. Then North/East expansion, then an island backbone.",
   capitalRequirements:
-    "North Shore pilot about $65,000–$115,000 capital and $25,000–$50,000 a year to operate. Planning estimates, October 2026, pending final site design and a bill of materials. 397 pieces across 38 SKUs are already on hand and reduce hardware purchases.",
+    "North Shore pilot is budgeted as a buy-new build on Ubiquiti 5 GHz radios, a LiFePO4 bank with a hot-swap spare, 3.2 kW of solar, a propane generator at each site, drone survey, freight past the Hanalei bridge, labor, overhead, and Kauaʻi GET. Cambium is not the vendor. Shelf inventory is not subtracted.",
   partners: "No confirmed facility partnerships — all K5 hubs marked proposed.",
   sitePipeline: "10 candidate sites + 6 North Shore planning nodes + radio infrastructure research entries.",
   risks: [
@@ -43,7 +43,7 @@ export const strategySections = {
     {
       date: "2026-10",
       decision:
-        "After Hurricane Lowell, lead with a Hāʻena–Kīlauea resilience corridor, KauaiInternet 72, and preliminary pilot economics of $65,000–$115,000 capital and $25,000–$50,000 a year.",
+        "After Hurricane Lowell, lead with a Hāʻena–Kīlauea resilience corridor and KauaiInternet 72. The pilot budget buys all new current-generation gear and includes labor and overhead.",
     },
   ],
 };

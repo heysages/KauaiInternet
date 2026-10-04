@@ -1,5 +1,5 @@
 import { northShorePilot } from "@/data/northShorePilot";
-import { costEstimateNote, formatUsdRange, pilotCapex, pilotOpex } from "@/data/resilienceMission";
+import { costEstimateNote, formatUsd, pilotCapital, pilotOperating } from "@/data/resilienceMission";
 import OperationalStatusBadge from "@/components/OperationalStatusBadge";
 
 export default function NorthShorePilotSection() {
@@ -65,12 +65,12 @@ export default function NorthShorePilotSection() {
         </div>
 
         <div className="mt-8 glass-card rounded-2xl p-6">
-          <h3 className="font-semibold text-ocean-deep mb-2">Preliminary project economics</h3>
+          <h3 className="font-semibold text-ocean-deep mb-2">Buy-new project budget</h3>
           <p className="text-sm text-ocean-deep mb-1">
-            Capital {formatUsdRange(pilotCapex.low, pilotCapex.high)}
+            Capital {formatUsd(pilotCapital)}
           </p>
           <p className="text-sm text-ocean-deep mb-3">
-            Operating {formatUsdRange(pilotOpex.low, pilotOpex.high)} per year
+            Operating {formatUsd(pilotOperating)} per year
           </p>
           <p className="text-xs text-ocean-mid/80">{costEstimateNote}</p>
           <a

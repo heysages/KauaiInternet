@@ -1,4 +1,4 @@
-import Link from "next/link";
+import HashLink from "@/components/HashLink";
 import { designPrinciple } from "@/data/resilienceMission";
 
 export default function Hero() {
@@ -14,7 +14,7 @@ export default function Hero() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, rgba(13,43,69,0.92) 0%, rgba(13,43,69,0.62) 45%, rgba(35,111,163,0.75) 100%)",
+            "linear-gradient(115deg, rgba(13,43,69,0.82) 0%, rgba(13,43,69,0.38) 48%, rgba(13,43,69,0.72) 100%)",
         }}
       />
 
@@ -36,24 +36,24 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-            <Link
-              href="#lowell"
+            <HashLink
+              href="/#lowell"
               className="inline-flex items-center justify-center gap-2 bg-amber-emergency hover:bg-amber-glow text-ocean-deep font-semibold px-7 py-3.5 rounded-xl transition-colors shadow-lg shadow-amber-emergency/25"
             >
               What Lowell taught us
-            </Link>
-            <Link
-              href="#cost"
+            </HashLink>
+            <HashLink
+              href="/#cost"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 font-medium px-7 py-3.5 rounded-xl transition-colors"
             >
               What it costs
-            </Link>
-            <Link
-              href="#network-map"
+            </HashLink>
+            <HashLink
+              href="/#network-map"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 font-medium px-7 py-3.5 rounded-xl transition-colors"
             >
               Explore the map
-            </Link>
+            </HashLink>
           </div>
         </div>
       </div>

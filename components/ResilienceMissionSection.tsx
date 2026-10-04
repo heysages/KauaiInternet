@@ -1,17 +1,12 @@
-import { getInventoryStats } from "@/data/inventory";
+import PilotBudgetBreakdown from "@/components/PilotBudgetBreakdown";
 import {
   architecture,
-  costEstimateNote,
   designPrinciple,
   failureColumns,
   failureRows,
-  formatUsd,
-  formatUsdRange,
   kauaiInternet72,
   lowellLessons,
-  pilotCapex,
   pilotCorridor,
-  pilotOpex,
   rolloutStages,
   type FailureState,
 } from "@/data/resilienceMission";
@@ -22,11 +17,7 @@ const cellClass: Record<FailureState, string> = {
   down: "bg-sand-light text-ocean-mid",
 };
 
-const costScale = Math.max(pilotCapex.high, pilotOpex.high);
-
 export default function ResilienceMissionSection() {
-  const inventory = getInventoryStats();
-
   return (
     <>
       <section id="problem" className="section-padding bg-sand-light">
@@ -206,50 +197,9 @@ export default function ResilienceMissionSection() {
             5 · What it costs to start
           </p>
           <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
-            North Shore pilot, before a final parts list
+            What it costs if we buy everything new
           </h2>
-          <div className="grid lg:grid-cols-2 gap-8 mb-8">
-            <div>
-              <p className="text-sm font-semibold text-ocean-deep mb-1">
-                Capital cost to build the pilot
-              </p>
-              <p className="text-3xl font-semibold text-ocean-deep mb-3">
-                {formatUsdRange(pilotCapex.low, pilotCapex.high)}
-              </p>
-              <div className="h-3 rounded-full bg-sand-warm overflow-hidden mb-6">
-                <div
-                  className="h-full rounded-full bg-ocean-mid"
-                  style={{ width: `${(pilotCapex.high / costScale) * 100}%` }}
-                />
-              </div>
-              <p className="text-sm font-semibold text-ocean-deep mb-1">Annual operating cost</p>
-              <p className="text-3xl font-semibold text-ocean-deep mb-3">
-                {formatUsdRange(pilotOpex.low, pilotOpex.high)}
-              </p>
-              <div className="h-3 rounded-full bg-sand-warm overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-ocean-mid/70"
-                  style={{ width: `${(pilotOpex.high / costScale) * 100}%` }}
-                />
-              </div>
-              <p className="text-xs text-ocean-mid mt-3">
-                Bar length is the high end of each range, scaled to {formatUsd(costScale)}.
-              </p>
-            </div>
-            <div className="glass-card rounded-2xl p-6">
-              <p className="text-3xl font-semibold text-ocean-deep">{inventory.totalUnits}</p>
-              <p className="text-sm text-ocean-mid mb-4">
-                pieces of starter equipment already on hand, across {inventory.uniqueSkus} SKUs.
-              </p>
-              <p className="text-sm text-ocean-mid leading-relaxed">
-                That stock — switches, backhaul radios, antennas, a few computers, two Starlink
-                kits, and tower batteries — cuts the hardware the first corridor has to purchase.
-                It does not replace site work or a 72-hour solar and battery design. Those pieces
-                are on the shelf, not deployed.
-              </p>
-            </div>
-          </div>
-          <p className="text-sm text-ocean-mid max-w-3xl leading-relaxed">{costEstimateNote}</p>
+          <PilotBudgetBreakdown />
         </div>
       </section>
     </>

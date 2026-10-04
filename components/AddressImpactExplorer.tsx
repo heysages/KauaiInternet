@@ -10,6 +10,7 @@ import MapViewModeToggle from "@/components/MapViewModeToggle";
 import TodayFutureSlider from "@/components/TodayFutureSlider";
 import type { MapViewMode } from "@/types/mapView";
 import { communityMapLayers } from "@/data/communityMapLayers";
+import { sampleAddresses } from "@/data/sampleAddresses";
 import { computeAddressImpactReport } from "@/lib/addressImpactReport";
 import { getGroundViewSceneFeatures, getNearbySceneFeatures } from "@/lib/nearbySceneFeatures";
 import { isImmersiveMode } from "@/lib/mapBasemaps";
@@ -39,11 +40,16 @@ export default function AddressImpactExplorer() {
   const [mapViewMode, setMapViewMode] = useState<MapViewMode>("community");
   const [mapFullscreen, setMapFullscreen] = useState(false);
   const [sceneOrbit, setSceneOrbit] = useState(false);
-  useEffect(() => {
-    if (!selectedLocation && mapViewMode !== "community") {
-      setMapViewMode("community");
+
+  const handleViewMode = (mode: MapViewMode) => {
+    if (mode !== "community" && !selectedLocation) {
+      const sample =
+        sampleAddresses.find((address) => address.neighborhood === "Hanalei") ??
+        sampleAddresses[0];
+      if (sample) setSelectedLocation(sample);
     }
-  }, [selectedLocation, mapViewMode]);
+    setMapViewMode(mode);
+  };
 
   useEffect(() => {
     if (mapViewMode !== "scene") {
@@ -114,7 +120,7 @@ export default function AddressImpactExplorer() {
   }, [selectedLocation, mapViewMode, explorerLayers, futureProgress]);
 
   return (
-    <section id="explore" className="section-padding gradient-sand">
+    <section id="your-community" className="section-padding gradient-sand">
       <div className="max-w-6xl mx-auto">
         <p className="text-ridge-mid font-semibold text-sm tracking-widest uppercase mb-3">
           Address Impact Explorer
@@ -140,7 +146,7 @@ export default function AddressImpactExplorer() {
         <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-3 space-y-4">
             <div
-              className={`platform-shell platform-shell-embedded rounded-2xl overflow-hidden relative transition-[height] duration-300 ${
+              className={`platform-shell rounded-2xl overflow-hidden relative transition-[height] duration-300 ${
                 mapFullscreen
                   ? "map-immersive-fullscreen"
                   : mapViewMode === "street" && selectedLocation
@@ -152,7 +158,7 @@ export default function AddressImpactExplorer() {
                 <div className="pointer-events-auto min-w-0">
                   <MapViewModeToggle
                     value={mapViewMode}
-                    onChange={setMapViewMode}
+                    onChange={handleViewMode}
                     hasFocus={!!selectedLocation}
                     variant="dark"
                   />

@@ -185,22 +185,22 @@ body {
   font-size: 10px;
 }
 
-.platform-shell-embedded {
-  height: min(78vh, 820px);
-  min-height: 480px;
-}
-
-/* Island planning platform layout */
+/* Island planning platform layout.
+   Height belongs on the map variants only. A content card that reuses
+   .platform-shell should shrink to its contents. */
 .platform-shell {
   display: flex;
   flex-direction: column;
-  height: min(88vh, 920px);
-  min-height: 560px;
   background: var(--ocean-deep);
   overflow: hidden;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
+.platform-shell-embedded {
+  height: min(72vh, 760px);
+  min-height: 480px;
 }
 
 .platform-shell-fullscreen {
