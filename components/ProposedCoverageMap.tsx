@@ -8,10 +8,13 @@ if (typeof window !== "undefined") {
 }
 
 import {
-  expansionCoverageBounds,
   expansionHubs,
   expansionLinks,
   expansionServiceAreas,
+  islandCoverageBounds,
+  islandHubs,
+  islandLinks,
+  islandServiceAreas,
   pilotCoverageBounds,
   pilotHubs,
   pilotLinks,
@@ -19,10 +22,30 @@ import {
 } from "@/data/proposedCoverage";
 import { satelliteBasemapStyle } from "@/lib/mapBasemaps";
 
-export default function ProposedCoverageMap() {
+const laterLayerIds = [
+  "expansion-fill",
+  "expansion-line",
+  "expansion-links",
+  "expansion-hubs",
+  "expansion-labels",
+  "island-fill",
+  "island-line",
+  "island-links",
+  "island-hubs",
+  "island-labels",
+];
+
+type ProposedCoverageMapProps = {
+  showIsland: boolean;
+  onShowIslandChange: (show: boolean) => void;
+};
+
+export default function ProposedCoverageMap({
+  showIsland,
+  onShowIslandChange,
+}: ProposedCoverageMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const [showLater, setShowLater] = useState(false);
   const [ready, setReady] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
 
@@ -37,7 +60,7 @@ export default function ProposedCoverageMap() {
       fitBoundsOptions: { padding: 36 },
       attributionControl: false,
       maxZoom: 15,
-      minZoom: 9,
+      minZoom: 8,
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
     map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
@@ -69,7 +92,7 @@ export default function ProposedCoverageMap() {
         type: "fill",
         source: "expansion-areas",
         layout: { visibility: "none" },
-        paint: { "fill-color": "#7db9a6", "fill-opacity": 0.28 },
+        paint: { "fill-color": "#e6c07b", "fill-opacity": 0.34 },
       });
       map.addLayer({
         id: "expansion-line",
@@ -162,6 +185,61 @@ export default function ProposedCoverageMap() {
         },
       });
 
+      map.addSource("island-areas", { type: "geojson", data: islandServiceAreas });
+      map.addLayer({
+        id: "island-fill",
+        type: "fill",
+        source: "island-areas",
+        layout: { visibility: "none" },
+        paint: { "fill-color": "#e6c07b", "fill-opacity": 0.34 },
+      });
+      map.addLayer({
+        id: "island-line",
+        type: "line",
+        source: "island-areas",
+        layout: { visibility: "none" },
+        paint: { "line-color": "#e6e2d6", "line-width": 1.5, "line-dasharray": [2, 2] },
+      });
+      map.addSource("island-links", { type: "geojson", data: islandLinks });
+      map.addLayer({
+        id: "island-links",
+        type: "line",
+        source: "island-links",
+        layout: { visibility: "none" },
+        paint: { "line-color": "#f4b942", "line-width": 2, "line-dasharray": [1.5, 1.5] },
+      });
+      map.addSource("island-hubs", { type: "geojson", data: islandHubs });
+      map.addLayer({
+        id: "island-hubs",
+        type: "circle",
+        source: "island-hubs",
+        layout: { visibility: "none" },
+        paint: {
+          "circle-radius": 6,
+          "circle-color": "#1a4a5c",
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+      map.addLayer({
+        id: "island-labels",
+        type: "symbol",
+        source: "island-hubs",
+        layout: {
+          visibility: "none",
+          "text-field": ["get", "name"],
+          "text-size": 12,
+          "text-font": ["Open Sans Bold"],
+          "text-offset": [0, 1.1],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": "#ffffff",
+          "text-halo-color": "#0d2b45",
+          "text-halo-width": 1.2,
+        },
+      });
+
       setReady(true);
     });
 
@@ -176,36 +254,41 @@ export default function ProposedCoverageMap() {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    const visibility = showLater ? "visible" : "none";
-    for (const id of ["expansion-fill", "expansion-line", "expansion-links", "expansion-hubs", "expansion-labels"]) {
-      map.setLayoutProperty(id, "visibility", visibility);
+    const visibility = showIsland ? "visible" : "none";
+    for (const id of laterLayerIds) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
     }
-    map.fitBounds(showLater ? expansionCoverageBounds : pilotCoverageBounds, {
+    map.fitBounds(showIsland ? islandCoverageBounds : pilotCoverageBounds, {
       padding: 36,
       duration: 700,
     });
-  }, [showLater, ready]);
+  }, [showIsland, ready]);
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-2 mb-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <p className="text-sm text-ocean-mid">
+          {showIsland ? "Towns where people live, around the island" : "North Shore pilot only"}
+        </p>
         <button
           type="button"
-          onClick={() => setShowLater(false)}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium ${
-            showLater ? "bg-sand-light text-ocean-mid" : "bg-ocean-deep text-white"
-          }`}
+          role="switch"
+          aria-checked={showIsland}
+          onClick={() => onShowIslandChange(!showIsland)}
+          className="inline-flex items-center gap-3 rounded-full border border-sand-warm bg-white px-3 py-2 text-sm font-medium text-ocean-deep"
         >
-          North Shore pilot
-        </button>
-        <button
-          type="button"
-          onClick={() => setShowLater(true)}
-          className={`rounded-full px-3 py-1.5 text-sm font-medium ${
-            showLater ? "bg-ocean-deep text-white" : "bg-sand-light text-ocean-mid"
-          }`}
-        >
-          Include later expansion
+          <span>Whole island</span>
+          <span
+            className={`relative h-6 w-11 rounded-full transition-colors ${
+              showIsland ? "bg-ocean-deep" : "bg-sand-warm"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+                showIsland ? "translate-x-5" : "translate-x-0.5"
+              }`}
+            />
+          </span>
         </button>
       </div>
       <div className="relative">
@@ -231,19 +314,20 @@ export default function ProposedCoverageMap() {
             <span className="h-3 w-3 rounded-full border-2 border-white bg-ocean-deep" />
             Proposed hub, site not surveyed
           </li>
-          {showLater && (
+          {showIsland && (
             <li className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-sm border border-dashed border-white bg-brand-sage/70" />
-              Later: Anahola and Kapaʻa
+              <span className="h-3 w-3 rounded-sm bg-[#e6c07b]/90" />
+              Other towns where people live
             </li>
           )}
         </ul>
       </div>
       <p className="text-xs text-ocean-mid mt-3 max-w-3xl leading-relaxed">
-        Shaded areas are the towns the plan is built for. The line between them is a
-        point-to-point backbone, not a blanket of signal. Handheld mesh is meant to work
-        near a hub and between people who carry a radio. This is not a measured coverage
-        prediction, and no site is permitted yet.
+        {showIsland
+          ? "Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains, Nāpali, and the canyon interior are left unshaded. The published budget is still only the North Shore pilot."
+          : "Shaded areas are the towns the first build is for. Turn on Whole island to see the same pattern in the other places people live."}{" "}
+        The line between hubs is point-to-point, not a blanket of signal. This is not a
+        measured coverage prediction, and no site is permitted yet.
       </p>
     </div>
   );

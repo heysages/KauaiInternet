@@ -4,7 +4,7 @@ import PowerPathDiagram from "@/components/explainers/PowerPathDiagram";
 import RolloutDiagram from "@/components/explainers/RolloutDiagram";
 import WhatStaysDiagram from "@/components/explainers/WhatStaysDiagram";
 import PilotBudgetBreakdown from "@/components/PilotBudgetBreakdown";
-import ProposedCoverageMap from "@/components/ProposedCoverageMap";
+import IslandPlan from "@/components/IslandPlan";
 import {
   designPrinciple,
   failureColumns,
@@ -115,10 +115,10 @@ export default function ResilienceMissionSection() {
           <div id="coverage" className="mb-12 scroll-mt-24">
             <h3 className="font-semibold text-ocean-deep mb-1">Where the plan would serve</h3>
             <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
-              Four communities on the North Shore. Each shaded area is the town a hub is
-              meant to serve. The gold line is the link between hubs.
+              The first shaded towns are the North Shore pilot. Whole island turns on the
+              other places people live, and turns them off again.
             </p>
-            <ProposedCoverageMap />
+            <IslandPlan />
           </div>
 
           <div className="glass-card rounded-2xl p-6 mb-6 flex flex-col sm:flex-row sm:items-center gap-6">

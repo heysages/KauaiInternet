@@ -13,6 +13,7 @@ import CommunityExperience from "@/components/CommunityExperience";
 import NorthShorePilotSection from "@/components/NorthShorePilotSection";
 import HostNodeSection from "@/components/HostNodeSection";
 import TechnologySection from "@/components/TechnologySection";
+import AppPreviewSection from "@/components/AppPreviewSection";
 import NetworkRoadmapSection from "@/components/NetworkRoadmapSection";
 import CommunityResilienceSection from "@/components/CommunityResilienceSection";
 import WaysToHelpSection from "@/components/WaysToHelpSection";
@@ -39,6 +40,7 @@ export default function Home() {
       <NorthShorePilotSection />
       <HostNodeSection />
       <TechnologySection />
+      <AppPreviewSection />
       <IslandModeSection />
       <NetworkRoadmapSection />
       <CommunityExperience />
@@ -73,6 +75,7 @@ export default function Home() {
                 <li><a href="#network-map" className="hover:text-white transition-colors">Network Map</a></li>
                 <li><a href="#north-shore-pilot" className="hover:text-white transition-colors">North Shore Pilot</a></li>
                 <li><a href="#technology" className="hover:text-white transition-colors">Technology</a></li>
+                <li><a href="/app" className="hover:text-white transition-colors">App mock</a></li>
                 <li><a href="#host-node" className="hover:text-white transition-colors">Host a Node</a></li>
                 <li><a href="#support" className="hover:text-white transition-colors">Get Involved</a></li>
               </ul>

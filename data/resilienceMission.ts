@@ -52,7 +52,8 @@ export const rolloutStages = [
   {
     id: "backbone",
     title: "Island Backbone",
-    summary: "A small set of elevated sites so the rest of Kauaʻi can join the same network.",
+    summary:
+      "The same hub pattern in the towns where people live: Wailua, Līhuʻe, Kōloa, Kalaheo, Hanapēpē, Waimea, and Kekaha. Not the empty interior.",
   },
 ] as const;
 

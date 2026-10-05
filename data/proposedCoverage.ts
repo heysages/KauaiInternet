@@ -4,7 +4,7 @@
  * They are not a measured radio footprint and not a promise of signal.
  */
 
-export type CoverageStage = "pilot" | "expansion";
+export type CoverageStage = "pilot" | "expansion" | "island";
 
 export type CoverageAreaProps = {
   id: string;
@@ -127,6 +127,114 @@ export const pilotCoverageBounds: [[number, number], [number, number]] = [
 export const expansionCoverageBounds: [[number, number], [number, number]] = [
   [-159.64, 22.03],
   [-159.27, 22.26],
+];
+
+/** Towns around the coast where people live. Not the mountains, Nāpali, or the canyon. */
+export const islandHubs = {
+  type: "FeatureCollection" as const,
+  features: [
+    hub("wailua", "Wailua", -159.34, 22.04),
+    hub("lihue", "Līhuʻe", -159.37, 21.98),
+    hub("koloa", "Kōloa", -159.47, 21.9),
+    hub("kalaheo", "Kalaheo", -159.53, 21.92),
+    hub("hanapepe", "Hanapēpē", -159.59, 21.91),
+    hub("waimea", "Waimea", -159.67, 21.96),
+    hub("kekaha", "Kekaha", -159.71, 21.97),
+  ],
+};
+
+export const islandLinks = {
+  type: "FeatureCollection" as const,
+  features: [
+    link("kapaa-wailua", [
+      [-159.32, 22.08],
+      [-159.34, 22.04],
+    ]),
+    link("wailua-lihue", [
+      [-159.34, 22.04],
+      [-159.37, 21.98],
+    ]),
+    link("lihue-koloa", [
+      [-159.37, 21.98],
+      [-159.47, 21.9],
+    ]),
+    link("koloa-kalaheo", [
+      [-159.47, 21.9],
+      [-159.53, 21.92],
+    ]),
+    link("kalaheo-hanapepe", [
+      [-159.53, 21.92],
+      [-159.59, 21.91],
+    ]),
+    link("hanapepe-waimea", [
+      [-159.59, 21.91],
+      [-159.67, 21.96],
+    ]),
+    link("waimea-kekaha", [
+      [-159.67, 21.96],
+      [-159.71, 21.97],
+    ]),
+  ],
+};
+
+export const islandServiceAreas = {
+  type: "FeatureCollection" as const,
+  features: [
+    area("wailua", "Wailua", "island", "Homes along the river and the highway", [
+      [-159.365, 22.058],
+      [-159.318, 22.055],
+      [-159.315, 22.022],
+      [-159.362, 22.02],
+      [-159.365, 22.058],
+    ]),
+    area("lihue", "Līhuʻe", "island", "The town, Hanamāʻulu, and the services people travel to", [
+      [-159.4, 22.012],
+      [-159.338, 22.008],
+      [-159.332, 21.958],
+      [-159.398, 21.952],
+      [-159.4, 22.012],
+    ]),
+    area("koloa", "Kōloa / Poʻipū", "island", "The south-shore towns, not a resort network", [
+      [-159.492, 21.918],
+      [-159.442, 21.912],
+      [-159.438, 21.868],
+      [-159.488, 21.872],
+      [-159.492, 21.918],
+    ]),
+    area("kalaheo", "Kalaheo", "island", "The ridge town on the way west", [
+      [-159.552, 21.942],
+      [-159.508, 21.94],
+      [-159.505, 21.9],
+      [-159.55, 21.902],
+      [-159.552, 21.942],
+    ]),
+    area("hanapepe", "Hanapēpē", "island", "Hanapēpē and ʻEleʻele", [
+      [-159.615, 21.925],
+      [-159.568, 21.928],
+      [-159.565, 21.888],
+      [-159.612, 21.886],
+      [-159.615, 21.925],
+    ]),
+    area("waimea", "Waimea", "island", "The west-end town at the river", [
+      [-159.692, 21.978],
+      [-159.648, 21.976],
+      [-159.646, 21.938],
+      [-159.69, 21.94],
+      [-159.692, 21.978],
+    ]),
+    area("kekaha", "Kekaha", "island", "The last coastal town to the west", [
+      [-159.732, 21.988],
+      [-159.688, 21.982],
+      [-159.69, 21.948],
+      [-159.73, 21.952],
+      [-159.732, 21.988],
+    ]),
+  ],
+};
+
+export const islandCoverageBounds: [[number, number], [number, number]] = [
+  [-159.78, 21.84],
+  [-159.28, 22.26],
 ];
 
 function hub(id: string, name: string, lng: number, lat: number) {
