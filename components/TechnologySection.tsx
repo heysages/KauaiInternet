@@ -22,12 +22,8 @@ export default function TechnologySection() {
           the problem. The pilot stays on airFiber because a status note and short
           messages do not need multi-gigabit links, and a wide channel is harder to find.
           Phones do not join that link. One BLiNQ FW-300i at each town hub covers about
-          180° of Band 48 LTE for a phone that installs this network’s profile.
-          Cambium’s UK company entered administration in September 2026. Airspan bought
-          other fixed-wireless lines and left ePMP out. Univastu India has since taken
-          exclusivity on remaining Cambium assets, and that sale is not closed, so ePMP
-          is still not the plan. RAK WisMesh carries short messages, and Starlink Mini is
-          the off-island path. Town hubs carry seven batteries online, the ridge relay
+          180° of Band 48 LTE for a phone that installs this network’s profile. RAK
+          WisMesh carries short messages, and Starlink Mini is the off-island path. Town hubs carry seven batteries online, the ridge relay
           carries four, and every site keeps a pack that swaps in live, a 3.2 kW array,
           and a propane generator. The older NanoBeam
           stock on the shelf is not part of this design. Protocol notes for LoRa,

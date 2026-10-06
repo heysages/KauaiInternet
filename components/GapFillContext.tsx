@@ -19,7 +19,7 @@ const GapFillContext = createContext<GapFillContextValue | null>(null);
 export function GapFillProvider({ children }: { children: ReactNode }) {
   const [showGapFill, setShowGapFillState] = useState(false);
   const [showIsland, setShowIslandState] = useState(false);
-  const [view, setView] = useState<PhoneView>("before");
+  const [view, setView] = useState<PhoneView>("after");
 
   const setShowGapFill = (show: boolean) => {
     setShowGapFillState(show);
@@ -49,10 +49,10 @@ export function useGapFill() {
 }
 
 export function useCostScenario(): ReturnType<typeof quoteSelection> & PricedBuild {
-  const { view, showGapFill, showIsland } = useGapFill();
+  const { showGapFill, showIsland } = useGapFill();
   return quoteSelection({
-    view,
-    gap: view === "after" && showGapFill,
-    island: view === "after" && showIsland,
+    view: "after",
+    gap: showGapFill,
+    island: showIsland,
   });
 }

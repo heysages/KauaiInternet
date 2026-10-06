@@ -10,11 +10,9 @@ const both = quoteSelection({ view: "after", gap: true, island: true });
 
 export function ScenarioCostCards() {
   const quote = useCostScenario();
-  const heading = quote.view === "before" ? "Today, this plan has not been built" : quote.plainName.replace(/\.$/, "");
+  const heading = quote.plainName.replace(/\.$/, "");
   const buildDetail =
-    quote.view === "before"
-      ? "No sites from this plan are on the coast yet, so there is nothing to build in this view."
-      : quote.island && quote.gap
+    quote.island && quote.gap
         ? "The four town sites, eight smaller solar spots, and nine more towns around the coast. Bought new. A walk of the roads can add or drop a spot, and a survey can still add a ridge relay."
         : quote.island
           ? "The four town sites, plus Anahola, Kapaʻa, Wailua, Līhuʻe, Kōloa, Kalaheo, Hanapēpē, Waimea, and Kekaha. Bought new. A survey can still add a ridge relay where two towns cannot see each other."
@@ -22,9 +20,7 @@ export function ScenarioCostCards() {
             ? "The four town sites, plus eight smaller solar spots in the gaps. Bought new. A walk of the roads can add or drop a spot."
             : "New equipment, solar and batteries, shipping, and the people to install the four town sites. Bought new. Nothing already on a shelf is subtracted.";
   const yearDetail =
-    quote.view === "before"
-      ? "No sites to staff, and no phone signal from this plan to keep legal."
-      : quote.island
+    quote.island
         ? "The North Shore on-call roster, plus a second person so Līhuʻe and the west side are not waiting on that drive. The monthly spectrum fee does not go up."
         : quote.gap
           ? "The same people on call, plus access and a short visit at each pocket if the spot is not donated. The monthly spectrum fee does not go up."
@@ -56,14 +52,7 @@ export function ScenarioCostCards() {
         </article>
       </div>
       <p className="text-sm text-ocean-mid mt-6 max-w-3xl leading-relaxed">
-        {quote.view === "before" ? (
-          <>
-            The four towns are {formatUsd(pilotCapital)} to build and {formatUsd(pilotOperating)} a
-            year. With the gaps filled in, {formatUsd(pockets.capital)} and {formatUsd(pockets.operating)}.
-            With the rest of the coast, {formatUsd(coast.capital)} and {formatUsd(coast.operating)}.
-            With both, {formatUsd(both.capital)} and {formatUsd(both.operating)}.
-          </>
-        ) : quote.gap && quote.island ? (
+        {quote.gap && quote.island ? (
           <>
             The four towns alone are {formatUsd(pilotCapital)} to build and {formatUsd(pilotOperating)} a
             year.
@@ -100,7 +89,7 @@ export function ScenarioBudgetSummary() {
     <>
       <h3 className="font-semibold text-ocean-deep mb-2">Buy-new project budget</h3>
       <p className="text-sm text-ocean-mid mb-2">
-        {quote.name} This follows the phone map and the Whole island switch.
+        {quote.name} This follows Gap fill and Whole island.
       </p>
       <p className="text-sm text-ocean-deep mb-1">Capital {formatUsd(quote.capital)}</p>
       <p className="text-sm text-ocean-deep mb-3">

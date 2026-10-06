@@ -21,35 +21,6 @@ export default function PilotBudgetBreakdown() {
   const coast = quoteSelection({ view: "after", gap: false, island: true });
   const both = quoteSelection({ view: "after", gap: true, island: true });
 
-  if (quote.view === "before") {
-    return (
-      <div>
-        <p className="text-sm text-ocean-mid max-w-3xl mb-8 leading-relaxed">
-          Before is the coast as it is. This plan has not been built, so there is no project
-          cost in this view. Switch the phone map to After for the four towns. Turn on Gap
-          fill to add the eight pockets. Turn on Whole island to add the other coastal towns.
-        </p>
-        <div className="grid lg:grid-cols-2 gap-4">
-          <div className="glass-card rounded-2xl p-6">
-            <p className="text-sm font-semibold text-ocean-deep mb-1">Capital cost to build</p>
-            <p className="text-3xl font-semibold text-ocean-deep">{formatUsd(0)}</p>
-          </div>
-          <div className="glass-card rounded-2xl p-6">
-            <p className="text-sm font-semibold text-ocean-deep mb-1">Annual operating cost</p>
-            <p className="text-3xl font-semibold text-ocean-deep">{formatUsd(0)}</p>
-          </div>
-        </div>
-        <p className="text-sm text-ocean-mid mt-6 max-w-3xl leading-relaxed">
-          After, the four towns, is {formatUsd(pilotCapital)} to build and {formatUsd(pilotOperating)} a
-          year. With the eight pockets it is {formatUsd(pockets.capital)} to build and{" "}
-          {formatUsd(pockets.operating)} a year. With the rest of the coast it is {formatUsd(coast.capital)}{" "}
-          to build and {formatUsd(coast.operating)} a year. With both it is {formatUsd(both.capital)} to
-          build and {formatUsd(both.operating)} a year.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div>
       <p className="text-sm text-ocean-mid max-w-3xl mb-8 leading-relaxed">
