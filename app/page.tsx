@@ -1,5 +1,7 @@
 import { AddressImpactProvider } from "@/components/AddressImpactContext";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
+import PlainHome from "@/components/PlainHome";
+import { ViewSwitch } from "@/components/ReadingMode";
 import SiteNav from "@/components/SiteNav";
 import CrisisBanner from "@/components/CrisisBanner";
 import { siteConfig } from "@/lib/site";
@@ -26,6 +28,10 @@ export default function Home() {
   return (
     <AddressImpactProvider>
       <SiteNav />
+      <ViewSwitch
+        plain={<PlainHome />}
+        technical={
+          <>
       <CrisisBanner />
       <Hero />
       <ResilienceMissionSection />
@@ -104,6 +110,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+          </>
+        }
+      />
     </AddressImpactProvider>
   );
 }

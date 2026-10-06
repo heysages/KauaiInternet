@@ -20,7 +20,12 @@ export default function HashLink({ href, className, children, onClick }: HashLin
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (id && pathname === path) {
-      const target = document.getElementById(id);
+      const slot = document.documentElement.classList.contains("reading-plain")
+        ? ".reading-slot-plain"
+        : ".reading-slot-technical";
+      const target =
+        document.querySelector<HTMLElement>(`${slot} #${CSS.escape(id)}`) ??
+        document.getElementById(id);
       if (target) {
         event.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });

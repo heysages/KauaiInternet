@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import HashLink from "@/components/HashLink";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
+import { ReadingToggle } from "@/components/ReadingMode";
 
-const navLinks = [
+const technicalLinks = [
   { href: "/#lowell", label: "Lowell" },
   { href: "/#what-we-are-building", label: "Build" },
   { href: "/#when-everything-is-down", label: "Outages" },
@@ -13,6 +14,53 @@ const navLinks = [
   { href: "/#technology", label: "Technology" },
   { href: "/#host-node", label: "Host a Node" },
 ];
+
+const neighborLinks = [
+  { href: "/#service", label: "Service" },
+  { href: "/#lost", label: "Lost connections" },
+  { href: "/#where", label: "Where" },
+  { href: "/#cost", label: "Cost" },
+];
+
+function NavLinks({
+  links,
+  stacked = false,
+  onNavigate,
+}: {
+  links: { href: string; label: string }[];
+  stacked?: boolean;
+  onNavigate?: () => void;
+}) {
+  return (
+    <>
+      {links.map((link) => (
+        <HashLink
+          key={link.href}
+          href={link.href}
+          onClick={onNavigate}
+          className={
+            stacked
+              ? "block px-4 py-3 text-sm text-mist hover:text-white hover:bg-white/8 rounded-xl transition-colors"
+              : "px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
+          }
+        >
+          {link.label}
+        </HashLink>
+      ))}
+      <HashLink
+        href="/#support"
+        onClick={onNavigate}
+        className={
+          stacked
+            ? "block mt-2 px-4 py-3 text-sm font-semibold text-center bg-amber-emergency text-ocean-deep rounded-xl"
+            : "ml-2 px-4 py-2 text-sm font-semibold bg-amber-emergency hover:bg-amber-glow text-ocean-deep rounded-lg transition-colors"
+        }
+      >
+        Get Involved
+      </HashLink>
+    </>
+  );
+}
 
 export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -44,28 +92,20 @@ export default function SiteNav() {
           <KauaiInternetLogo variant="light" compact />
         </HashLink>
 
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <HashLink
-              key={link.href}
-              href={link.href}
-              className="px-4 py-2 text-sm text-mist hover:text-white rounded-lg hover:bg-white/8 transition-colors"
-            >
-              {link.label}
-            </HashLink>
-          ))}
-          <HashLink
-            href="/#support"
-            className="ml-2 px-4 py-2 text-sm font-semibold bg-amber-emergency hover:bg-amber-glow text-ocean-deep rounded-lg transition-colors"
-          >
-            Get Involved
-          </HashLink>
+        <div className="flex items-center gap-2">
+          <ReadingToggle />
+          <div className="reading-slot-technical hidden lg:flex items-center gap-1">
+            <NavLinks links={technicalLinks} />
+          </div>
+          <div className="reading-slot-plain hidden lg:flex items-center gap-1">
+            <NavLinks links={neighborLinks} />
+          </div>
         </div>
 
         <button
           type="button"
           onClick={() => setMenuOpen((o) => !o)}
-          className="md:hidden p-2 text-white rounded-lg hover:bg-white/10 transition-colors"
+          className="lg:hidden p-2 text-white rounded-lg hover:bg-white/10 transition-colors"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
@@ -80,24 +120,13 @@ export default function SiteNav() {
       </nav>
 
       {menuOpen && (
-        <div className="md:hidden border-t border-white/10 bg-ocean-deep/98 backdrop-blur-md px-5 py-4 space-y-1">
-          {navLinks.map((link) => (
-            <HashLink
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 text-sm text-mist hover:text-white hover:bg-white/8 rounded-xl transition-colors"
-            >
-              {link.label}
-            </HashLink>
-          ))}
-          <HashLink
-            href="/#support"
-            onClick={() => setMenuOpen(false)}
-            className="block mt-2 px-4 py-3 text-sm font-semibold text-center bg-amber-emergency text-ocean-deep rounded-xl"
-          >
-            Get Involved
-          </HashLink>
+        <div className="lg:hidden border-t border-white/10 bg-ocean-deep/98 backdrop-blur-md px-5 py-4 space-y-1">
+          <div className="reading-slot-technical">
+            <NavLinks links={technicalLinks} onNavigate={() => setMenuOpen(false)} stacked />
+          </div>
+          <div className="reading-slot-plain">
+            <NavLinks links={neighborLinks} onNavigate={() => setMenuOpen(false)} stacked />
+          </div>
         </div>
       )}
     </header>

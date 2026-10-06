@@ -1,3 +1,5 @@
+import { ReadingText } from "@/components/ReadingMode";
+
 const regions = [
   {
     id: "island-east",
@@ -31,10 +33,10 @@ export default function IslandLivingSections() {
       <div>
         <h3 className="font-semibold text-ocean-deep mb-2">The same pattern, in every town</h3>
         <p className="text-sm text-ocean-mid max-w-3xl leading-relaxed">
-          Each place below gets what the North Shore pilot gets: a resilience hub, a link to
-          the next town, a short-range mesh, and 72 hours of solar and battery with a spare
-          pack and a propane generator. The dollar figure on this page is only the North Shore.
-          These towns are the plan for later, not a second quote.
+          <ReadingText
+            technical="Each place below gets what the North Shore pilot gets: a resilience hub, a link to the next town, a short-range mesh, and 72 hours of solar and battery with a spare pack and a propane generator. The dollar figure on this page is only the North Shore. These towns are the plan for later, not a second quote."
+            plain="Each town below would get what the North Shore gets: a community site people can go to, a link to the next town, and power of its own for three days. The price on this page is only the North Shore. These towns come later."
+          />
         </p>
       </div>
       {regions.map((region) => (

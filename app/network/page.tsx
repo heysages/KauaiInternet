@@ -1,4 +1,6 @@
 import Link from "next/link";
+import PlainStandIn from "@/components/PlainStandIn";
+import { ViewSwitch } from "@/components/ReadingMode";
 import SiteNav from "@/components/SiteNav";
 import NetworkModeIndicator from "@/components/NetworkModeIndicator";
 import { NetworkModeProvider } from "@/components/NetworkModeContext";
@@ -21,6 +23,19 @@ export default function NetworkPage() {
   return (
     <>
       <SiteNav />
+      <ViewSwitch
+        plain={
+          <PlainStandIn kicker="Neighbor version" title="This page is the technical drawing">
+            <p>
+              Nothing here is on the air. It is a diagram for the people designing the
+              network. What neighbors would notice is on the front page: a phone signal in
+              town on an ordinary day, and a short message that still gets through when the
+              power and the internet are out.
+            </p>
+            <p>Switch to Technical if you want the diagram.</p>
+          </PlainStandIn>
+        }
+        technical={
       <main className="min-h-screen bg-ocean-deep text-white pt-20">
         <div className="max-w-6xl mx-auto section-padding pb-16">
           <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -94,6 +109,8 @@ export default function NetworkPage() {
           </div>
         </div>
       </main>
+        }
+      />
     </>
   );
 }

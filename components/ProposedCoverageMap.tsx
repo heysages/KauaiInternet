@@ -20,6 +20,7 @@ import {
   pilotLinks,
   pilotServiceAreas,
 } from "@/data/proposedCoverage";
+import { ReadingText } from "@/components/ReadingMode";
 import { satelliteBasemapStyle } from "@/lib/mapBasemaps";
 
 const laterLayerIds = [
@@ -268,7 +269,11 @@ export default function ProposedCoverageMap({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <p className="text-sm text-ocean-mid">
-          {showIsland ? "Towns where people live, around the island" : "North Shore pilot only"}
+          {showIsland ? (
+            "Towns where people live, around the island"
+          ) : (
+            <ReadingText technical="North Shore pilot only" plain="North Shore first" />
+          )}
         </p>
         <button
           type="button"
@@ -304,15 +309,24 @@ export default function ProposedCoverageMap({
         <ul className="absolute left-3 bottom-3 max-w-[240px] space-y-1.5 rounded-xl bg-ocean-deep/90 px-3 py-2 text-xs text-white pointer-events-none">
           <li className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-sm bg-brand-teal/80" />
-            Community a pilot hub is meant to serve
+            <ReadingText
+              technical="Community a pilot hub is meant to serve"
+              plain="Town this first build would serve"
+            />
           </li>
           <li className="flex items-center gap-2">
             <span className="h-0.5 w-4 bg-[#f4b942]" />
-            Proposed link between hubs
+            <ReadingText
+              technical="Proposed link between hubs"
+              plain="Link from one community site to the next"
+            />
           </li>
           <li className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full border-2 border-white bg-ocean-deep" />
-            Proposed hub, site not surveyed
+            <ReadingText
+              technical="Proposed hub, site not surveyed"
+              plain="Community site, location not chosen yet"
+            />
           </li>
           {showIsland && (
             <li className="flex items-center gap-2">
@@ -323,11 +337,18 @@ export default function ProposedCoverageMap({
         </ul>
       </div>
       <p className="text-xs text-ocean-mid mt-3 max-w-3xl leading-relaxed">
-        {showIsland
-          ? "Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains, Nāpali, and the canyon interior are left unshaded. The published budget is still only the North Shore pilot."
-          : "Shaded areas are the towns the first build is for. Turn on Whole island to see the same pattern in the other places people live."}{" "}
-        The line between hubs is point-to-point, not a blanket of signal. This is not a
-        measured coverage prediction, and no site is permitted yet.
+        {showIsland ? (
+          <ReadingText
+            technical="Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains, Nāpali, and the canyon interior are left unshaded. The published budget is still only the North Shore pilot."
+            plain="Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains are left blank on purpose. The price on this page is still only the North Shore."
+          />
+        ) : (
+          "Shaded areas are the towns the first build is for. Turn on Whole island to see the same pattern in the other places people live."
+        )}{" "}
+        <ReadingText
+          technical="The line between hubs is point-to-point, not a blanket of signal. This is not a measured coverage prediction, and no site is permitted yet."
+          plain="The line is the link from one community site to the next, not a blanket of phone signal. The color is the town, not a measured coverage map, and no site has a permit yet."
+        />
       </p>
     </div>
   );

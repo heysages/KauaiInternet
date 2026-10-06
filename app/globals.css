@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
+@custom-variant reading-plain (&:where(html.reading-plain *));
+@custom-variant reading-technical (&:where(html:not(.reading-plain) *));
+
+html.reading-plain .reading-slot-technical {
+  display: none !important;
+}
+html:not(.reading-plain) .reading-slot-plain {
+  display: none !important;
+}
+
 :root {
   /* Official Kauai Internet brand palette */
   --brand-navy: #0d2b45;

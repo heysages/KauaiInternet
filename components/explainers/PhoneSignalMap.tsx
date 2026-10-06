@@ -16,6 +16,7 @@ import {
   pilotServiceAreas,
 } from "@/data/proposedCoverage";
 import { useGapFill } from "@/components/GapFillContext";
+import { ReadingText } from "@/components/ReadingMode";
 import { gapFill } from "@/data/resilienceMission";
 import { satelliteBasemapStyle } from "@/lib/mapBasemaps";
 
@@ -194,11 +195,22 @@ export default function PhoneSignalMap() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
         <p className="text-sm text-ocean-mid">
-          {view === "before"
-            ? "Before: where phones already fail, Princeville west to Keʻē"
-            : showFill
-              ? "Filled in: smaller solar nodes in the pockets those radios miss"
-              : "After: towns the new phone radios are aimed at"}
+          {view === "before" ? (
+            <ReadingText
+              technical="Before: where phones already fail, Princeville west to Keʻē"
+              plain="Today: where calls already fail, from Princeville out toward Keʻē"
+            />
+          ) : showFill ? (
+            <ReadingText
+              technical="Filled in: smaller solar nodes in the pockets those radios miss"
+              plain="Filled in: smaller solar spots in the holes between those towns"
+            />
+          ) : (
+            <ReadingText
+              technical="After: towns the new phone radios are aimed at"
+              plain="After: the four towns that would get a phone signal"
+            />
+          )}
         </p>
         <div className="flex flex-wrap items-center gap-2">
         <div className="inline-flex flex-wrap rounded-full border border-sand-warm bg-white p-1" role="group" aria-label="Phone signal">
@@ -234,7 +246,7 @@ export default function PhoneSignalMap() {
           }}
           className="inline-flex items-center gap-3 rounded-full border border-sand-warm bg-white px-3 py-2 text-sm font-medium text-ocean-deep"
         >
-          <span>Gap fill</span>
+          <ReadingText technical="Gap fill" plain="Fill the gaps" />
           <span
             className={`relative h-6 w-11 rounded-full transition-colors ${
               showGapFill ? "bg-ocean-deep" : "bg-sand-warm"
@@ -263,32 +275,55 @@ export default function PhoneSignalMap() {
           {view === "before" ? (
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#c46b5a]/90" />
-              Unreliable phone service in the public record
+              <ReadingText
+                technical="Unreliable phone service in the public record"
+                plain="Where phone service already fails"
+              />
             </li>
           ) : (
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-brand-teal/80" />
-              Town a Band 48 radio is aimed at
+              <ReadingText
+                technical="Town a Band 48 radio is aimed at"
+                plain="A town that would get a signal"
+              />
             </li>
           )}
           {showFill && (
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#e6c07b]/90" />
-              Pocket a solar node would fill
+              <ReadingText
+                technical="Pocket a solar node would fill"
+                plain="A gap a smaller solar spot would fill"
+              />
             </li>
           )}
           <li className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full border-2 border-white bg-ocean-deep" />
-            Proposed hub, site not surveyed
+            <ReadingText
+              technical="Proposed hub, site not surveyed"
+              plain="Community site, location not chosen yet"
+            />
           </li>
         </ul>
       </div>
       <p className="text-xs text-ocean-mid mt-3 max-w-3xl leading-relaxed">
-        {view === "before"
-          ? "Rose marks Hāʻena, Wainiha, and Hanalei. In 2024, fire and emergency management told the County Council that service from this stretch to Keʻē drops or disappears. Princeville and Kīlauea are not drawn as dead. This is not a carrier coverage map."
-          : showFill
-            ? `Gold marks ${gapFill.pockets.length} pockets the 180° town radios do not face. Each pocket would get a smaller solar node: a ${gapFill.radio}, ${gapFill.eirp} of signal and ${gapFill.watts} watts of draw, on ${gapFill.batteries} batteries and ${gapFill.panels} panels, with a short hop back to the nearest hub. It holds 72 hours on the battery and does not get a generator. A walk test adds or drops sites. These nodes are not in the pilot price, and the shade is still not a measured contour.`
-            : "Teal marks the four towns. Each town hub gets one BLiNQ radio covering about 180° of that town. A phone shows this network after it installs the profile. The shade is the town, not a measured signal contour, and it is not Verizon, AT&T, or T-Mobile."}
+        {view === "before" ? (
+          <ReadingText
+            technical="Rose marks Hāʻena, Wainiha, and Hanalei. In 2024, fire and emergency management told the County Council that service from this stretch to Keʻē drops or disappears. Princeville and Kīlauea are not drawn as dead. This is not a carrier coverage map."
+            plain="The rose towns are where people already report that calls drop or disappear, from this stretch out to Keʻē. Princeville and Kīlauea are not drawn as dead. This is not a phone-company coverage map."
+          />
+        ) : showFill ? (
+          <ReadingText
+            technical={`Gold marks ${gapFill.pockets.length} pockets the 180° town radios do not face. Each pocket would get a smaller solar node: a ${gapFill.radio}, ${gapFill.eirp} of signal and ${gapFill.watts} watts of draw, on ${gapFill.batteries} batteries and ${gapFill.panels} panels, with a short hop back to the nearest hub. It holds 72 hours on the battery and does not get a generator. A walk test adds or drops sites. These nodes are not in the pilot price, and the shade is still not a measured contour.`}
+            plain={`Gold marks ${gapFill.pockets.length} gaps the town sites do not face. Each one would get a smaller solar spot that holds for three days on its own batteries. A walk of the roads adds or drops sites. These spots are not in the North Shore price, and the color is still the place, not a measured signal.`}
+          />
+        ) : (
+          <ReadingText
+            technical="Teal marks the four towns. Each town hub gets one BLiNQ radio covering about 180° of that town. A phone shows this network after it installs the profile. The shade is the town, not a measured signal contour, and it is not Verizon, AT&T, or T-Mobile."
+            plain="Teal marks the four towns. A phone uses this signal after it is set up for this network. The color is the town, not a measured footprint, and it is not Verizon, AT&T, or T-Mobile."
+          />
+        )}
       </p>
     </div>
   );

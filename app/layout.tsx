@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
+import { ReadingModeProvider } from "@/components/ReadingMode";
 import WebAnalytics from "@/components/WebAnalytics";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
@@ -54,8 +55,13 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${fraunces.variable} antialiased`}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("kauai-reading-mode")==="plain")document.documentElement.classList.add("reading-plain")}catch(e){}`,
+          }}
+        />
         <WebAnalytics />
-        {children}
+        <ReadingModeProvider>{children}</ReadingModeProvider>
       </body>
     </html>
   );

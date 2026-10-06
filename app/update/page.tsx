@@ -1,4 +1,6 @@
 import Link from "next/link";
+import PlainStandIn from "@/components/PlainStandIn";
+import { ViewSwitch } from "@/components/ReadingMode";
 import SiteNav from "@/components/SiteNav";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 import { siteUpdate } from "@/data/siteUpdate";
@@ -13,6 +15,19 @@ export default function UpdatePage() {
   return (
     <>
       <SiteNav />
+      <ViewSwitch
+        plain={
+          <PlainStandIn kicker="Neighbor version" title="When the power goes out, a lot of connections go quiet">
+            <p>
+              Phones, home internet, and even some radio go down with the electricity.
+              The plan on the front page is about two things: more phone service on an
+              ordinary day, and a short message and a community note that still work
+              when those usual connections are lost.
+            </p>
+            <p>Switch to Technical to read the sourced update.</p>
+          </PlainStandIn>
+        }
+        technical={
       <main className="min-h-screen bg-sand-light pt-20">
         <div className="max-w-3xl mx-auto section-padding pb-16">
           <div className="mb-6">
@@ -140,6 +155,8 @@ export default function UpdatePage() {
           <KauaiInternetLogo variant="dark" compact />
         </footer>
       </main>
+        }
+      />
     </>
   );
 }

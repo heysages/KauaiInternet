@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import KauaiAppMock from "@/components/KauaiAppMock";
+import PlainStandIn from "@/components/PlainStandIn";
+import { ViewSwitch } from "@/components/ReadingMode";
 import SiteNav from "@/components/SiteNav";
 
 export const metadata: Metadata = {
@@ -14,6 +16,21 @@ export default function AppMockPage() {
   return (
     <>
       <SiteNav />
+      <ViewSwitch
+        plain={
+          <PlainStandIn kicker="Neighbor version" title="An app for a note and a short message">
+            <p>
+              This is a preview, not an app you can download yet. Neighbors would open it
+              to read what is open — roads, water, a shelter — and to send a short message
+              when their phone has no service.
+            </p>
+            <p>
+              The people who look after the sites would use the same app to see if a site
+              is running low on power. Switch to Technical to see that preview.
+            </p>
+          </PlainStandIn>
+        }
+        technical={
       <main className="bg-sand-light min-h-screen pt-24 pb-16 px-5 sm:px-8">
         <div className="max-w-6xl mx-auto">
           <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
@@ -60,6 +77,8 @@ export default function AppMockPage() {
           </div>
         </div>
       </main>
+        }
+      />
     </>
   );
 }
