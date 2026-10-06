@@ -66,7 +66,7 @@ export const everydayCoverage = {
     {
       id: "house",
       title: "A call from the house",
-      text: "A house the sector can see uses this network once the phone has the profile. A house behind a ridge, or deep indoors, can still need its own radio. That radio for each house is not in the pilot price.",
+      text: "A house the town radio can see uses this network once the phone has the profile. A house behind a ridge is a gap-fill pocket, not a radio on every home. A subscriber radio for each house is still not in the pilot price.",
     },
     {
       id: "mesh",
@@ -106,6 +106,12 @@ export const rolloutStages = [
     summary: "Hāʻena, Hanalei, Princeville, and Kīlauea. The first corridor that meets KauaiInternet 72.",
   },
   {
+    id: "gap-fill",
+    title: "Gap fill",
+    summary:
+      "Smaller solar nodes in the pockets a town radio does not face: Keʻē, Wainiha, the Hanalei valley, the road off Princeville, Anini, Kalihiwai, Kīlauea point, and Moloaʻa. A walk test adds or drops sites. This phase is not in the pilot price.",
+  },
+  {
     id: "expansion",
     title: "North/East Expansion",
     summary: "Extend the same pattern toward Anahola and Kapaʻa after the pilot corridor is working.",
@@ -117,6 +123,27 @@ export const rolloutStages = [
       "The same hub pattern in the towns where people live: Wailua, Līhuʻe, Kōloa, Kalaheo, Hanapēpē, Waimea, and Kekaha. Not the empty interior.",
   },
 ] as const;
+
+export const gapFill = {
+  radio: "BLiNQ X-300i",
+  radioPrice: 4000,
+  corePrice: 750,
+  watts: 70,
+  eirp: "33 dBm, about 2 watts",
+  coverage: "about 270°",
+  batteries: 2,
+  panels: 2,
+  pockets: [
+    "Keʻē",
+    "Wainiha",
+    "Hanalei valley",
+    "Princeville road",
+    "Anini",
+    "Kalihiwai",
+    "Kīlauea point",
+    "Moloaʻa",
+  ],
+} as const;
 
 export const costEstimateNote =
   "October 2026 budget to buy the corridor new. No contributed gear is subtracted. Listed hardware uses published prices. Labor, freight, cabinets, and overhead are allowances, not quotes.";

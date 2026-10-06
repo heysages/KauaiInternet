@@ -1,10 +1,11 @@
 import ArchitectureDiagram from "@/components/explainers/ArchitectureDiagram";
+import BuildGrowth from "@/components/BuildGrowth";
 import EverydayCoverage from "@/components/explainers/EverydayCoverage";
 import PhoneSignalMap from "@/components/explainers/PhoneSignalMap";
 import OutageTimeline from "@/components/explainers/OutageTimeline";
 import PowerPathDiagram from "@/components/explainers/PowerPathDiagram";
-import RolloutDiagram from "@/components/explainers/RolloutDiagram";
 import WhatStaysDiagram from "@/components/explainers/WhatStaysDiagram";
+import { GapFillProvider } from "@/components/GapFillContext";
 import PilotBudgetBreakdown from "@/components/PilotBudgetBreakdown";
 import IslandPlan from "@/components/IslandPlan";
 import {
@@ -15,7 +16,6 @@ import {
   kauaiInternet72,
   lowellLessons,
   pilotCorridor,
-  rolloutStages,
   type FailureState,
 } from "@/data/resilienceMission";
 
@@ -177,6 +177,7 @@ export default function ResilienceMissionSection() {
             <ArchitectureDiagram />
           </div>
 
+          <GapFillProvider>
           <div id="everyday" className="mb-12 scroll-mt-24">
             <h3 className="font-semibold text-ocean-deep mb-1">The same build on an ordinary day</h3>
             <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
@@ -191,24 +192,8 @@ export default function ResilienceMissionSection() {
             <EverydayCoverage />
           </div>
 
-          <h3 className="font-semibold text-ocean-deep mb-1">How the build grows</h3>
-          <p className="text-sm text-ocean-mid mb-4">
-            North Shore first. East side next. The rest of the island after that.
-          </p>
-          <div className="mb-8">
-            <RolloutDiagram />
-          </div>
-          <ol className="grid lg:grid-cols-3 gap-3">
-            {rolloutStages.map((stage, index) => (
-              <li key={stage.id} className="rounded-2xl border border-sand-warm bg-white p-5">
-                <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-2">
-                  Stage {index + 1}
-                </p>
-                <p className="font-semibold text-ocean-deep mb-2">{stage.title}</p>
-                <p className="text-sm text-ocean-mid leading-relaxed">{stage.summary}</p>
-              </li>
-            ))}
-          </ol>
+          <BuildGrowth />
+          </GapFillProvider>
         </div>
       </section>
 

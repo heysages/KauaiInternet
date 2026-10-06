@@ -127,6 +127,86 @@ export const phoneGapAreas = {
   ),
 };
 
+/**
+ * Pockets the 180° town radios do not face.
+ * Illustrative sites for the gap-fill phase. Not surveyed, and not a signal contour.
+ */
+export const phoneFillAreas = {
+  type: "FeatureCollection" as const,
+  features: [
+    area("kee", "Keʻē", "pilot", "End of the road, west of the Hāʻena radio", [
+      [-159.604, 22.224],
+      [-159.584, 22.226],
+      [-159.582, 22.212],
+      [-159.602, 22.21],
+      [-159.604, 22.224],
+    ]),
+    area("wainiha-pocket", "Wainiha", "pilot", "The road between Hāʻena and Hanalei", [
+      [-159.568, 22.214],
+      [-159.538, 22.212],
+      [-159.54, 22.196],
+      [-159.57, 22.198],
+      [-159.568, 22.214],
+    ]),
+    area("hanalei-valley", "Hanalei valley", "pilot", "Inland of the bay, behind the town radio", [
+      [-159.512, 22.188],
+      [-159.484, 22.186],
+      [-159.486, 22.172],
+      [-159.514, 22.174],
+      [-159.512, 22.188],
+    ]),
+    area("princeville-road", "Princeville road", "pilot", "The drop from the plateau into Hanalei", [
+      [-159.478, 22.22],
+      [-159.456, 22.216],
+      [-159.458, 22.202],
+      [-159.48, 22.206],
+      [-159.478, 22.22],
+    ]),
+    area("anini", "Anini", "pilot", "The coast between Princeville and Kīlauea", [
+      [-159.47, 22.234],
+      [-159.436, 22.232],
+      [-159.438, 22.218],
+      [-159.47, 22.22],
+      [-159.47, 22.234],
+    ]),
+    area("kalihiwai", "Kalihiwai", "pilot", "The bay the town radios do not face", [
+      [-159.436, 22.23],
+      [-159.406, 22.228],
+      [-159.408, 22.214],
+      [-159.438, 22.216],
+      [-159.436, 22.23],
+    ]),
+    area("kilauea-point", "Kīlauea point", "pilot", "The coast north of town", [
+      [-159.414, 22.234],
+      [-159.39, 22.232],
+      [-159.392, 22.22],
+      [-159.416, 22.222],
+      [-159.414, 22.234],
+    ]),
+    area("moloaa", "Moloaʻa", "pilot", "East of Kīlauea, before the next corridor", [
+      [-159.394, 22.2],
+      [-159.366, 22.198],
+      [-159.368, 22.182],
+      [-159.396, 22.184],
+      [-159.394, 22.2],
+    ]),
+  ],
+};
+
+export const phoneFillNodes = {
+  type: "FeatureCollection" as const,
+  features: [
+    hub("kee", "Keʻē", -159.593, 22.218),
+    hub("wainiha-pocket", "Wainiha", -159.554, 22.205),
+    hub("hanalei-valley", "Hanalei valley", -159.499, 22.18),
+    hub("princeville-road", "Princeville road", -159.468, 22.211),
+    hub("anini", "Anini", -159.453, 22.226),
+    hub("kalihiwai", "Kalihiwai", -159.422, 22.222),
+    hub("kilauea-point", "Kīlauea point", -159.402, 22.227),
+    hub("moloaa", "Moloaʻa", -159.381, 22.191),
+  ],
+};
+
 export const pilotCoverageBounds: [[number, number], [number, number]] = [
   [-159.63, 22.17],
   [-159.36, 22.25],

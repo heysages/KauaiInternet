@@ -7,7 +7,16 @@ if (typeof window !== "undefined") {
   maplibregl.setWorkerUrl("/maplibre-gl-csp-worker.js");
 }
 
-import { phoneGapAreas, pilotCoverageBounds, pilotHubs, pilotServiceAreas } from "@/data/proposedCoverage";
+import {
+  phoneFillAreas,
+  phoneFillNodes,
+  phoneGapAreas,
+  pilotCoverageBounds,
+  pilotHubs,
+  pilotServiceAreas,
+} from "@/data/proposedCoverage";
+import { useGapFill } from "@/components/GapFillContext";
+import { gapFill } from "@/data/resilienceMission";
 import { satelliteBasemapStyle } from "@/lib/mapBasemaps";
 
 type PhoneView = "before" | "after";
@@ -16,7 +25,9 @@ export default function PhoneSignalMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [ready, setReady] = useState(false);
+  const { showGapFill, setShowGapFill } = useGapFill();
   const [view, setView] = useState<PhoneView>("before");
+  const showFill = showGapFill && view === "after";
   const [mapError, setMapError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -72,6 +83,53 @@ export default function PhoneSignalMap() {
         paint: { "line-color": "#e6e2d6", "line-width": 2 },
       });
 
+      map.addSource("phone-fill-areas", { type: "geojson", data: phoneFillAreas });
+      map.addLayer({
+        id: "phone-fill-fill",
+        type: "fill",
+        source: "phone-fill-areas",
+        layout: { visibility: "none" },
+        paint: { "fill-color": "#e6c07b", "fill-opacity": 0.55 },
+      });
+      map.addLayer({
+        id: "phone-fill-line",
+        type: "line",
+        source: "phone-fill-areas",
+        layout: { visibility: "none" },
+        paint: { "line-color": "#fff6df", "line-width": 1.5 },
+      });
+      map.addSource("phone-fill-nodes", { type: "geojson", data: phoneFillNodes });
+      map.addLayer({
+        id: "phone-fill-nodes",
+        type: "circle",
+        source: "phone-fill-nodes",
+        layout: { visibility: "none" },
+        paint: {
+          "circle-radius": 5,
+          "circle-color": "#f4b942",
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+      map.addLayer({
+        id: "phone-fill-labels",
+        type: "symbol",
+        source: "phone-fill-nodes",
+        layout: {
+          visibility: "none",
+          "text-field": ["get", "name"],
+          "text-size": 11,
+          "text-font": ["Open Sans Bold"],
+          "text-offset": [0, 1],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": "#ffffff",
+          "text-halo-color": "#0d2b45",
+          "text-halo-width": 1.2,
+        },
+      });
+
       map.addSource("phone-hubs", { type: "geojson", data: pilotHubs });
       map.addLayer({
         id: "phone-hubs",
@@ -116,16 +174,21 @@ export default function PhoneSignalMap() {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    const showAfter = view === "after";
-    const afterVisibility = showAfter ? "visible" : "none";
-    const beforeVisibility = showAfter ? "none" : "visible";
-    for (const id of ["phone-after-fill", "phone-after-line"]) {
-      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", afterVisibility);
-    }
-    for (const id of ["phone-gap-fill", "phone-gap-line"]) {
-      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", beforeVisibility);
-    }
-  }, [view, ready]);
+    const showTowns = view === "after";
+    const showBefore = view === "before";
+    const setVisibility = (ids: string[], visible: boolean) => {
+      const visibility = visible ? "visible" : "none";
+      for (const id of ids) {
+        if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
+      }
+    };
+    setVisibility(["phone-after-fill", "phone-after-line"], showTowns);
+    setVisibility(["phone-gap-fill", "phone-gap-line"], showBefore);
+    setVisibility(
+      ["phone-fill-fill", "phone-fill-line", "phone-fill-nodes", "phone-fill-labels"],
+      showFill,
+    );
+  }, [view, showFill, ready]);
 
   return (
     <div>
@@ -133,9 +196,12 @@ export default function PhoneSignalMap() {
         <p className="text-sm text-ocean-mid">
           {view === "before"
             ? "Before: where phones already fail, Princeville west to Keʻē"
-            : "After: towns the new phone radios are aimed at"}
+            : showFill
+              ? "Filled in: smaller solar nodes in the pockets those radios miss"
+              : "After: towns the new phone radios are aimed at"}
         </p>
-        <div className="inline-flex rounded-full border border-sand-warm bg-white p-1" role="group" aria-label="Phone signal">
+        <div className="flex flex-wrap items-center gap-2">
+        <div className="inline-flex flex-wrap rounded-full border border-sand-warm bg-white p-1" role="group" aria-label="Phone signal">
           <button
             type="button"
             aria-pressed={view === "before"}
@@ -156,6 +222,31 @@ export default function PhoneSignalMap() {
           >
             After
           </button>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={showGapFill}
+          onClick={() => {
+            const next = !showGapFill;
+            setShowGapFill(next);
+            if (next) setView("after");
+          }}
+          className="inline-flex items-center gap-3 rounded-full border border-sand-warm bg-white px-3 py-2 text-sm font-medium text-ocean-deep"
+        >
+          <span>Gap fill</span>
+          <span
+            className={`relative h-6 w-11 rounded-full transition-colors ${
+              showGapFill ? "bg-ocean-deep" : "bg-sand-warm"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+                showGapFill ? "translate-x-5" : "translate-x-0.5"
+              }`}
+            />
+          </span>
+        </button>
         </div>
       </div>
       <div className="relative">
@@ -180,6 +271,12 @@ export default function PhoneSignalMap() {
               Town a Band 48 radio is aimed at
             </li>
           )}
+          {showFill && (
+            <li className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-sm bg-[#e6c07b]/90" />
+              Pocket a solar node would fill
+            </li>
+          )}
           <li className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full border-2 border-white bg-ocean-deep" />
             Proposed hub, site not surveyed
@@ -189,7 +286,9 @@ export default function PhoneSignalMap() {
       <p className="text-xs text-ocean-mid mt-3 max-w-3xl leading-relaxed">
         {view === "before"
           ? "Rose marks Hāʻena, Wainiha, and Hanalei. In 2024, fire and emergency management told the County Council that service from this stretch to Keʻē drops or disappears. Princeville and Kīlauea are not drawn as dead. This is not a carrier coverage map."
-          : "Teal marks the four towns. Each town hub gets one BLiNQ radio covering about 180° of that town. A phone shows this network after it installs the profile. The shade is the town, not a measured signal contour, and it is not Verizon, AT&T, or T-Mobile."}
+          : showFill
+            ? `Gold marks ${gapFill.pockets.length} pockets the 180° town radios do not face. Each pocket would get a smaller solar node: a ${gapFill.radio}, ${gapFill.eirp} of signal and ${gapFill.watts} watts of draw, on ${gapFill.batteries} batteries and ${gapFill.panels} panels, with a short hop back to the nearest hub. It holds 72 hours on the battery and does not get a generator. A walk test adds or drops sites. These nodes are not in the pilot price, and the shade is still not a measured contour.`
+            : "Teal marks the four towns. Each town hub gets one BLiNQ radio covering about 180° of that town. A phone shows this network after it installs the profile. The shade is the town, not a measured signal contour, and it is not Verizon, AT&T, or T-Mobile."}
       </p>
     </div>
   );
