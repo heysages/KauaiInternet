@@ -3,9 +3,9 @@ import IslandPlan from "@/components/IslandPlan";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 import PhoneSignalMap from "@/components/explainers/PhoneSignalMap";
 import { GapFillProvider } from "@/components/GapFillContext";
+import { ScenarioCostCards } from "@/components/ScenarioCost";
 import SupportCTA from "@/components/SupportCTA";
-import { formatUsd, lowellLessons } from "@/data/resilienceMission";
-import { pilotCapital, pilotOperating } from "@/data/pilotBudget";
+import { lowellLessons } from "@/data/resilienceMission";
 import { siteConfig } from "@/lib/site";
 
 const stillWorks = [
@@ -28,6 +28,7 @@ export default function PlainHome() {
   const radioLesson = lowellLessons.find((lesson) => lesson.id === "radio");
 
   return (
+    <GapFillProvider>
     <>
       <section className="relative min-h-[88vh] text-white overflow-hidden">
         <div
@@ -92,13 +93,11 @@ export default function PlainHome() {
             bars in every house, and this is not Verizon, AT&T, or T-Mobile. A phone uses
             the new signal after it is set up for this network.
           </p>
-          <GapFillProvider>
-            <PhoneSignalMap />
-          </GapFillProvider>
+          <PhoneSignalMap />
           <p className="text-sm text-ocean-mid mt-4 max-w-3xl leading-relaxed">
             Fill the gaps adds smaller solar spots in the holes those town sites leave.
-            A walk of the roads would add or drop some of them. That step is later, and
-            it is not in the price below.
+            A walk of the roads would add or drop some of them. The price below follows
+            Before, After, and that switch.
           </p>
         </div>
       </section>
@@ -178,9 +177,9 @@ export default function PlainHome() {
             North Shore first, then the towns where people live
           </h2>
           <p className="text-ocean-mid max-w-3xl leading-relaxed mb-8">
-            The price on this page is only the North Shore. The same kind of community
-            site can follow the coast later, through the east side, Līhuʻe, the south
-            shore, and the west side. Not the empty mountains.
+            The price follows the switches. Whole island adds the east side, Līhuʻe, the
+            south shore, and the west side: the same kind of community site in each of
+            those towns. Not the empty mountains.
           </p>
           <IslandPlan />
         </div>
@@ -191,38 +190,7 @@ export default function PlainHome() {
           <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-3">
             Cost
           </p>
-          <h2 className="heading-display text-3xl sm:text-4xl font-semibold text-ocean-deep mb-4 text-balance">
-            What the North Shore start costs
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 max-w-3xl">
-            <article className="rounded-2xl border border-sand-warm p-6">
-              <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-2">
-                To build
-              </p>
-              <p className="heading-display text-4xl font-semibold text-ocean-deep mb-3">
-                {formatUsd(pilotCapital)}
-              </p>
-              <p className="text-sm text-ocean-mid leading-relaxed">
-                New equipment, solar and batteries, shipping, and the people to install
-                the four town sites. Bought new. Nothing already on a shelf is subtracted.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-sand-warm p-6">
-              <p className="text-xs font-semibold uppercase tracking-widest text-ridge-mid mb-2">
-                Each year
-              </p>
-              <p className="heading-display text-4xl font-semibold text-ocean-deep mb-3">
-                {formatUsd(pilotOperating)}
-              </p>
-              <p className="text-sm text-ocean-mid leading-relaxed">
-                People on call, one week of storm work, and the fees that keep the phone
-                signal legal to turn on. The smaller gap-filling sites are not in either number.
-              </p>
-            </article>
-          </div>
-          <p className="text-sm text-ocean-mid mt-6">
-            Switch to Technical for the part-by-part budget.
-          </p>
+          <ScenarioCostCards />
         </div>
       </section>
 
@@ -248,5 +216,6 @@ export default function PlainHome() {
         </div>
       </footer>
     </>
+    </GapFillProvider>
   );
 }

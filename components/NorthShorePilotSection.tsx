@@ -1,6 +1,7 @@
-import { northShorePilot } from "@/data/northShorePilot";
-import { costEstimateNote, formatUsd, pilotCapital, pilotOperating } from "@/data/resilienceMission";
+import { ScenarioBudgetSummary } from "@/components/ScenarioCost";
 import OperationalStatusBadge from "@/components/OperationalStatusBadge";
+import { northShorePilot } from "@/data/northShorePilot";
+import { costEstimateNote } from "@/data/resilienceMission";
 
 export default function NorthShorePilotSection() {
   return (
@@ -65,13 +66,7 @@ export default function NorthShorePilotSection() {
         </div>
 
         <div className="mt-8 glass-card rounded-2xl p-6">
-          <h3 className="font-semibold text-ocean-deep mb-2">Buy-new project budget</h3>
-          <p className="text-sm text-ocean-deep mb-1">
-            Capital {formatUsd(pilotCapital)}
-          </p>
-          <p className="text-sm text-ocean-deep mb-3">
-            Operating {formatUsd(pilotOperating)} per year
-          </p>
+          <ScenarioBudgetSummary />
           <p className="text-xs text-ocean-mid/80">{costEstimateNote}</p>
           <a
             href="#cost"

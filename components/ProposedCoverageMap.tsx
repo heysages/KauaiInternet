@@ -339,8 +339,8 @@ export default function ProposedCoverageMap({
       <p className="text-xs text-ocean-mid mt-3 max-w-3xl leading-relaxed">
         {showIsland ? (
           <ReadingText
-            technical="Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains, Nāpali, and the canyon interior are left unshaded. The published budget is still only the North Shore pilot."
-            plain="Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains are left blank on purpose. The price on this page is still only the North Shore."
+            technical="Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains, Nāpali, and the canyon interior are left unshaded. The cost on this page includes these towns while Whole island is on."
+            plain="Gold areas are the other towns where people live: the east side, Līhuʻe, the south shore, and the west end. The mountains are left blank on purpose. The price on this page includes these towns while Whole island is on."
           />
         ) : (
           "Shaded areas are the towns the first build is for. Turn on Whole island to see the same pattern in the other places people live."

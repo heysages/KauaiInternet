@@ -5,7 +5,6 @@ import PhoneSignalMap from "@/components/explainers/PhoneSignalMap";
 import OutageTimeline from "@/components/explainers/OutageTimeline";
 import PowerPathDiagram from "@/components/explainers/PowerPathDiagram";
 import WhatStaysDiagram from "@/components/explainers/WhatStaysDiagram";
-import { GapFillProvider } from "@/components/GapFillContext";
 import PilotBudgetBreakdown from "@/components/PilotBudgetBreakdown";
 import IslandPlan from "@/components/IslandPlan";
 import {
@@ -140,7 +139,7 @@ export default function ResilienceMissionSection() {
             <h3 className="font-semibold text-ocean-deep mb-1">Where the plan would serve</h3>
             <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
               The first shaded towns are the North Shore pilot. Whole island turns on the
-              other places people live, and turns them off again.
+              other places people live and adds those towns to the cost.
             </p>
             <IslandPlan />
           </div>
@@ -177,7 +176,6 @@ export default function ResilienceMissionSection() {
             <ArchitectureDiagram />
           </div>
 
-          <GapFillProvider>
           <div id="everyday" className="mb-12 scroll-mt-24">
             <h3 className="font-semibold text-ocean-deep mb-1">The same build on an ordinary day</h3>
             <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
@@ -193,7 +191,6 @@ export default function ResilienceMissionSection() {
           </div>
 
           <BuildGrowth />
-          </GapFillProvider>
         </div>
       </section>
 

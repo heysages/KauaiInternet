@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
-
+import { useGapFill } from "@/components/GapFillContext";
 import IslandLivingSections from "@/components/IslandLivingSections";
 import ProposedCoverageMap from "@/components/ProposedCoverageMap";
 
 export default function IslandPlan() {
-  const [showIsland, setShowIsland] = useState(false);
+  const { showIsland, setShowIsland } = useGapFill();
 
   return (
     <div>

@@ -1,4 +1,5 @@
 import { AddressImpactProvider } from "@/components/AddressImpactContext";
+import { GapFillProvider } from "@/components/GapFillContext";
 import KauaiInternetLogo from "@/components/KauaiInternetLogo";
 import PlainHome from "@/components/PlainHome";
 import { ViewSwitch } from "@/components/ReadingMode";
@@ -31,6 +32,7 @@ export default function Home() {
       <ViewSwitch
         plain={<PlainHome />}
         technical={
+          <GapFillProvider>
           <>
       <CrisisBanner />
       <Hero />
@@ -111,6 +113,7 @@ export default function Home() {
         </div>
       </footer>
           </>
+          </GapFillProvider>
         }
       />
     </AddressImpactProvider>

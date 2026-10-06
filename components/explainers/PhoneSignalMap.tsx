@@ -15,19 +15,17 @@ import {
   pilotHubs,
   pilotServiceAreas,
 } from "@/data/proposedCoverage";
-import { useGapFill } from "@/components/GapFillContext";
+import { useCostScenario, useGapFill } from "@/components/GapFillContext";
 import { ReadingText } from "@/components/ReadingMode";
-import { gapFill } from "@/data/resilienceMission";
+import { formatUsd, gapFill } from "@/data/resilienceMission";
 import { satelliteBasemapStyle } from "@/lib/mapBasemaps";
-
-type PhoneView = "before" | "after";
 
 export default function PhoneSignalMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [ready, setReady] = useState(false);
-  const { showGapFill, setShowGapFill } = useGapFill();
-  const [view, setView] = useState<PhoneView>("before");
+  const { showGapFill, setShowGapFill, view, setView } = useGapFill();
+  const quote = useCostScenario();
   const showFill = showGapFill && view === "after";
   const [mapError, setMapError] = useState<string | null>(null);
 
@@ -239,11 +237,7 @@ export default function PhoneSignalMap() {
           type="button"
           role="switch"
           aria-checked={showGapFill}
-          onClick={() => {
-            const next = !showGapFill;
-            setShowGapFill(next);
-            if (next) setView("after");
-          }}
+          onClick={() => setShowGapFill(!showGapFill)}
           className="inline-flex items-center gap-3 rounded-full border border-sand-warm bg-white px-3 py-2 text-sm font-medium text-ocean-deep"
         >
           <ReadingText technical="Gap fill" plain="Fill the gaps" />
@@ -315,8 +309,8 @@ export default function PhoneSignalMap() {
           />
         ) : showFill ? (
           <ReadingText
-            technical={`Gold marks ${gapFill.pockets.length} pockets the 180° town radios do not face. Each pocket would get a smaller solar node: a ${gapFill.radio}, ${gapFill.eirp} of signal and ${gapFill.watts} watts of draw, on ${gapFill.batteries} batteries and ${gapFill.panels} panels, with a short hop back to the nearest hub. It holds 72 hours on the battery and does not get a generator. A walk test adds or drops sites. These nodes are not in the pilot price, and the shade is still not a measured contour.`}
-            plain={`Gold marks ${gapFill.pockets.length} gaps the town sites do not face. Each one would get a smaller solar spot that holds for three days on its own batteries. A walk of the roads adds or drops sites. These spots are not in the North Shore price, and the color is still the place, not a measured signal.`}
+            technical={`Gold marks ${gapFill.pockets.length} pockets the 180° town radios do not face. Each pocket would get a smaller solar node: a ${gapFill.radio}, ${gapFill.eirp} of signal and ${gapFill.watts} watts of draw, on ${gapFill.batteries} batteries and ${gapFill.panels} panels, with a short hop back to the nearest hub. It holds 72 hours on the battery and does not get a generator. A walk test adds or drops sites. The cost under the switches adds these nodes on top of the four towns. The shade is still not a measured contour.`}
+            plain={`Gold marks ${gapFill.pockets.length} gaps the town sites do not face. Each one would get a smaller solar spot that holds for three days on its own batteries. A walk of the roads adds or drops sites. The cost under the switches includes these spots. The color is still the place, not a measured signal.`}
           />
         ) : (
           <ReadingText
@@ -324,6 +318,13 @@ export default function PhoneSignalMap() {
             plain="Teal marks the four towns. A phone uses this signal after it is set up for this network. The color is the town, not a measured footprint, and it is not Verizon, AT&T, or T-Mobile."
           />
         )}
+      </p>
+      <p className="text-sm font-medium text-ocean-deep mt-3">
+        <ReadingText
+          technical={quote.name}
+          plain={quote.plainName}
+        />{" "}
+        To build {formatUsd(quote.capital)}. Each year {formatUsd(quote.operating)}.
       </p>
     </div>
   );

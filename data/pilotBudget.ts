@@ -494,6 +494,641 @@ export const budgetGroups: { id: BudgetGroupId; label: string }[] = [
   { id: "labor", label: "Labor" },
 ];
 
+/**
+ * Eight pocket nodes the town radios do not face.
+ * Listed lines use the same shops as the pilot. Allowances use the same rates.
+ * A walk test can add or drop a site, so this is the illustrated eight, not a survey.
+ */
+export const gapFillCapitalLines: BudgetLine[] = [
+  {
+    id: "gap-radios",
+    group: "equipment",
+    label: "BLiNQ X-300i pocket radios",
+    detail:
+      "One at each of eight pockets: Keʻē, Wainiha, the Hanalei valley, the road off Princeville, Anini, Kalihiwai, Kīlauea point, and Moloaʻa. The shop lists the DC model at $4,000. About 270° and 33 dBm, 70 watts maximum, on the 48 volt bus. A walk test can add or drop a site.",
+    quantity: 8,
+    unitDollars: 4000,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, X-300i DC",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/x-300i-enodeb-dc/",
+  },
+  {
+    id: "gap-spare-radio",
+    group: "equipment",
+    label: "Spare pocket radio",
+    detail: "One spare X-300i, so a failed pocket radio is a swap and not a mainland reorder.",
+    quantity: 1,
+    unitDollars: 4000,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, X-300i DC",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/x-300i-enodeb-dc/",
+  },
+  {
+    id: "gap-epc",
+    group: "equipment",
+    label: "Pocket core licenses",
+    detail:
+      "The same embedded EPC license as the town hubs, one per live pocket radio and one for the spare.",
+    quantity: 9,
+    unitDollars: 750,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, embedded EPC license",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/embedded-epc-license/",
+  },
+  {
+    id: "gap-hop",
+    group: "equipment",
+    label: "LiteBeam hop radios",
+    detail:
+      "A pair for each pocket: one at the node and one at the nearest town hub. B&H lists the LiteBeam 5AC Gen2 at $71. The hop is how the pocket reaches the town. It is not a second phone signal.",
+    quantity: 16,
+    unitDollars: 71,
+    basis: "listed",
+    sourceLabel: "B&H, LiteBeam 5AC Gen2",
+    sourceHref:
+      "https://www.bhphotovideo.com/c/product/1348249-REG/ubiquiti_networks_lbe_5ac_gen2_us_litebeam_ac_gen2_airmax.html",
+  },
+  {
+    id: "gap-hop-spare",
+    group: "equipment",
+    label: "Spare hop radios",
+    detail: "Two spare LiteBeams for the pocket hops.",
+    quantity: 2,
+    unitDollars: 71,
+    basis: "listed",
+    sourceLabel: "B&H, LiteBeam 5AC Gen2",
+    sourceHref:
+      "https://www.bhphotovideo.com/c/product/1348249-REG/ubiquiti_networks_lbe_5ac_gen2_us_litebeam_ac_gen2_airmax.html",
+  },
+  {
+    id: "gap-batteries",
+    group: "power",
+    label: "Pocket batteries",
+    detail:
+      "Two EG4 packs per pocket. One pack’s usable energy is short of 70 watts plus the hop for 72 hours. Two packs cover it. These nodes do not get a generator or a third spare pack.",
+    quantity: 16,
+    unitDollars: 1471,
+    basis: "listed",
+    sourceLabel: "SanTan Solar, EG4 LifePower4 V2",
+    sourceHref:
+      "https://www.santansolar.com/product/eg4-lifepower-4-v2-lithium-battery-48v-100ah-ul-1973-ul-9540a/",
+  },
+  {
+    id: "gap-lynx",
+    group: "power",
+    label: "Pocket fuse buses",
+    detail: "One Victron Lynx Distributor per pocket for the two packs. Same listed price as the town hubs.",
+    quantity: 8,
+    unitDollars: 233,
+    basis: "listed",
+    sourceLabel: "Current Connected, Lynx Distributor M10",
+    sourceHref:
+      "https://www.currentconnected.com/product/victron-lynx-distributor-power-distribution-system-m10",
+  },
+  {
+    id: "gap-fuses",
+    group: "power",
+    label: "Pocket battery fuses",
+    detail: "The Lynx ships without fuses. Same fuse-kit allowance as a pilot site.",
+    quantity: 8,
+    unitDollars: 125,
+    basis: "allowance",
+  },
+  {
+    id: "gap-mppt",
+    group: "power",
+    label: "Pocket charge controllers",
+    detail:
+      "The same 48-volt SmartSolar as the town hubs. Two panels do not use its full capacity. A 12- or 24-volt controller cannot charge this battery.",
+    quantity: 8,
+    unitDollars: 502,
+    basis: "listed",
+    sourceLabel: "EXPLORIST.life, SmartSolar MPPT 250/70",
+    sourceHref: "https://shop.explorist.life/shop/all-products/victron-smartsolar-mppt-25070/",
+  },
+  {
+    id: "gap-panels",
+    group: "power",
+    label: "Pocket solar modules",
+    detail: "Two 400W modules per pocket, 800 watts. Same per-panel allowance as the town arrays.",
+    quantity: 16,
+    unitDollars: 210,
+    basis: "allowance",
+  },
+  {
+    id: "gap-dcdc",
+    group: "power",
+    label: "48-to-24 volt converters",
+    detail:
+      "The LiteBeam at the pocket runs on 24 volts. The town hub powers its own end. Allowance for a small isolated converter at each pocket. A US shop price for that converter is not locked.",
+    quantity: 8,
+    unitDollars: 75,
+    basis: "allowance",
+  },
+  {
+    id: "gap-mount",
+    group: "equipment",
+    label: "Pocket pole and enclosure",
+    detail:
+      "Pole, small enclosure, and DC jumper per pocket. Not the Sunflower kit, which adds an AC power supply these nodes do not use. Allowance, not a catalog bundle.",
+    quantity: 8,
+    unitDollars: 400,
+    basis: "allowance",
+  },
+  {
+    id: "gap-freight",
+    group: "freight",
+    label: "Freight for the pocket nodes",
+    detail:
+      "Extra ocean freight for 16 batteries and 16 panels on top of the pilot shipment. Allowance, not a carrier quote.",
+    quantity: 1,
+    unitDollars: 4000,
+    basis: "allowance",
+  },
+  {
+    id: "gap-permits",
+    group: "survey",
+    label: "Pocket permits",
+    detail:
+      "Electrical permit allowance per pocket. Not a county fee schedule. A walk test can drop a site before this is filed.",
+    quantity: 8,
+    unitDollars: 500,
+    basis: "allowance",
+  },
+  {
+    id: "gap-cbrs",
+    group: "survey",
+    label: "Pocket radio registration",
+    detail:
+      "Same $400 per Category B radio as the four town radios. Eight live pocket radios. The spare stays on the shelf.",
+    quantity: 1,
+    unitDollars: 3200,
+    basis: "allowance",
+  },
+  {
+    id: "gap-labor",
+    group: "labor",
+    label: "Pocket install",
+    detail:
+      "128 hours at $185. Two people for one day at each of eight pockets, the same bill rate as the town radio install.",
+    quantity: 128,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+  {
+    id: "gap-walk",
+    group: "labor",
+    label: "Walk test",
+    detail:
+      "16 hours at $185. Two people for one day to walk the pockets and add or drop a site before the order is placed.",
+    quantity: 16,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+];
+
+/**
+ * Nine more town hubs on the coast where people live.
+ * Anahola, Kapaʻa, Wailua, Līhuʻe, Kōloa (with Poʻipū), Kalaheo,
+ * Hanapēpē (with ʻEleʻele), Waimea, and Kekaha.
+ * Each one is a town hub, not a ridge relay: phone radio, seven batteries,
+ * solar, generator, and a link to the next town. A survey can still add a
+ * ridge relay where two towns cannot see each other. That relay is not priced.
+ */
+const laterTowns = 9;
+const laterHops = 9;
+
+export const islandCapitalLines: BudgetLine[] = [
+  {
+    id: "island-af",
+    group: "equipment",
+    label: "Backbone radios for the rest of the coast",
+    detail:
+      "Two airFiber 5XHD radios on each of nine new hops: Kīlauea to Anahola, Anahola to Kapaʻa, Kapaʻa to Wailua, Wailua to Līhuʻe, Līhuʻe to Kōloa, Kōloa to Kalaheo, Kalaheo to Hanapēpē, Hanapēpē to Waimea, and Waimea to Kekaha. Same listed radio as the North Shore.",
+    quantity: laterHops * 2,
+    unitDollars: 429,
+    basis: "listed",
+    sourceLabel: "Ubiquiti store, airFiber 5XHD",
+    sourceHref: "https://store.ui.com/us/en/products/airfiber-5xhd-1",
+  },
+  {
+    id: "island-spare-radios",
+    group: "equipment",
+    label: "Spare backbone radios",
+    detail: "Four spare airFiber radios for the longer coast, so a failed hop is not a mainland reorder.",
+    quantity: 4,
+    unitDollars: 429,
+    basis: "listed",
+    sourceLabel: "Ubiquiti store, airFiber 5XHD",
+    sourceHref: "https://store.ui.com/us/en/products/airfiber-5xhd-1",
+  },
+  {
+    id: "island-dishes",
+    group: "equipment",
+    label: "Backbone dishes",
+    detail: "One 30 dBi RocketDish per working radio. Spares do not get a dish until they are installed.",
+    quantity: laterHops * 2,
+    unitDollars: 183,
+    basis: "listed",
+    sourceLabel: "NewTech Industries, RD-5G30",
+    sourceHref: "https://www.newtechindustries.com/ubiquiti-rd-5g30-5ghz-rocketdish-30dbi-2x2/",
+  },
+  {
+    id: "island-mounts",
+    group: "equipment",
+    label: "Dish mount kits",
+    detail: "Same airFiber mount allowance as the North Shore, one per working radio.",
+    quantity: laterHops * 2,
+    unitDollars: 99,
+    basis: "allowance",
+  },
+  {
+    id: "island-gateways",
+    group: "equipment",
+    label: "Mesh gateways",
+    detail: "One WisMesh Ethernet gateway at each of the nine town sites. Same listed price as the pilot.",
+    quantity: laterTowns,
+    unitDollars: 115,
+    basis: "listed",
+    sourceLabel: "Rokland, WisMesh Ethernet gateway",
+    sourceHref: "https://store.rokland.com/products/wismesh-ethernet-gateway",
+  },
+  {
+    id: "island-mesh",
+    group: "equipment",
+    label: "Community mesh radios",
+    detail: "Five handhelds at each town, the same allowance as the North Shore towns.",
+    quantity: laterTowns * 5,
+    unitDollars: 65,
+    basis: "allowance",
+  },
+  {
+    id: "island-routers",
+    group: "equipment",
+    label: "Site routers",
+    detail: "One router at each town site. Same allowance as the pilot.",
+    quantity: laterTowns,
+    unitDollars: 250,
+    basis: "allowance",
+  },
+  {
+    id: "island-pcs",
+    group: "equipment",
+    label: "Hub computers",
+    detail: "One fanless computer at each town, to hold the local status note.",
+    quantity: laterTowns,
+    unitDollars: 650,
+    basis: "allowance",
+  },
+  {
+    id: "island-poe",
+    group: "equipment",
+    label: "PoE switches",
+    detail: "One small PoE switch at each town. The phone radio stays on the 48 volt battery bus.",
+    quantity: laterTowns,
+    unitDollars: 200,
+    basis: "allowance",
+  },
+  {
+    id: "island-phone",
+    group: "equipment",
+    label: "Town phone radios",
+    detail:
+      "One BLiNQ FW-300i at each of the nine towns, the same radio as Hāʻena, Hanalei, Princeville, and Kīlauea. Kōloa covers Poʻipū. Hanapēpē covers ʻEleʻele. About 180° of that town, on the 48 volt bus.",
+    quantity: laterTowns,
+    unitDollars: 8000,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, FW-300i Band 48",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/fw-300i-band-48-enodeb/",
+  },
+  {
+    id: "island-spare-phone",
+    group: "equipment",
+    label: "Spare town phone radios",
+    detail: "Two spare FW-300i radios, one kept for the east side and one for the west side.",
+    quantity: 2,
+    unitDollars: 8000,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, FW-300i Band 48",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/fw-300i-band-48-enodeb/",
+  },
+  {
+    id: "island-epc",
+    group: "equipment",
+    label: "Town core licenses",
+    detail: "One embedded EPC license per live town radio and one per spare. Same $750 license.",
+    quantity: laterTowns + 2,
+    unitDollars: 750,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, embedded EPC license",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/embedded-epc-license/",
+  },
+  {
+    id: "island-profiles",
+    group: "equipment",
+    label: "Phone profiles for the other towns",
+    detail: "Three more packs of 100 profiles, the same allowance as the North Shore’s first pack. Not a carrier plan.",
+    quantity: 3,
+    unitDollars: 1500,
+    basis: "allowance",
+  },
+  {
+    id: "island-starlink",
+    group: "equipment",
+    label: "Starlink Mini kits",
+    detail: "Two more kits, at Līhuʻe and Waimea, so the east-side services and the west end each have a path off the island. Same listed Mini price.",
+    quantity: 2,
+    unitDollars: 199,
+    basis: "listed",
+    sourceLabel: "Starlink Mini",
+    sourceHref: "https://starlink.com/cd/mini-product-us",
+  },
+  {
+    id: "island-batteries",
+    group: "power",
+    label: "Town batteries",
+    detail:
+      "Seven EG4 packs at each town, the same bank the North Shore towns use so the phone radio stays inside 72 hours. No extra ridge relay is included. A survey can add one later if two towns cannot see each other.",
+    quantity: laterTowns * 7,
+    unitDollars: 1471,
+    basis: "listed",
+    sourceLabel: "SanTan Solar, EG4 LifePower4 V2",
+    sourceHref: "https://www.santansolar.com/product/eg4-lifepower-4-v2-lithium-battery-48v-100ah-ul-1973-ul-9540a/",
+  },
+  {
+    id: "island-hot-swap",
+    group: "power",
+    label: "Hot-swap spare batteries",
+    detail: "One spare pack at each town, stored charged, same as the North Shore sites.",
+    quantity: laterTowns,
+    unitDollars: 1471,
+    basis: "listed",
+    sourceLabel: "SanTan Solar, EG4 LifePower4 V2",
+    sourceHref: "https://www.santansolar.com/product/eg4-lifepower-4-v2-lithium-battery-48v-100ah-ul-1973-ul-9540a/",
+  },
+  {
+    id: "island-lynx",
+    group: "power",
+    label: "Fuse buses",
+    detail: "Two Lynx distributors per town, eight fuse positions, same as a North Shore town hub.",
+    quantity: laterTowns * 2,
+    unitDollars: 233,
+    basis: "listed",
+    sourceLabel: "Current Connected, Lynx Distributor M10",
+    sourceHref: "https://www.currentconnected.com/product/victron-lynx-distributor-power-distribution-system-m10",
+  },
+  {
+    id: "island-fuses",
+    group: "power",
+    label: "Battery fuses",
+    detail: "Same fuse-kit allowance as a pilot site. The Lynx ships without fuses.",
+    quantity: laterTowns,
+    unitDollars: 125,
+    basis: "allowance",
+  },
+  {
+    id: "island-inverters",
+    group: "power",
+    label: "Inverter chargers",
+    detail: "One MultiPlus-II 48/5000 per town. Same listed price as the North Shore.",
+    quantity: laterTowns,
+    unitDollars: 1459,
+    basis: "listed",
+    sourceLabel: "Current Connected, MultiPlus-II 48/5000 120V",
+    sourceHref: "https://www.currentconnected.com/product/victron-48v-multiplus-2-5kva-120v-inverter-70a-charger-ul-1741",
+  },
+  {
+    id: "island-mppt",
+    group: "power",
+    label: "Charge controllers",
+    detail: "One SmartSolar MPPT 250/70 per town, for an eight-panel array. Same listed price.",
+    quantity: laterTowns,
+    unitDollars: 502,
+    basis: "listed",
+    sourceLabel: "EXPLORIST.life, SmartSolar MPPT 250/70",
+    sourceHref: "https://shop.explorist.life/shop/all-products/victron-smartsolar-mppt-25070/",
+  },
+  {
+    id: "island-panels",
+    group: "power",
+    label: "Solar modules",
+    detail: "Eight 400W modules per town, 3.2 kW. Same per-panel allowance as the North Shore.",
+    quantity: laterTowns * 8,
+    unitDollars: 210,
+    basis: "allowance",
+  },
+  {
+    id: "island-generators",
+    group: "power",
+    label: "Propane generators",
+    detail: "One Champion 201319 per town. The 72 hours are still the solar and the batteries. The generator is the refill after that.",
+    quantity: laterTowns,
+    unitDollars: 959,
+    basis: "listed",
+    sourceLabel: "SuperGen, Champion 201319",
+    sourceHref: "https://www.supergenproducts.com/product/201319-4500w-champion-electric-start-dual-fuel-inverter-with-co-shield/",
+  },
+  {
+    id: "island-propane",
+    group: "power",
+    label: "Propane cache",
+    detail: "Four 20-pound tanks at each town, bought on island. Same allowance as a North Shore site.",
+    quantity: laterTowns * 4,
+    unitDollars: 85,
+    basis: "allowance",
+  },
+  {
+    id: "island-bos",
+    group: "power",
+    label: "Racks, racking, generator inlet",
+    detail: "Same per-site allowance as a North Shore town hub: battery rack, eight-panel racking, generator inlet, propane cage, surge protection, conduit, and grounding.",
+    quantity: laterTowns,
+    unitDollars: 2400,
+    basis: "allowance",
+  },
+  {
+    id: "island-freight",
+    group: "freight",
+    label: "Freight for the other towns",
+    detail: "The North Shore shipment is $18,000 for five sites, $3,600 a site. Nine more town hubs use that same per-site allowance. Not a carrier quote.",
+    quantity: laterTowns,
+    unitDollars: 3600,
+    basis: "allowance",
+  },
+  {
+    id: "island-drone",
+    group: "survey",
+    label: "Path survey",
+    detail: "Nine days at the same $1,800 day rate, one day along each new hop, including a weather hold. The drone bought for the North Shore is reused.",
+    quantity: laterHops,
+    unitDollars: 1800,
+    basis: "allowance",
+  },
+  {
+    id: "island-lift",
+    group: "survey",
+    label: "Boom lifts",
+    detail: "Two lift rentals, one for the east side and one for the west side. Same $3,000 allowance as the North Shore rental.",
+    quantity: 2,
+    unitDollars: 3000,
+    basis: "allowance",
+  },
+  {
+    id: "island-permits",
+    group: "survey",
+    label: "Permits",
+    detail: "The North Shore permit allowance is $10,000 for five sites, $2,000 a site. Nine more towns use that same allowance. Not a county fee schedule.",
+    quantity: laterTowns,
+    unitDollars: 2000,
+    basis: "allowance",
+  },
+  {
+    id: "island-cbrs",
+    group: "survey",
+    label: "Phone-radio registration",
+    detail: "Same $400 per Category B radio as the North Shore. Nine live town radios. The two spares stay on the shelf.",
+    quantity: 1,
+    unitDollars: laterTowns * 400,
+    basis: "allowance",
+  },
+  {
+    id: "island-labor",
+    group: "labor",
+    label: "Install and alignment",
+    detail: "720 hours at $185. The North Shore prices five sites at 80 hours each. These nine towns use that same allowance: two people for five days, including the drive.",
+    quantity: laterTowns * 80,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+  {
+    id: "island-phone-install",
+    group: "labor",
+    label: "Phone-radio install",
+    detail: "144 hours at $185. Two people for one day at each town, the same allowance as a North Shore town radio.",
+    quantity: laterTowns * 16,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+  {
+    id: "island-design",
+    group: "labor",
+    label: "RF and electrical design",
+    detail: "120 hours at $185 for the nine new hops, the phone-radio aim in each town, and the permit drawings. The North Shore design block was 80 hours.",
+    quantity: 120,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+];
+
+export const islandOperatingLines: BudgetLine[] = [
+  {
+    id: "island-starlink-service",
+    group: "equipment",
+    label: "Starlink service",
+    detail: "The Līhuʻe and Waimea dishes on the same Roam 300GB plan, $80 a month each.",
+    quantity: 24,
+    unitDollars: 80,
+    basis: "listed",
+    sourceLabel: "Starlink service plans",
+    sourceHref: "https://starlink.com/service-plans",
+  },
+  {
+    id: "island-maintenance",
+    group: "labor",
+    label: "Maintenance labor",
+    detail: "90 hours at $185, about ten hours a year at each of the nine towns. The North Shore quarterly block stays its own line.",
+    quantity: 90,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+  {
+    id: "island-access",
+    group: "overhead",
+    label: "Site access",
+    detail: "Same $200 a month assumption at each of the nine towns, if the roof or yard is not donated.",
+    quantity: laterTowns * 12,
+    unitDollars: 200,
+    basis: "allowance",
+  },
+  {
+    id: "island-insurance",
+    group: "overhead",
+    label: "Equipment insurance",
+    detail: "The North Shore allowance is $3,600. This adds $6,500 for the nine town hubs. Not a broker quote.",
+    quantity: 1,
+    unitDollars: 6500,
+    basis: "allowance",
+  },
+  {
+    id: "island-admin",
+    group: "labor",
+    label: "Admin and bookkeeping",
+    detail: "Another four hours a month, at the same $100 rate, once the coast is more than the North Shore.",
+    quantity: 48,
+    unitDollars: 100,
+    basis: "allowance",
+  },
+  {
+    id: "island-on-call",
+    group: "labor",
+    label: "Second on-call seat",
+    detail: "Another person at $60 a day, so Līhuʻe and the west side are not waiting on a drive from the North Shore. The first seat stays the North Shore line.",
+    quantity: 365,
+    unitDollars: 60,
+    basis: "allowance",
+  },
+  {
+    id: "island-outage",
+    group: "labor",
+    label: "Outage operations",
+    detail: "Another 80 hours at $185, one more week of two people, for the towns past Kīlauea. A longer outage still adds hours beyond this.",
+    quantity: 80,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+  {
+    id: "island-fuel",
+    group: "power",
+    label: "Generator exercise fuel",
+    detail: "The North Shore fuel allowance is $900 for five sites, $180 a site. Nine more towns use that same allowance.",
+    quantity: laterTowns,
+    unitDollars: 180,
+    basis: "allowance",
+  },
+  {
+    id: "island-spares",
+    group: "equipment",
+    label: "Spares reserve",
+    detail: "Annual set-aside for the longer coast, on top of the North Shore reserve. Not a replacement schedule.",
+    quantity: 1,
+    unitDollars: 3000,
+    basis: "allowance",
+  },
+];
+
+export const gapFillOperatingLines: BudgetLine[] = [
+  {
+    id: "gap-access",
+    group: "overhead",
+    label: "Pocket site access",
+    detail:
+      "Same $200 a month assumption as the pilot sites, for eight pockets, if the pole or yard is not donated. Drop this line if hosts give the spot.",
+    quantity: 96,
+    unitDollars: 200,
+    basis: "allowance",
+  },
+  {
+    id: "gap-maintenance",
+    group: "labor",
+    label: "Pocket maintenance",
+    detail:
+      "32 hours at $185, about four hours a year at each pocket. The on-call roster and the outage week stay the pilot lines. They already cover this corridor. The spectrum fee does not go up: the $500 a month already includes the first 200 radios.",
+    quantity: 32,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+];
+
 export function lineTotal(line: BudgetLine): number {
   return line.quantity * line.unitDollars;
 }
@@ -502,30 +1137,122 @@ export function groupTotal(lines: BudgetLine[], group: BudgetGroupId): number {
   return lines.filter((line) => line.group === group).reduce((sum, line) => sum + lineTotal(line), 0);
 }
 
-const directCapital = budgetLines.reduce((sum, line) => sum + lineTotal(line), 0);
-const materialsAndFreight =
-  groupTotal(budgetLines, "equipment") +
-  groupTotal(budgetLines, "power") +
-  groupTotal(budgetLines, "freight") +
-  groupTotal(budgetLines, "survey");
+export type PricedBuild = {
+  capitalLines: BudgetLine[];
+  operatingLines: BudgetLine[];
+  capital: number;
+  operating: number;
+  capitalOverhead: number;
+  capitalGet: number;
+  capitalContingency: number;
+  operatingGet: number;
+  capitalBreakdown: { id: string; label: string; amount: number }[];
+};
 
-export const capitalOverhead = Math.round(directCapital * overheadRate);
-export const capitalBeforeTax = directCapital + capitalOverhead;
-export const capitalGet = Math.round(capitalBeforeTax * kauaiGetRate);
-export const capitalContingency = Math.round(materialsAndFreight * materialsContingencyRate);
-export const pilotCapital = capitalBeforeTax + capitalGet + capitalContingency;
+export function priceBuild(capitalLines: BudgetLine[], yearlyLines: BudgetLine[]): PricedBuild {
+  const directCapital = capitalLines.reduce((sum, line) => sum + lineTotal(line), 0);
+  const materialsAndFreight =
+    groupTotal(capitalLines, "equipment") +
+    groupTotal(capitalLines, "power") +
+    groupTotal(capitalLines, "freight") +
+    groupTotal(capitalLines, "survey");
+  const overhead = Math.round(directCapital * overheadRate);
+  const beforeTax = directCapital + overhead;
+  const get = Math.round(beforeTax * kauaiGetRate);
+  const contingency = Math.round(materialsAndFreight * materialsContingencyRate);
+  const directOperating = yearlyLines.reduce((sum, line) => sum + lineTotal(line), 0);
+  const yearlyGet = Math.round(directOperating * kauaiGetRate);
+  return {
+    capitalLines,
+    operatingLines: yearlyLines,
+    capital: beforeTax + get + contingency,
+    operating: directOperating + yearlyGet,
+    capitalOverhead: overhead,
+    capitalGet: get,
+    capitalContingency: contingency,
+    operatingGet: yearlyGet,
+    capitalBreakdown: [
+      ...budgetGroups.map((group) => ({
+        id: group.id,
+        label: group.label,
+        amount: groupTotal(capitalLines, group.id),
+      })),
+      { id: "overhead", label: "Overhead and margin", amount: overhead },
+      { id: "get", label: "Kauaʻi GET", amount: get },
+      { id: "contingency", label: "Materials contingency", amount: contingency },
+    ],
+  };
+}
 
-const directOperating = operatingLines.reduce((sum, line) => sum + lineTotal(line), 0);
-export const operatingGet = Math.round(directOperating * kauaiGetRate);
-export const pilotOperating = directOperating + operatingGet;
+const pilotQuote = priceBuild(budgetLines, operatingLines);
+export const capitalOverhead = pilotQuote.capitalOverhead;
+export const capitalGet = pilotQuote.capitalGet;
+export const capitalContingency = pilotQuote.capitalContingency;
+export const pilotCapital = pilotQuote.capital;
+export const operatingGet = pilotQuote.operatingGet;
+export const pilotOperating = pilotQuote.operating;
+export const capitalBreakdown = pilotQuote.capitalBreakdown;
 
-export const capitalBreakdown = [
-  ...budgetGroups.map((group) => ({
-    id: group.id,
-    label: group.label,
-    amount: groupTotal(budgetLines, group.id),
-  })),
-  { id: "overhead", label: "Overhead and margin", amount: capitalOverhead },
-  { id: "get", label: "Kauaʻi GET", amount: capitalGet },
-  { id: "contingency", label: "Materials contingency", amount: capitalContingency },
-];
+export type CostScenario = "before" | "after" | "fill";
+
+export type CostSelection = {
+  view: "before" | "after";
+  gap: boolean;
+  island: boolean;
+};
+
+const emptyQuote = priceBuild([], []);
+
+export function quoteSelection(
+  selection: CostSelection,
+): PricedBuild & CostSelection & { name: string; plainName: string } {
+  if (selection.view === "before") {
+    return {
+      view: "before",
+      gap: false,
+      island: false,
+      name: "Before: nothing in this plan is built yet.",
+      plainName: "Today: this plan is not built yet.",
+      ...emptyQuote,
+    };
+  }
+
+  const extras = [
+    selection.gap ? "the eight pockets" : "",
+    selection.island ? "nine more towns around the coast" : "",
+  ].filter(Boolean);
+  const plainExtras = [
+    selection.gap ? "the gaps filled in" : "",
+    selection.island ? "the rest of the coast" : "",
+  ].filter(Boolean);
+
+  return {
+    view: "after",
+    gap: selection.gap,
+    island: selection.island,
+    name: extras.length
+      ? `After: the four North Shore towns, plus ${extras.join(" and ")}.`
+      : "After: the four North Shore towns.",
+    plainName: plainExtras.length
+      ? `The four towns, plus ${plainExtras.join(" and ")}.`
+      : "The four towns.",
+    ...priceBuild(
+      [
+        ...budgetLines,
+        ...(selection.gap ? gapFillCapitalLines : []),
+        ...(selection.island ? islandCapitalLines : []),
+      ],
+      [
+        ...operatingLines,
+        ...(selection.gap ? gapFillOperatingLines : []),
+        ...(selection.island ? islandOperatingLines : []),
+      ],
+    ),
+  };
+}
+
+export function quoteFor(scenario: CostScenario) {
+  if (scenario === "before") return quoteSelection({ view: "before", gap: false, island: false });
+  if (scenario === "fill") return quoteSelection({ view: "after", gap: true, island: false });
+  return quoteSelection({ view: "after", gap: false, island: false });
+}

@@ -34,8 +34,8 @@ export default function IslandLivingSections() {
         <h3 className="font-semibold text-ocean-deep mb-2">The same pattern, in every town</h3>
         <p className="text-sm text-ocean-mid max-w-3xl leading-relaxed">
           <ReadingText
-            technical="Each place below gets what the North Shore pilot gets: a resilience hub, a link to the next town, a short-range mesh, and 72 hours of solar and battery with a spare pack and a propane generator. The dollar figure on this page is only the North Shore. These towns are the plan for later, not a second quote."
-            plain="Each town below would get what the North Shore gets: a community site people can go to, a link to the next town, and power of its own for three days. The price on this page is only the North Shore. These towns come later."
+            technical="Each place below gets what a North Shore town hub gets: a resilience hub, a link to the next town, a short-range mesh, a phone radio for that town, and 72 hours of solar and battery with a spare pack and a propane generator. Whole island adds these nine towns to the cost on this page. A survey can still add a ridge relay where two towns cannot see each other. That relay is not in the price."
+            plain="Each town below gets what the North Shore gets: a community site, a link to the next town, phone service for that town, and power of its own for three days. While Whole island is on, the price on this page includes these towns."
           />
         </p>
       </div>

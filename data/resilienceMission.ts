@@ -109,18 +109,19 @@ export const rolloutStages = [
     id: "gap-fill",
     title: "Gap fill",
     summary:
-      "Smaller solar nodes in the pockets a town radio does not face: Keʻē, Wainiha, the Hanalei valley, the road off Princeville, Anini, Kalihiwai, Kīlauea point, and Moloaʻa. A walk test adds or drops sites. This phase is not in the pilot price.",
+      "Smaller solar nodes in the pockets a town radio does not face: Keʻē, Wainiha, the Hanalei valley, the road off Princeville, Anini, Kalihiwai, Kīlauea point, and Moloaʻa. A walk test adds or drops sites. Gap fill adds this phase to the cost.",
   },
   {
     id: "expansion",
     title: "North/East Expansion",
-    summary: "Extend the same pattern toward Anahola and Kapaʻa after the pilot corridor is working.",
+    summary:
+      "Extend the same pattern toward Anahola and Kapaʻa after the pilot corridor is working. Whole island adds these towns to the cost.",
   },
   {
     id: "backbone",
     title: "Island Backbone",
     summary:
-      "The same hub pattern in the towns where people live: Wailua, Līhuʻe, Kōloa, Kalaheo, Hanapēpē, Waimea, and Kekaha. Not the empty interior.",
+      "The same hub pattern in the towns where people live: Wailua, Līhuʻe, Kōloa, Kalaheo, Hanapēpē, Waimea, and Kekaha. Whole island adds these towns to the cost. Not the empty interior.",
   },
 ] as const;
 
