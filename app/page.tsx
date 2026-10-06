@@ -69,6 +69,7 @@ export default function Home() {
                 <li><a href="#lowell" className="hover:text-white transition-colors">Hurricane Lowell</a></li>
                 <li><a href="#what-we-are-building" className="hover:text-white transition-colors">What we are building</a></li>
                 <li><a href="#everyday" className="hover:text-white transition-colors">Everyday coverage</a></li>
+                <li><a href="#phone-signal" className="hover:text-white transition-colors">Phone signal</a></li>
                 <li><a href="#cost" className="hover:text-white transition-colors">Pilot cost</a></li>
                 <li><a href="#island-mode" className="hover:text-white transition-colors">Island Mode</a></li>
                 <li><a href="/network" className="hover:text-white transition-colors">Network Status</a></li>

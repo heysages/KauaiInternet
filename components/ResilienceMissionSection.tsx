@@ -1,5 +1,6 @@
 import ArchitectureDiagram from "@/components/explainers/ArchitectureDiagram";
 import EverydayCoverage from "@/components/explainers/EverydayCoverage";
+import PhoneSignalMap from "@/components/explainers/PhoneSignalMap";
 import OutageTimeline from "@/components/explainers/OutageTimeline";
 import PowerPathDiagram from "@/components/explainers/PowerPathDiagram";
 import RolloutDiagram from "@/components/explainers/RolloutDiagram";
@@ -179,10 +180,14 @@ export default function ResilienceMissionSection() {
           <div id="everyday" className="mb-12 scroll-mt-24">
             <h3 className="font-semibold text-ocean-deep mb-1">The same build on an ordinary day</h3>
             <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
-              Most of the cost of better everyday phone service in these valleys is a powered
-              site and a path back to the internet. This pilot buys those. A carrier radio that
-              puts bars on a phone, and a link from the backbone to each house, come after.
+              The airFiber link connects the hubs. It does not put a signal on a phone. Each
+              town hub gets one BLiNQ phone radio covering about 180° of that town, so a
+              phone that joins this network can use it there on an ordinary day. The backbone
+              is what carries that traffic off the valley.
             </p>
+            <div id="phone-signal" className="mb-8 scroll-mt-24">
+              <PhoneSignalMap />
+            </div>
             <EverydayCoverage />
           </div>
 

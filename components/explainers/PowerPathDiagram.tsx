@@ -5,13 +5,13 @@ const steps = [
     icon: <SunIcon />,
   },
   {
-    title: "Four batteries online",
-    text: "About 16 kWh usable. The radios and a charging outlet last 72 hours.",
+    title: "Batteries online",
+    text: "Seven at each town hub, about 29 kWh usable, so the phone radio lasts 72 hours at full draw. The ridge relay stays at four.",
     icon: <BatteryIcon />,
   },
   {
     title: "One hot spare",
-    text: "Pull a weak pack and bolt this one in. The other three stay on.",
+    text: "Pull a weak pack and bolt this one in. The packs still online stay on.",
     icon: <SwapIcon />,
   },
   {

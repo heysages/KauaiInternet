@@ -48,17 +48,25 @@ export const everydayCoverage = {
         "Starlink at two hubs, and Wi-Fi in the building, so a phone there can load a page or place a Wi-Fi call every day.",
       outage: "If the path off the island dies, the cached note at the hub remains.",
     },
+    {
+      id: "phone",
+      title: "Band 48 phone radios",
+      ordinary:
+        "One BLiNQ FW-300i at each town hub, covering about 180° of that town. A phone that installs this profile can call and use data there on an ordinary day.",
+      outage:
+        "The radio draws up to 180 watts. Seven batteries at the town hub keep that maximum inside the 72 hours.",
+    },
   ],
   stillNeeded: [
     {
       id: "bars",
-      title: "Bars across the valley",
-      text: "A phone shows more bars when a licensed carrier radio covers that spot. This budget buys the site, the power, and the backhaul that radio would use. The radio itself, and any agreement with AT&T, Verizon, or T-Mobile, is a later step.",
+      title: "Carrier bars",
+      text: "A Verizon, AT&T, or T-Mobile phone does not join this network by itself. Their bars still need their own radio, or an agreement to share the site. This budget buys the Band 48 radios, not theirs.",
     },
     {
       id: "house",
       title: "A call from the house",
-      text: "Wi-Fi calling works at home once that house has internet from the backbone. A subscriber radio for each house is a separate purchase, and it is not in the pilot price.",
+      text: "A house the sector can see uses this network once the phone has the profile. A house behind a ridge, or deep indoors, can still need its own radio. That radio for each house is not in the pilot price.",
     },
     {
       id: "mesh",

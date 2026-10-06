@@ -25,7 +25,7 @@ export const strategySections = {
   pilotPlan:
     "Operational corridor: Hāʻena, Hanalei, Princeville, Kīlauea. Resilience hubs, a wireless backbone, and an emergency mesh. Then North/East expansion, then an island backbone.",
   capitalRequirements:
-    "North Shore pilot is budgeted as a buy-new build on Ubiquiti airFiber 5XHD radios, a LiFePO4 bank with a hot-swap spare, 3.2 kW of solar, a propane generator at each site, drone survey, freight past the Hanalei bridge, labor, overhead, and Kauaʻi GET. Wave MLO5 is the higher-capacity 5 GHz option and is not the pilot radio. Cambium ePMP is not the vendor. Shelf inventory is not subtracted.",
+    "North Shore pilot is budgeted as a buy-new build on Ubiquiti airFiber 5XHD backhaul, one BLiNQ FW-300i Band 48 phone radio at each town hub, a LiFePO4 bank with a hot-swap spare, 3.2 kW of solar, a propane generator at each site, drone survey, freight past the Hanalei bridge, labor, overhead, and Kauaʻi GET. Wave MLO5 is the higher-capacity 5 GHz backhaul option and is not the pilot radio. Cambium ePMP is not the vendor. Shelf inventory is not subtracted.",
   partners: "No confirmed facility partnerships — all K5 hubs marked proposed.",
   sitePipeline: "10 candidate sites + 6 North Shore planning nodes + radio infrastructure research entries.",
   risks: [

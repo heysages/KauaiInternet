@@ -26,9 +26,9 @@ export const budgetAssumptions = {
   hops: 4,
   asOf: "October 2026",
   design:
-    "Four town hubs (Hāʻena, Hanalei, Princeville, Kīlauea) plus one ridge relay, because the North Shore usually needs an extra hop. A survey can drop the relay. This price is the powered sites and the town-to-town backbone. A carrier small cell, and a radio on every house, are later purchases.",
+    "Four town hubs (Hāʻena, Hanalei, Princeville, Kīlauea) plus one ridge relay, because the North Shore usually needs an extra hop. A survey can drop the relay. Each town hub gets one BLiNQ FW-300i phone radio, covering about 180° of that town. A Verizon, AT&T, or T-Mobile radio, and a radio on every house, are still later purchases.",
   technology:
-    "Ubiquiti airFiber 5XHD on 5 GHz for the backbone, with 30 dBi dishes. It stays up in rain when a clean channel is available, and it is the radio a working fixed-wireless builder would still use for most links. Ubiquiti’s newer Wave MLO5 can bond more 5 GHz spectrum for multi-gigabit speed and also does not fade in rain, but this pilot does not need that speed and wide channels are harder to find. Cambium Networks Ltd went into administration on September 14, 2026. Airspan bought the PMP 450 and PTP lines on September 22 and left ePMP out. Univastu India later took exclusivity on remaining Cambium assets; that sale is not closed, so ePMP is not the backbone. Each site gets four EG4 5.12 kWh batteries online, a fifth pack as a hot spare, 3.2 kW of solar, and a propane generator. That covers the radios past 72 hours and still leaves room to charge phones. Starlink Mini is the off-island path at two hubs. Messages use current RAK WisMesh gateways.",
+    "Ubiquiti airFiber 5XHD on 5 GHz for the backbone, with 30 dBi dishes. It stays up in rain when a clean channel is available, and it is the radio a working fixed-wireless builder would still use for most links. Ubiquiti’s newer Wave MLO5 can bond more 5 GHz spectrum for multi-gigabit speed and also does not fade in rain, but this pilot does not need that speed and wide channels are harder to find. Phones do not join that backbone. Each town hub gets one BLiNQ FW-300i on Band 48, the shared CBRS band, covering about 180° of that town, so a phone that installs this network’s profile has LTE there. Cambium Networks Ltd went into administration on September 14, 2026. Airspan bought the PMP 450 and PTP lines on September 22 and left ePMP out. Univastu India later took exclusivity on remaining Cambium assets; that sale is not closed, so ePMP is not the backbone. Town hubs get seven EG4 5.12 kWh batteries online so the phone radio stays inside 72 hours at its published maximum draw. The ridge relay stays at four. Every site keeps a hot spare, 3.2 kW of solar, and a propane generator. Starlink Mini is the off-island path at two hubs. Messages use current RAK WisMesh gateways.",
   labor:
     "Install labor is priced at $185 an hour. That is a Kauaʻi contractor bill rate for a licensed electrician and a helper, above the roughly $47 journey-worker wage in local job postings. It is not the $89.71 prevailing-wage total, which is a wage-plus-fringe figure for covered public work, not a bill rate. The earlier $150 rate did not cover a four-day site or the North Shore shuttle.",
   noDonatedGear:
@@ -143,9 +143,54 @@ export const budgetLines: BudgetLine[] = [
     id: "poe-switch",
     group: "equipment",
     label: "Outdoor PoE switches",
-    detail: "One small PoE switch at each powered site.",
+    detail: "One small PoE switch at each powered site. The phone radio runs on the 48 volt battery bus, not on this switch.",
     quantity: 5,
     unitDollars: 200,
+    basis: "allowance",
+  },
+  {
+    id: "phone-radios",
+    group: "equipment",
+    label: "BLiNQ FW-300i phone radios",
+    detail:
+      "One at each town hub, none at the ridge relay. BLiNQ’s shop lists the Band 48 model at $8,000, with the mount and a 48 volt jumper. It is one box with about 180° of coverage, so it faces the town instead of three separate sectors. BLiNQ lists up to 53 dBm EIRP per sector; a Category B grant is capped at 47 dBm per 10 MHz, and the grant sets the power. Maximum draw is 180 watts, off the 48 volt battery bus. The map still shades the town, not a measured contour. A phone uses this after it installs a profile. It stays a Band 48 network, not Verizon, AT&T, or T-Mobile.",
+    quantity: 4,
+    unitDollars: 8000,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, FW-300i Band 48",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/fw-300i-band-48-enodeb/",
+  },
+  {
+    id: "spare-phone-radios",
+    group: "equipment",
+    label: "Spare phone radio",
+    detail: "One spare FW-300i, so a failed town radio is a swap and not a mainland reorder.",
+    quantity: 1,
+    unitDollars: 8000,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, FW-300i Band 48",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/fw-300i-band-48-enodeb/",
+  },
+  {
+    id: "embedded-epc",
+    group: "equipment",
+    label: "Embedded core licenses",
+    detail:
+      "BLiNQ’s embedded EPC license is $750 and runs inside one base station, so the town does not need a separate core server. Five licenses: four live radios and the spare.",
+    quantity: 5,
+    unitDollars: 750,
+    basis: "listed",
+    sourceLabel: "BLiNQ shop, embedded EPC license",
+    sourceHref: "https://shop.blinqnetworks.com/index.php/product/embedded-epc-license/",
+  },
+  {
+    id: "phone-profiles",
+    group: "equipment",
+    label: "First 100 phone profiles",
+    detail:
+      "SIM or eSIM cards so the first neighbors can join the Band 48 network. The core license is a separate line. No single catalog price covers the card pack. Allowance, not a carrier plan.",
+    quantity: 1,
+    unitDollars: 1500,
     basis: "allowance",
   },
   {
@@ -163,8 +208,9 @@ export const budgetLines: BudgetLine[] = [
     id: "batteries",
     group: "power",
     label: "EG4 48V 100Ah LiFePO4 batteries",
-    detail: "Four 5.12 kWh batteries online at each site. That is 20.48 kWh nameplate, about 16 kWh usable at 80% depth of discharge. A 200 watt average load — radios, phone charging, and a light — is about 15 kWh over 72 hours. The radios alone are closer to 100 watts, so the bank covers them well past 72 hours.",
-    quantity: 20,
+    detail:
+      "Four online at the ridge relay, seven online at each town hub. Seven packs are 35.84 kWh nameplate, about 29 kWh usable at 80% depth of discharge. The phone radio’s published maximum is 180 watts, so a town hub is about 380 watts and about 27 kWh over 72 hours. That fits the seven-pack bank. The ridge relay stays near 200 watts and keeps four packs.",
+    quantity: 32,
     unitDollars: 1471,
     basis: "listed",
     sourceLabel: "SanTan Solar, EG4 LifePower4 V2",
@@ -174,7 +220,8 @@ export const budgetLines: BudgetLine[] = [
     id: "hot-swap-batteries",
     group: "power",
     label: "Hot-swap spare batteries",
-    detail: "One extra 5.12 kWh pack at each site, stored charged. The four online packs each sit on their own fuse, so a weak pack can be unbolted and this spare bolted in while the other three keep the hub up. Three packs still hold about 12 kWh usable, roughly two days at a 200 watt load.",
+    detail:
+      "One extra 5.12 kWh pack at each site, stored charged. A weak online pack can be unbolted and this spare bolted in while the others keep the hub up. At a town hub, six packs remain until the spare is in, about 25 kWh usable. At the ridge relay, three remain, about 12 kWh.",
     quantity: 5,
     unitDollars: 1471,
     basis: "listed",
@@ -185,8 +232,9 @@ export const budgetLines: BudgetLine[] = [
     id: "lynx",
     group: "power",
     label: "Victron Lynx Distributor",
-    detail: "One fused DC bus per site. Four positions, one per online battery, so a single pack can be isolated without shutting the hub down. Current Connected lists the M10 at $232.90.",
-    quantity: 5,
+    detail:
+      "One fused DC bus at the ridge relay, two at each town hub. Two distributors give eight fuse positions. Seven packs sit online, and the spare can take the eighth during a swap. Current Connected lists the M10 at $232.90.",
+    quantity: 9,
     unitDollars: 233,
     basis: "listed",
     sourceLabel: "Current Connected, Lynx Distributor M10",
@@ -256,7 +304,8 @@ export const budgetLines: BudgetLine[] = [
     id: "balance-of-system",
     group: "power",
     label: "Racks, racking, generator inlet",
-    detail: "Rack for four server batteries, a shelf for the spare pack, eight-panel racking, generator inlet, propane cage, surge protection, conduit, and grounding. Per-site allowance, not a quote.",
+    detail:
+      "Rack space for the online batteries, including seven packs at each town hub, a shelf for the spare, eight-panel racking, generator inlet, propane cage, surge protection, conduit, and grounding. Per-site allowance, not a quote.",
     quantity: 5,
     unitDollars: 2400,
     basis: "allowance",
@@ -292,9 +341,10 @@ export const budgetLines: BudgetLine[] = [
     id: "permits",
     group: "survey",
     label: "Permits",
-    detail: "Electrical and solar permits for a 3.2 kW array and a generator at each site, plus a coastal Special Management Area allowance where Hāʻena or Hanalei sites fall inside it.",
+    detail:
+      "Electrical and solar permits for a 3.2 kW array and a generator at each site, the four phone-radio mounts, plus a coastal Special Management Area allowance where Hāʻena or Hanalei sites fall inside it.",
     quantity: 1,
-    unitDollars: 8000,
+    unitDollars: 10000,
     basis: "allowance",
   },
   {
@@ -307,10 +357,31 @@ export const budgetLines: BudgetLine[] = [
     basis: "allowance",
   },
   {
+    id: "phone-install",
+    group: "labor",
+    label: "Phone-radio install",
+    detail:
+      "64 hours at $185. Two people for one day at each town hub to mount the FW-300i, aim its 180° face at the town, land it on the 48 volt bus, and confirm a handset joins.",
+    quantity: 64,
+    unitDollars: 185,
+    basis: "allowance",
+  },
+  {
+    id: "cbrs-registration",
+    group: "survey",
+    label: "CBRS installer registration",
+    detail:
+      "A certified professional installer has to register each Category B radio with a spectrum system before it can transmit. Allowance for four radios. Not a vendor quote.",
+    quantity: 1,
+    unitDollars: 1600,
+    basis: "allowance",
+  },
+  {
     id: "design-labor",
     group: "labor",
     label: "RF and electrical design",
-    detail: "80 hours at $185 for the link budget, the one-line with the generator inlet and hot-swap bus, and permit drawings.",
+    detail:
+      "80 hours at $185 for the link budget, the Band 48 sector aim, the one-line with the generator inlet and hot-swap bus, and permit drawings.",
     quantity: 80,
     unitDollars: 185,
     basis: "allowance",
@@ -328,6 +399,18 @@ export const operatingLines: BudgetLine[] = [
     basis: "listed",
     sourceLabel: "Starlink service plans",
     sourceHref: "https://starlink.com/service-plans",
+  },
+  {
+    id: "sas",
+    group: "equipment",
+    label: "Spectrum access system",
+    detail:
+      "Key Bridge Wireless lists $500 a month, and that base fee includes the first 200 radios. Four phone radios fit inside it. Google is not taking new SAS customers. The radios cannot legally transmit on Band 48 without a grant.",
+    quantity: 12,
+    unitDollars: 500,
+    basis: "listed",
+    sourceLabel: "Key Bridge Wireless, June 16, 2026",
+    sourceHref: "https://keybridgewireless.com/codex/read/blog/press/reduced-pricing-and-seamless-migration-support",
   },
   {
     id: "maintenance",

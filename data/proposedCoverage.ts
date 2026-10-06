@@ -119,6 +119,14 @@ export const expansionServiceAreas = {
   ],
 };
 
+/** Towns the 2024 public record already calls unreliable: Princeville west to Keʻē. */
+export const phoneGapAreas = {
+  type: "FeatureCollection" as const,
+  features: pilotServiceAreas.features.filter(
+    (feature) => feature.properties.id === "haena" || feature.properties.id === "hanalei",
+  ),
+};
+
 export const pilotCoverageBounds: [[number, number], [number, number]] = [
   [-159.63, 22.17],
   [-159.36, 22.25],
