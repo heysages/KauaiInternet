@@ -6,7 +6,7 @@ const steps = [
   },
   {
     title: "Wireless backbone",
-    text: "A radio link from one hub to the next, so the note can travel the corridor.",
+    text: "A radio link from one hub to the next. On an ordinary day it is backhaul. In an outage the note still travels the corridor.",
     icon: <LinkIcon />,
   },
   {

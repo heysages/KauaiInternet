@@ -30,9 +30,9 @@ export default function Hero() {
           </h1>
 
           <p className="text-lg sm:text-xl text-mist leading-relaxed max-w-2xl text-balance">
-            After Hurricane Lowell, power and ordinary communications stayed down for days.
-            KauaiInternet is building a North Shore corridor that still carries a message
-            when the utility grid does not.
+            Cell service along the North Shore is already thin on an ordinary day. After
+            Hurricane Lowell, power and phones stayed down for days. This corridor is the
+            powered sites and the wireless backhaul those two problems share.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3">

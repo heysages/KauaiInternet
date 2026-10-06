@@ -15,6 +15,59 @@ export const kauaiInternet72 = {
   rule: "Critical network nodes operate for at least 72 hours without utility power, on solar and battery.",
 };
 
+export const everydayCoverage = {
+  sources: [
+    {
+      label: "Kauai Now, May 2, 2024",
+      href: "https://kauainownews.com/2024/05/02/haena-residents-challenge-att-cell-tower-plans/",
+    },
+    {
+      label: "Civil Beat / AP, North Shore coverage gap",
+      href: "https://apnews.com/article/hawaii-fire-departments-communication-fc8c2f9a7cb93f4b546e5e44ac7ea9e5",
+    },
+  ],
+  pieces: [
+    {
+      id: "site",
+      title: "Powered site",
+      ordinary:
+        "A radio here stays on when the utility blinks, so everyday service on the site does not wait for KIUC.",
+      outage: "Solar and battery cover 72 hours. The generator refills after that.",
+    },
+    {
+      id: "backbone",
+      title: "Town-to-town backbone",
+      ordinary:
+        "This is backhaul. A home internet link, or a carrier small cell on the same site, uses it to reach the rest of the internet.",
+      outage: "The status note and short messages still move from Hāʻena to Kīlauea.",
+    },
+    {
+      id: "hub",
+      title: "Internet at the hub",
+      ordinary:
+        "Starlink at two hubs, and Wi-Fi in the building, so a phone there can load a page or place a Wi-Fi call every day.",
+      outage: "If the path off the island dies, the cached note at the hub remains.",
+    },
+  ],
+  stillNeeded: [
+    {
+      id: "bars",
+      title: "Bars across the valley",
+      text: "A phone shows more bars when a licensed carrier radio covers that spot. This budget buys the site, the power, and the backhaul that radio would use. The radio itself, and any agreement with AT&T, Verizon, or T-Mobile, is a later step.",
+    },
+    {
+      id: "house",
+      title: "A call from the house",
+      text: "Wi-Fi calling works at home once that house has internet from the backbone. A subscriber radio for each house is a separate purchase, and it is not in the pilot price.",
+    },
+    {
+      id: "mesh",
+      title: "The handheld mesh",
+      text: "The mesh carries a short message when a phone has no service. Putting bars on a phone is a different radio.",
+    },
+  ],
+} as const;
+
 export const architecture = [
   {
     id: "hubs",
@@ -26,7 +79,7 @@ export const architecture = [
     id: "backbone",
     title: "Wireless Backbone",
     summary:
-      "Links the hubs along the corridor so a message can move from one community to the next.",
+      "Links the hubs along the corridor. On an ordinary day that link is backhaul. In an outage it still carries a message from one community to the next.",
   },
   {
     id: "mesh",

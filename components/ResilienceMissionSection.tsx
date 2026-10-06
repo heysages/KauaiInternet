@@ -1,4 +1,5 @@
 import ArchitectureDiagram from "@/components/explainers/ArchitectureDiagram";
+import EverydayCoverage from "@/components/explainers/EverydayCoverage";
 import OutageTimeline from "@/components/explainers/OutageTimeline";
 import PowerPathDiagram from "@/components/explainers/PowerPathDiagram";
 import RolloutDiagram from "@/components/explainers/RolloutDiagram";
@@ -9,6 +10,7 @@ import {
   designPrinciple,
   failureColumns,
   failureRows,
+  everydayCoverage,
   kauaiInternet72,
   lowellLessons,
   pilotCorridor,
@@ -38,12 +40,33 @@ export default function ResilienceMissionSection() {
               <p className="text-lg text-ocean-mid leading-relaxed mb-4">
                 {designPrinciple}
               </p>
-              <p className="text-ocean-mid leading-relaxed">
+              <p className="text-ocean-mid leading-relaxed mb-4">
                 Phones, fiber, and many radios plug into the same utility power. Hurricane Lowell
                 showed what that means: days without electricity, and communities that still needed
                 to know which roads were open, where water and food were, and how to reach a neighbor.
                 KauaiInternet is the local layer that keeps that message moving.
               </p>
+              <p className="text-ocean-mid leading-relaxed mb-3">
+                Everyday cell service on this coast is already a reason to build. In May 2024,
+                Kauaʻi Fire and Emergency Management told the County Council that service in
+                Hāʻena and at Keʻē frequently drops, or is absent, when someone needs to call
+                for help. The Associated Press reported lifeguards at Keʻē sometimes walk the
+                beach looking for a signal.
+              </p>
+              <ul className="space-y-1">
+                {everydayCoverage.sources.map((source) => (
+                  <li key={source.href}>
+                    <a
+                      href={source.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-ocean-mid underline underline-offset-2 hover:text-ocean-deep"
+                    >
+                      {source.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
             <figure>
               <img
@@ -151,6 +174,16 @@ export default function ResilienceMissionSection() {
           </p>
           <div className="mb-12">
             <ArchitectureDiagram />
+          </div>
+
+          <div id="everyday" className="mb-12 scroll-mt-24">
+            <h3 className="font-semibold text-ocean-deep mb-1">The same build on an ordinary day</h3>
+            <p className="text-sm text-ocean-mid mb-4 max-w-3xl">
+              Most of the cost of better everyday phone service in these valleys is a powered
+              site and a path back to the internet. This pilot buys those. A carrier radio that
+              puts bars on a phone, and a link from the backbone to each house, come after.
+            </p>
+            <EverydayCoverage />
           </div>
 
           <h3 className="font-semibold text-ocean-deep mb-1">How the build grows</h3>
